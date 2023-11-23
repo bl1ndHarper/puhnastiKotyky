@@ -1,0 +1,83 @@
+CREATE TABLE `projects`(
+    `projects_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `description` TEXT NOT NULL,
+    `users_id` INT UNSIGNED NOT NULL,
+    `creation_date` DATETIME NOT NULL,
+    `level` ENUM('easy', 'medium', 'hard') NOT NULL,
+    `duration` INT NOT NULL,
+    `status` ENUM('draft', 'in development', 'completed') NOT NULL
+);
+ALTER TABLE
+    `projects` ADD INDEX `projects_name_index`(`name`);
+ALTER TABLE
+    `projects` ADD PRIMARY KEY `projects_projects_id_primary`(`projects_id`);
+CREATE TABLE `projects_users`(
+    `projects_users_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `projects_id` INT UNSIGNED NOT NULL,
+    `users_id` INT UNSIGNED NOT NULL
+);
+ALTER TABLE
+    `projects_users` ADD PRIMARY KEY `projects_users_projects_users_id_primary`(`projects_users_id`);
+CREATE TABLE `users_technologies`(
+    `users_technologies_id` INT UNSIGNED NOT NULL,
+    `users_id` INT UNSIGNED NOT NULL,
+    `technologies_id` INT UNSIGNED NOT NULL
+);
+ALTER TABLE
+    `users_technologies` ADD PRIMARY KEY `users_technologies_users_technologies_id_primary`(`users_technologies_id`);
+CREATE TABLE `technologies`(
+    `technologies_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL
+);
+ALTER TABLE
+    `technologies` ADD PRIMARY KEY `technologies_technologies_id_primary`(`technologies_id`);
+CREATE TABLE `requests`(
+    `requests_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `users_id` INT UNSIGNED NOT NULL,
+    `projects_id` INT UNSIGNED NOT NULL,
+    `date` DATETIME NOT NULL,
+    `status` ENUM('considering', 'denied', 'accepted') NOT NULL
+);
+ALTER TABLE
+    `requests` ADD PRIMARY KEY `requests_requests_id_primary`(`requests_id`);
+CREATE TABLE `projects_technologies`(
+    `projects_technologies_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `projects_id` INT UNSIGNED NOT NULL,
+    `techonlogies_id` INT UNSIGNED NOT NULL
+);
+ALTER TABLE
+    `projects_technologies` ADD PRIMARY KEY `projects_technologies_projects_technologies_id_primary`(`projects_technologies_id`);
+CREATE TABLE `users`(
+    `users_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `first_name` VARCHAR(50) NOT NULL,
+    `last_name` VARCHAR(50) NOT NULL,
+    `email` VARCHAR(100) NOT NULL,
+    `password` VARCHAR(32) NOT NULL,
+    `photo` VARCHAR(255) NULL,
+    `about` TEXT NULL
+);
+ALTER TABLE
+    `users` ADD INDEX `users_email_index`(`email`);
+ALTER TABLE
+    `users` ADD PRIMARY KEY `users_users_id_primary`(`users_id`);
+ALTER TABLE
+    `users` ADD UNIQUE `users_email_unique`(`email`);
+ALTER TABLE
+    `users_technologies` ADD CONSTRAINT `users_technologies_technologies_id_foreign` FOREIGN KEY(`technologies_id`) REFERENCES `technologies`(`technologies_id`);
+ALTER TABLE
+    `projects_users` ADD CONSTRAINT `projects_users_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
+ALTER TABLE
+    `projects_users` ADD CONSTRAINT `projects_users_projects_users_id_foreign` FOREIGN KEY(`projects_users_id`) REFERENCES `users`(`users_id`);
+ALTER TABLE
+    `requests` ADD CONSTRAINT `requests_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
+ALTER TABLE
+    `projects_technologies` ADD CONSTRAINT `projects_technologies_techonlogies_id_foreign` FOREIGN KEY(`techonlogies_id`) REFERENCES `technologies`(`technologies_id`);
+ALTER TABLE
+    `projects` ADD CONSTRAINT `projects_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`users_id`);
+ALTER TABLE
+    `projects_technologies` ADD CONSTRAINT `projects_technologies_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
+ALTER TABLE
+    `users_technologies` ADD CONSTRAINT `users_technologies_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`users_id`);
+ALTER TABLE
+    `requests` ADD CONSTRAINT `requests_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`users_id`);
