@@ -44,7 +44,7 @@ ALTER TABLE
 CREATE TABLE `projects_technologies`(
     `projects_technologies_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `projects_id` INT UNSIGNED NOT NULL,
-    `techonlogies_id` INT UNSIGNED NOT NULL
+    `technologies_id` INT UNSIGNED NOT NULL
 );
 ALTER TABLE
     `projects_technologies` ADD PRIMARY KEY `projects_technologies_projects_technologies_id_primary`(`projects_technologies_id`);
