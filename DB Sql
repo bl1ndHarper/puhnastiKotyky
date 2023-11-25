@@ -64,7 +64,7 @@ ALTER TABLE
 ALTER TABLE
     `users` ADD UNIQUE `users_email_unique`(`email`);
 ALTER TABLE
-    `users_technologies` ADD CONSTRAINT `users_tech_tech_id_foreign` FOREIGN KEY(`technologies_id`) REFERENCES `technologies`(`technologies_id`);
+    `users_technologies` ADD CONSTRAINT `users_technologies_technologies_id_foreign` FOREIGN KEY(`technologies_id`) REFERENCES `technologies`(`technologies_id`);
 ALTER TABLE
     `projects_users` ADD CONSTRAINT `projects_users_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
 ALTER TABLE
@@ -72,12 +72,12 @@ ALTER TABLE
 ALTER TABLE
     `requests` ADD CONSTRAINT `requests_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
 ALTER TABLE
-    `projects_technologies` ADD CONSTRAINT `projects_tech_tech_id_foreign` FOREIGN KEY(`techonlogies_id`) REFERENCES `technologies`(`technologies_id`);
+    `projects_technologies` ADD CONSTRAINT `projects_technologies_techonlogies_id_foreign` FOREIGN KEY(`techonlogies_id`) REFERENCES `technologies`(`technologies_id`);
 ALTER TABLE
     `projects` ADD CONSTRAINT `projects_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`users_id`);
 ALTER TABLE
-    `projects_technologies` ADD CONSTRAINT `projects_tech_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
+    `projects_technologies` ADD CONSTRAINT `projects_technologies_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
 ALTER TABLE
-    `users_technologies` ADD CONSTRAINT `users_tech_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`users_id`);
+    `users_technologies` ADD CONSTRAINT `users_technologies_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`users_id`);
 ALTER TABLE
     `requests` ADD CONSTRAINT `requests_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`users_id`);
