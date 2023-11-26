@@ -1,5 +1,5 @@
-Create database DB;
-Use DB;
+CREATE DATABASE IF NOT EXISTS DB;
+USE DB;
 CREATE TABLE `projects` (
     `projects_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
