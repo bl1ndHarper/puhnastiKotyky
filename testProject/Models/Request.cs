@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace testProject.Data;
+namespace testProject.Models;
 
 public partial class Request
 {
