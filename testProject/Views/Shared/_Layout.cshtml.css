@@ -11,6 +11,15 @@ a {
   color: #0077cc;
 }
 
+ul {
+    display: block;
+    float: right;
+}
+
+li {
+    float: right;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

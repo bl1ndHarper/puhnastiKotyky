@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\SignUpPage.css" />
+    <None Include="wwwroot\images\cloud-10.png" />
+    <None Include="wwwroot\images\cloud-20.png" />
+    <None Include="wwwroot\images\confirm-password-icon0.png" />
+    <None Include="wwwroot\images\email-icon0.png" />
+    <None Include="wwwroot\images\first-name-icon0.png" />
+    <None Include="wwwroot\images\password-icon0.png" />
+    <None Include="wwwroot\images\second-name-image0.png" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14">
       <PrivateAssets>all</PrivateAssets>
