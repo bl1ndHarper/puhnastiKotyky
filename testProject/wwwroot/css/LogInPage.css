@@ -8,18 +8,18 @@
   overflow: hidden;
 }
 .log-in-page-day__cloud-1 {
-  width: 506.5px;
-  height: 539.5px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
+    width: 60vh;
+    height: 60vh;
+    position: absolute;
+    left: 0px;
+    top: 0px;
 }
 .log-in-page-day__cloud-2 {
-  width: 483px;
-  height: 566px;
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
+    width: 60vh;
+    height: 60vh;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 }
 .log-in-page-day__log-in-button {
     background: #9ed5c5;
@@ -27,49 +27,48 @@
     border-style: solid;
     border-color: #183d3d;
     border-width: 3px;
-    padding-top: 12px;
     display: flex;
     flex-direction: row;
     gap: 10px;
     align-items: center;
     justify-content: center;
-    width: 460px;
-    height: 60px;
+    width: 30vw;
+    height: 7vh;
     position: absolute;
-    left: calc(50% - 220px);
-    top: calc(50% - -145px);
+    left: calc(50% - 15vw);
+    top: calc(50% + 25vh);
 }
 .log-in-page-day__log-in-button p {
   color: #183d3d;
   text-align: left;
-  font: 500 36px "Fira Sans", sans-serif;
+  font: 500 3.5vmin "Fira Sans", sans-serif;
   position: relative;
 }
 .log-in-page-day__log-in-now {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: center;
-  justify-content: center;
-  width: 490px;
-  height: 190px;
-  position: absolute;
-  left: calc(50% - 235px);
-  top: calc(50% - 329px);
+    display: flex;
+    flex-direction: column;
+    gap: 1.4vh;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
+    height: auto;
+    position: absolute;
+    left: calc(50% - 15vw);
+    top: 20vh;
 }
 .log-in-page-day__text-field-1 {
   color: #183d3d;
-  text-align: left;
-  font: 700 64px "Fira Sans", sans-serif;
+  text-align: center;
+  font: 700 7vh "Fira Sans", sans-serif;
   position: relative;
+  width: 70vw;
 }
 .log-in-page-day__text-field-2 {
   color: #183d3d;
   text-align: center;
-  font: 400 24px "Fira Sans", sans-serif;
+  font: 400 3vh "Fira Sans", sans-serif;
   position: relative;
-  width: 485px;
-  height: 29px;
+  width: 70vw;
 }
 .log-in-page-day__color-mode-switch {
   display: flex;
@@ -77,27 +76,27 @@
   gap: 10px;
   align-items: flex-start;
   justify-content: flex-start;
-  height: auto;
+  height: 15vmin;
   position: absolute;
-  left: 45px;
-  bottom: 45px;
+  left: 3vmin;
+  bottom: 3vmin;
   overflow: visible;
 }
 
 .log-in-page-day__login-fields {
-  border-radius: 5px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  width: 490px;
-  height: 200px;
-  position: absolute;
-  left: calc(50% - 235px);
-  top: calc(50% - 74px);
-  overflow: hidden;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    align-items: center;
+    justify-content: center;
+    width: 49vw;
+    height: 30vh;
+    position: absolute;
+    left: calc(50% - 24.5vw);
+    top: calc(50% - 5vh);
+    overflow: hidden;
 }
 
 .log-in-page-day__login-fields div {
@@ -109,19 +108,23 @@
   padding: 0px 0px 0px 10px;
   display: flex;
   flex-direction: row;
-  gap: 25px;
+  gap: 1vw;
   align-items: center;
   justify-content: flex-start;
   flex-shrink: 0;
-  width: 450px;
-  height: 60px;
+  width: 30vw;
+  height: 6.5vh;
   position: relative;
 }
 
 .log-in-page-day__login-fields p, input {
   color: #8ec3b0;
   text-align: left;
-  font: 500 24px "Fira Sans", sans-serif;
+  font: 500 2.5vmin "Fira Sans", sans-serif;
   position: relative;
   outline: none;
+}
+
+.log-in-page-day__login-fields img {
+    height: 4vmin;
 }
