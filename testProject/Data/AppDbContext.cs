@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using testProject.Models;
 
 namespace testProject.Data;
 
-public partial class AppDbContext : DbContext
+public partial class AppDbContext : IdentityDbContext<User, IdentityRole<uint>, uint>
 {
     public AppDbContext()
     {
@@ -38,6 +40,10 @@ public partial class AppDbContext : DbContext
         modelBuilder
             .UseCollation("utf8mb4_0900_ai_ci")
             .HasCharSet("utf8mb4");
+
+        modelBuilder.Entity<IdentityUserLogin<uint>>().HasKey(l => new { l.LoginProvider, l.ProviderKey, l.UserId });
+        modelBuilder.Entity<IdentityUserRole<uint>>().HasKey(r => new { r.UserId, r.RoleId });
+        modelBuilder.Entity<IdentityUserToken<uint>>().HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
 
         modelBuilder.Entity<Project>(entity =>
         {
@@ -169,28 +175,17 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UsersId).HasName("PRIMARY");
-
             entity.ToTable("users");
 
-            entity.HasIndex(e => e.Email, "email").IsUnique();
-
-            entity.Property(e => e.UsersId).HasColumnName("users_id");
             entity.Property(e => e.About)
                 .HasColumnType("text")
                 .HasColumnName("about");
-            entity.Property(e => e.Email)
-                .HasMaxLength(100)
-                .HasColumnName("email");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
                 .HasColumnName("first_name");
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .HasColumnName("last_name");
-            entity.Property(e => e.Password)
-                .HasMaxLength(32)
-                .HasColumnName("password");
             entity.Property(e => e.Photo)
                 .HasMaxLength(255)
                 .HasColumnName("photo");
