@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap');
 
 .sign-up-page-day {
-  background: #def5e5;
-  width: auto;
-  height: auto;
-  position: static;
-  overflow: hidden;
+    background: #def5e5;
+    width: auto;
+    height: auto;
+    position: static;
+    overflow: hidden;
 }
+
 .sign-up-page-day__cloud-1 {
     width: 60vh;
     height: 60vh;
@@ -14,6 +15,7 @@
     left: 0px;
     top: 0px;
 }
+
 .sign-up-page-day__cloud-2 {
     width: 60vh;
     height: 60vh;
@@ -21,30 +23,49 @@
     right: 0px;
     bottom: 0px;
 }
-.sign-up-page-day__sign-up-button {
-    background: #9ed5c5;
-    border-radius: 16px;
-    border-style: solid;
-    border-color: #183d3d;
-    border-width: 3px;
+
+.sign-up-page-day__login-link, .sign-up-page-day__login-link:hover {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
+    gap: 1.6vh;
     align-items: center;
     justify-content: center;
     width: 30vw;
     height: 7vh;
     position: absolute;
     left: calc(50% - 15vw);
-    top: calc(50% - -35vh);
-}
-.sign-up-page-day__sign-up-button p {
+    top: calc(50% + 40vh);
     color: #183d3d;
-    text-align: left;
-    font: 500 3.5vmin "Fira Sans", sans-serif;
-    position: relative;
+    text-align: center;
+    font: 500 2vmin "Fira Sans", sans-serif;
 }
-.sign-up-page-day__sign-up-now {
+
+.sign-up-page-day__sign-up-button {
+    background: #9ed5c5;
+    border-radius: 2vmin;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: .5vmin;
+    display: flex;
+    flex-direction: row;
+    gap: 2vh;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
+    height: 7vh;
+    position: absolute;
+    left: calc(50% - 15vw);
+    top: calc(50% - -32vh);
+}
+
+    .sign-up-page-day__sign-up-button p {
+        color: #183d3d;
+        text-align: left;
+        font: 500 3.5vmin "Fira Sans", sans-serif;
+        position: relative;
+    }
+
+.sign-up-page-day__headers {
     display: flex;
     flex-direction: column;
     gap: 1.4vh;
@@ -57,25 +78,26 @@
     top: 15vh;
 }
 
-.sign-up-page-day__text-field-1 {
-    color: #183d3d;
-    text-align: center;
-    font: 700 7vh "Fira Sans", sans-serif;
-    position: relative;
-    width: 50vw;
-}
-.sign-up-page-day__text-field-2 {
-    color: #183d3d;
-    text-align: center;
-    font: 400 3vh "Fira Sans", sans-serif;
-    position: relative;
-    width: 40vw;
-}
+    .sign-up-page-day__headers h1 {
+        color: #183d3d;
+        text-align: center;
+        font: 700 7vh "Fira Sans", sans-serif;
+        position: relative;
+        width: 50vw;
+    }
+
+    .sign-up-page-day__headers h3 {
+        color: #183d3d;
+        text-align: center;
+        font: 400 3vh "Fira Sans", sans-serif;
+        position: relative;
+        width: 40vw;
+    }
 
 .sign-up-page-day__color-mode-switch {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 2vh;
     align-items: flex-start;
     justify-content: flex-start;
     height: 15vmin;
@@ -86,8 +108,6 @@
 }
 
 .sign-up-page-day__register-fields {
-    border-radius: 5px;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 2vh;
@@ -101,33 +121,33 @@
     overflow: hidden;
 }
 
-.sign-up-page-day__register-fields div {
-    background: #ffffff;
-    border-radius: 16px;
-    border-style: solid;
-    border-color: #8ec3b0;
-    border-width: 3px;
-    padding: 0px 0px 0px 10px;
-    display: flex;
-    flex-direction: row;
-    gap: 1vw;
-    align-items: center;
-    justify-content: flex-start;
-    flex-shrink: 0;
-    width: 30vw;
-    height: 6.5vh;
-    position: relative;
-    overflow: hidden;
-}
+    .sign-up-page-day__register-fields div {
+        background: #ffffff;
+        border-radius: 2vmin;
+        border-style: solid;
+        border-color: #8ec3b0;
+        border-width: .4vmin;
+        padding: 0px 0px 0px 10px;
+        display: flex;
+        flex-direction: row;
+        gap: 1vw;
+        align-items: center;
+        justify-content: flex-start;
+        flex-shrink: 0;
+        width: 30vw;
+        height: 6.5vh;
+        position: relative;
+        overflow: hidden;
+    }
 
-.sign-up-page-day__register-fields p, input {
-    color: #8ec3b0;
-    text-align: left;
-    font: 500 2.5vmin "Fira Sans", sans-serif;
-    position: relative;
-    outline: none;
-}
+    .sign-up-page-day__register-fields p, input {
+        color: #8ec3b0;
+        text-align: left;
+        font: 500 2.5vmin "Fira Sans", sans-serif;
+        position: relative;
+        outline: none;
+    }
 
-.sign-up-page-day__register-fields img {
-    height: 4vmin;
-}
+    .sign-up-page-day__register-fields img {
+        height: 4vmin;
+    }
