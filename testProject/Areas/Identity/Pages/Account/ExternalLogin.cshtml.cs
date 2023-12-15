@@ -123,23 +123,42 @@ namespace testProject.Areas.Identity.Pages.Account
             {
                 return RedirectToPage("./Lockout");
             }
-            else
-            {
-                // If the user does not have an account, then ask the user to create an account.
-                ReturnUrl = returnUrl;
-                ProviderDisplayName = info.ProviderDisplayName;
-                if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+            
+                var userEmail = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value.ToString();
+                var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
+                var firstName = name.Length > 0 ? name[0] : string.Empty;
+                var lastName = name.Length > 1 ? name[1] : string.Empty;
+
+                var user = new User { UserName = userEmail, Email = userEmail, EmailConfirmed = true, FirstName = firstName, LastName = lastName};
+                var resultCreateUser = await _userManager.CreateAsync(user);
+                if (resultCreateUser.Succeeded)
                 {
-                    Input = new InputModel
+                    var resultAddLogin = await _userManager.AddLoginAsync(user, info);
+                    if (resultAddLogin.Succeeded)
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        return LocalRedirect(returnUrl);
+                    }
                 }
-                return Page();
+
+            return LocalRedirect(returnUrl);
+            /* else {
+            // If the user does not have an account, then ask the user to create an account.
+            ReturnUrl = returnUrl;
+            ProviderDisplayName = info.ProviderDisplayName;
+            if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
+            {
+                Input = new InputModel
+                {
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                };
             }
+            return Page(); 
+            } */
         }
 
-        public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
+    public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             // Get the information about the user from the external login provider
@@ -165,7 +184,7 @@ namespace testProject.Areas.Identity.Pages.Account
                     {
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
-                        var userId = await _userManager.GetUserIdAsync(user);
+                        /* var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                         var callbackUrl = Url.Page(
@@ -181,7 +200,7 @@ namespace testProject.Areas.Identity.Pages.Account
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
                             return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
-                        }
+                        } */
 
                         await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
                         return LocalRedirect(returnUrl);

@@ -4,6 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>cba4feeb-8844-4ea2-9d88-acd79bc71fc8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,7 @@
     <None Include="wwwroot\images\first-name-icon0.png" />
     <None Include="wwwroot\images\password-icon0.png" />
     <None Include="wwwroot\images\second-name-image0.png" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.14" />
