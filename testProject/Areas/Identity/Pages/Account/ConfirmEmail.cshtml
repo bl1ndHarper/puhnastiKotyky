@@ -4,5 +4,8 @@
     ViewData["Title"] = "Email Confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="auth-pages-day__headers">
+    <h1>@ViewData["Title"]</h1>
+    <h3><partial name="_StatusMessage" model="Model.StatusMessage" /></h3>
+    <a class="auth-pages-day__text-link-item" asp-page="./Login">Click here to return to the log in page</a>
+</div>

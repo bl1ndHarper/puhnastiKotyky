@@ -4,21 +4,19 @@
     ViewData["Title"] = "Resend email confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
-<h2>Enter your email.</h2>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email" class="form-label"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Resend</button>
-        </form>
-    </div>
+<div class="auth-pages-day__headers">
+    <h1>@ViewData["Title"]</h1>
+    <h3>Enter your email to resend the confirmation link</h3>
+</div>
+<div class="auth-pages-day__input-fields">
+    <form method="post">
+        <div class="form-floating mb-3">
+            <img src="~/images/email-icon0.png" />
+            <input asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder="Email" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <button type="submit" class="auth-pages-day__button"><p>Resend Link</p></button>
+    </form>
 </div>
 
 @section Scripts {
