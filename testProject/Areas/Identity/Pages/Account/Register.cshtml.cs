@@ -139,8 +139,34 @@ namespace testProject.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    /*Sending Confirmation Email here*/
+                    try
+                    {
+                        var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+                        var config = builder.Build();
+                        var smtpSettings = config.GetSection("Smtp");
+
+                        var emailService = new EmailService(
+                            smtpSettings["Host"],
+                            int.Parse(config["Smtp:Port"]),
+                            smtpSettings["Username"],
+                            smtpSettings["Password"]
+                            );
+
+                        var emailTemplate = System.IO.File.ReadAllText("Views/EmailTemplates/EmailConfirm.html");
+                        var emailBody = emailTemplate.Replace("{activationLink}", callbackUrl);
+
+                        emailService.SendConfirmationEmail(user.Email, "Email confirmation", emailBody);
+
+                        //await _signInManager.SignInAsync(user, isPersistent: false);
+                        //return LocalRedirect(returnUrl);
+                    }
+                    catch (Exception) { }
+                    /*email must've been sent*/
+
+
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
