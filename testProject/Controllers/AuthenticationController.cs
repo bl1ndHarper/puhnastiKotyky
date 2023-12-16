@@ -12,5 +12,13 @@ namespace testProject.Controllers
         {
             return View();
         }
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+        public IActionResult PasswordRecovery()
+        {
+            return View();
+        }
     }
 }
