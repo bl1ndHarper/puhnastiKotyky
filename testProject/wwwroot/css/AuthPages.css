@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap');
+
+.hidden {
+    display: none;
+}
+
+a,
+button,
+select,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-decoration: none;
+    appearance: none;
+    background: none;
+}
+
+.auth-pages-day {
+    background: #def5e5;
+    width: auto;
+    height: auto;
+    position: static;
+    overflow: hidden;
+}
+
+.auth-pages-day__cloud-1 {
+    width: 60vmin;
+    height: 60vmin;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.auth-pages-day__cloud-2 {
+    width: 60vmin;
+    height: 60vmin;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.auth-pages-day__headers {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4vh;
+    align-items: center;
+    justify-content: center;
+    width: 30vw;
+    height: auto;
+    position: absolute;
+    left: calc(50% - 15vw);
+    top: 15vh;
+}
+
+    .auth-pages-day__headers h1 {
+        color: #183d3d;
+        text-align: center;
+        font: 700 7vmin "Fira Sans", sans-serif;
+        position: relative;
+        width: 70vw;
+    }
+
+    .auth-pages-day__headers h3 {
+        color: #183d3d;
+        text-align: center;
+        font: 400 3vmin "Fira Sans", sans-serif;
+        position: relative;
+        width: 70vw;
+    }
+
+.auth-pages-day__input-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    align-items: center;
+    justify-content: center;
+    width: 49vw;
+    height: auto;
+    position: absolute;
+    left: calc(50% - 24.5vw);
+    top: 52%;
+    transform: translateY(-30%);
+    overflow: hidden;
+}
+
+    .auth-pages-day__input-fields div {
+        background: #ffffff;
+        border-radius: 2vmin;
+        border-style: solid;
+        border-color: #8ec3b0;
+        border-width: .4vmin;
+        padding: 0px 0px 0px 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        flex-shrink: 0;
+        overflow: hidden;
+        width: 30vw;
+        height: 6.5vmin;
+        position: relative;
+    }
+
+    .auth-pages-day__input-fields p, input {
+        color: #8ec3b0;
+        text-align: left;
+        font: 500 2.5vmin "Fira Sans", sans-serif;
+        position: absolute;
+        width: calc(100% - 7.5vmin);
+        margin-left: 6vmin;
+        outline: none;
+    }
+
+    .auth-pages-day__input-fields span {
+        color: tomato;
+        text-align: right;
+        font: 300 1.4vmin "Fira Sans", sans-serif;
+        position: relative;
+        margin-bottom: 3vmin;
+        width: 98%;
+        outline: none;
+    }
+
+    .auth-pages-day__input-fields img {
+        height: 4vmin;
+        width: fit-content;
+        position: fixed;
+    }
+
+    .auth-pages-day__alert,
+    .auth-pages-day__input-fields .auth-pages-day__alert {
+        background: transparent;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        vertical-align: middle;
+        width: 30vw;
+        height: 5vmin;
+        padding: 4px;
+        border-radius: 1vmin;
+        border: .3vmin solid tomato;
+        position: relative;
+        font-size: 2vmin;
+    }
+
+        .auth-pages-day__alert ul {
+            text-align: center;
+            vertical-align: middle;
+            margin: 0;
+            padding: 4vmin;
+        }
+
+.auth-pages-day__button {
+    background: #9ed5c5;
+    border-radius: 2vmin;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: .5vmin;
+    margin-top: 5vmin;
+    width: 30vw;
+    height: 7vmin;
+    position: relative;
+}
+
+    .auth-pages-day__button p {
+        color: #183d3d;
+        text-align: center;
+        margin: 0;
+        width: 100%;
+        font: 500 3.5vmin "Fira Sans", sans-serif;
+        position: relative;
+    }
+
+.auth-pages-day__text-link-item, .auth-pages-day__text-link-item:hover {
+    color: #183d3d;
+    text-align: center;
+    font: 500 2vmin "Fira Sans", sans-serif;
+    position: relative;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+.auth-pages-day__color-mode-switch {
+    display: flex;
+    flex-direction: row;
+    gap: 2vh;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 15vmin;
+    position: absolute;
+    left: 3vmin;
+    bottom: 3vmin;
+    overflow: visible;
+}
