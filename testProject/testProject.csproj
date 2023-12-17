@@ -28,4 +28,11 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\UserAccount\Controllers\" />
+    <Folder Include="Areas\UserAccount\Data\" />
+    <Folder Include="Areas\UserAccount\Models\" />
+    <Folder Include="Areas\UserAccount\Views\" />
+  </ItemGroup>
+
 </Project>
