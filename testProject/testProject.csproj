@@ -29,10 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\UserAccount\Controllers\" />
     <Folder Include="Areas\UserAccount\Data\" />
-    <Folder Include="Areas\UserAccount\Models\" />
-    <Folder Include="Areas\UserAccount\Views\" />
   </ItemGroup>
 
 </Project>

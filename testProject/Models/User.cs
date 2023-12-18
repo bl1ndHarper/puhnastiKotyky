@@ -16,7 +16,7 @@ public partial class User : IdentityUser<uint>
 
     public virtual ICollection<Project> Projects { get; set; } = new List<Project>();
 
-    public virtual ProjectsUser? ProjectsUser { get; set; }
+    public virtual ICollection<ProjectsUser> ProjectsUser { get; set; } = new List<ProjectsUser>();
 
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
