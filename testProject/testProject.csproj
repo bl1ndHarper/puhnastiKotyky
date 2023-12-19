@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\default-profile-icon.png" />
+    <Content Remove="wwwroot\images\user-profile-image.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\images\cloud-10.png" />
     <None Include="wwwroot\images\cloud-20.png" />
     <None Include="wwwroot\images\confirm-password-icon0.png" />
@@ -30,6 +35,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\UserAccount\Data\" />
+    <Folder Include="Areas\UserAccount\Models\" />
   </ItemGroup>
 
 </Project>

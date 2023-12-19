@@ -32,7 +32,12 @@ namespace testProject.Areas.UserAccount.Controllers
                 .ThenInclude(user => user.Technologies)
                 .Include(user => user.ProjectsUser)
                 .ThenInclude(user => user.Projects)
+                .ThenInclude(user => user.Users)
+                .Include(user => user.ProjectsUser)
+                .ThenInclude(user => user.Projects)
                 .ThenInclude(user => user.ProjectsTechnologies)
+                .ThenInclude(user => user.Technologies)
+                .Include(user => user.Projects)
                 .FirstOrDefault(u => u.Id.ToString() == userId);
 
             return View(user);

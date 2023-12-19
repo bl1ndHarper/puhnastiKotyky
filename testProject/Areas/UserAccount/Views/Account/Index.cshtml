@@ -40,7 +40,7 @@
               
             </div>
             <div class="user-account-day__user-account">
-                <img src="~/images/sample-user-profile-image0.png" />
+                <img src="~/images/default-profile-icon (1).png" />
                 <div class="user-account-day__user-account-details">
                     <h2>
                         @Model.FirstName @Model.LastName
@@ -51,7 +51,7 @@
                     </div>
                     <div>
                         <h3 class="user-account-day__user-details-header">
-                            Technologies:
+                            Skills:
                         </h3>
                         <div class="user-account-day__technologies">
                             @foreach (var technology in Model.UsersTechnologies)
@@ -121,86 +121,52 @@
             </div>
             <div class="user-account-day__horizontal-container">
                 <div class="user-account-day__user-projects">
+                    @if (!Model.ProjectsUser.Any())
+                    {
+                        <h2>
+                            Here will be the projects you are a part of
+                        </h2>
+                    }
+                    else {
                     <h2>
                         Here are the projects you are a part of:
                     </h2>
+                    }
                     <div class="user-account-day__projects-container">
+                        @foreach(var projectsUser in Model.ProjectsUser){
                         <div class="user-account-day__project">
-                            <h2>[Name of the project]1</h2>
+                            <h2>@projectsUser.Projects.Name</h2>
                             <div class="user-account-day__project-technologies-container">
                                 <h3>
                                     Technologies:
                                 </h3>
                                 <div class="user-account-day__technologies">
-                                    <div>
-                                        <p>ASP.NET</p>
-                                    </div>
-                                    <div>
-                                        <p>C#</p>
-                                    </div>
-                                    <div>
-                                        <p>SQL</p>
-                                    </div>
-                                    <div>
-                                        <p>HTML/CSS</p>
-                                    </div>
+                                        @foreach(var projectTechnology in projectsUser.Projects.ProjectsTechnologies)
+                                        {
+                                            <div>
+                                                <p>@projectTechnology.Technologies.Name</p>
+                                            </div>
+                                        }      
                                 </div>
                             </div>
                             <div class="user-account-day__project-info">
                                 <div>
                                     <h3>Owner:</h3>
-                                    <p>Name Surname</p>
+                                        <p>@projectsUser.Projects.Users.FirstName</p>
                                 </div>
                                 <div>
                                     <h3>
                                         Creation Date:
                                     </h3>
-                                    <p>01.01.2023</p>
+                                        <p>@projectsUser.Projects.CreationDate.ToString("dd.MM.yyyy")</p>
                                 </div>
                                 <div>
                                     <h3>Status:</h3>
-                                    <p>Status</p>
+                                        <p>@projectsUser.Projects.Status</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="user-account-day__project">
-                            <h2>[Name of the project]1</h2>
-                            <div class="user-account-day__project-technologies-container">
-                                <h3>
-                                    Technologies:
-                                </h3>
-                                <div class="user-account-day__technologies">
-                                    <div>
-                                        <p>ASP.NET</p>
-                                    </div>
-                                    <div>
-                                        <p>C#</p>
-                                    </div>
-                                    <div>
-                                        <p>SQL</p>
-                                    </div>
-                                    <div>
-                                        <p>HTML/CSS</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="user-account-day__project-info">
-                                <div>
-                                    <h3>Owner:</h3>
-                                    <p>Name Surname</p>
-                                </div>
-                                <div>
-                                    <h3>
-                                        Creation Date:
-                                    </h3>
-                                    <p>01.01.2023</p>
-                                </div>
-                                <div>
-                                    <h3>Status:</h3>
-                                    <p>Status</p>
-                                </div>
-                            </div>
-                        </div>
+                        }
                     </div>
                 </div>
                 <div class="user-account-day__vertical-container">
@@ -306,9 +272,15 @@
                         </div>
                     </div>
                     <div class="user-account-day__user-requests">
+                        @if (!Model.Requests.Any())
+                            {
+                                <h2 class="user-account-day__user-requests-title">You don't have any requests to partcipate in other projects at the moment.</h2>
+                            }
+                        else{
                         <h2 class="user-account-day__user-requests-title">
                             Your requests to participate in other projects:
                         </h2>
+                        }
                         <div class="user-account-day__user-requests-container">
                             @foreach (var request in Model.Requests)
                             {
@@ -319,7 +291,7 @@
                                     <div class="user-account-day__request-info">
                                         <div>
                                             <h3>Date:</h3>
-                                            <p>@request.Date</p>
+                                            <p>@request.Date.ToString("dd.MM.yyyy")</p>
                                         </div>
                                         <div>
                                             <h3>Status:</h3>
