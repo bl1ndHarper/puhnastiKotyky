@@ -1,5 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap');
 
+user-account-day a,
+user-account-day button,
+user-account-day input,
+user-account-day select,
+user-account-day h1,
+user-account-day h2,
+user-account-day h3,
+user-account-day h4,
+user-account-day h5,
+user-account-day p,
+user-account-day * {
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-decoration: none;
+    appearance: none;
+    background: none;
+}
+
+.hidden {
+    display: none;
+}
+
 .user-account-day,
 .user-account-day * {
   box-sizing: border-box;
@@ -531,7 +554,9 @@
   box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
-.user-account-day__user-account img {
+
+
+.user-account-day__user-image-container {
   border-radius: 50%;
   border-style: solid;
   border-color: #183d3d;
@@ -541,15 +566,80 @@
   height: 311px;
   position: relative;
 }
+.user-account-day__user-image {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.user-account-day__input-user-image {
+    display: none;
+}
+.user-account-day__change-user-image-overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: .5s ease-in-out;
+    opacity: 0;
+    padding: 20px;
+    vertical-align: middle;
+    user-select: none;
+    pointer-events: none;
+}
+    .user-account-day__change-user-image-overlay label {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    .user-account-day__change-user-image-overlay p {
+        color: #def5e5;
+        text-align: center;
+        vertical-align: middle;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 15%;
+        height: auto;
+        width: 70%;
+        cursor: pointer;
+    }
+.user-account-day__user-image-container.hover-active:hover {
+    transition: .5s ease;
+    border-color: #def5e5;
+}
+    .user-account-day__user-image-container.hover-active:hover .user-account-day__change-user-image-overlay {
+        opacity: 1;
+        pointer-events: auto;
+    }
+.user-account-day__delete-user-image-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 17%;
+    height: 17%;
+    cursor: pointer;
+}
+
+
 .user-account-day__user-account-details {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex: 1;
-  min-width: 400px;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex: 1;
+    min-width: 400px;
+    position: relative;
 }
 .user-account-day__user-account-details h2 {
   color: #183d3d;
