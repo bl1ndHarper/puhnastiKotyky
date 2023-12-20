@@ -124,10 +124,10 @@ public partial class AppDbContext : IdentityDbContext<User, IdentityRole<uint>, 
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("projects_users_projects_id_foreign");
 
-            entity.HasOne(d => d.ProjectsUsers).WithOne(p => p.ProjectsUser)
-                .HasForeignKey<ProjectsUser>(d => d.ProjectsUsersId)
+            entity.HasOne(d => d.Users).WithMany(p => p.ProjectsUser)
+                .HasForeignKey(d => d.UsersId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("projects_users_projects_users_id_foreign");
+                .HasConstraintName("projects_users_users_id_foreign");
         });
 
         modelBuilder.Entity<Request>(entity =>

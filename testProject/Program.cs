@@ -38,8 +38,16 @@ app.UseStaticFiles();
 app.UseRouting();
 app.MapRazorPages();
 app.UseAuthorization();
-app.MapControllerRoute(
+
+app.UseEndpoints(endpoints => {
+    endpoints.MapControllerRoute(
+          name: "UserAccount",
+          pattern: "{area:exists}/{controller=Account}/{action=Index}/{id?}"
+        );
+
+    endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
 app.Run();
