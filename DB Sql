@@ -19,7 +19,7 @@ CREATE TABLE `projects_users`(
     PRIMARY KEY (`projects_users_id`)
 );
 CREATE TABLE `users_technologies`(
-    `users_technologies_id` INT UNSIGNED NOT NULL,
+    `users_technologies_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `users_id` INT UNSIGNED NOT NULL,
     `technologies_id` INT UNSIGNED NOT NULL,
     PRIMARY KEY (`users_technologies_id`)
@@ -60,7 +60,7 @@ ALTER TABLE
 ALTER TABLE
     `projects_users` ADD CONSTRAINT `projects_users_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
 ALTER TABLE
-    `projects_users` ADD CONSTRAINT `projects_users_projects_users_id_foreign` FOREIGN KEY(`projects_users_id`) REFERENCES `users`(`users_id`);
+    `projects_users` ADD CONSTRAINT `projects_users_users_id_foreign` FOREIGN KEY(`users_id`) REFERENCES `users`(`users_id`);
 ALTER TABLE
     `requests` ADD CONSTRAINT `requests_projects_id_foreign` FOREIGN KEY(`projects_id`) REFERENCES `projects`(`projects_id`);
 ALTER TABLE
