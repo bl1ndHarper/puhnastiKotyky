@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/UserAccount.css" />
-
+    
     <style>
         a,
         button,
@@ -32,6 +32,7 @@
         }
     </style>
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
     <div class="user-account-day">
@@ -62,7 +63,7 @@
                             }
                         </div>
                     </div>
-                    <div class="user-account-day__self-description">
+                        <div class="user-account-day__self-description">
                         <h3 class="user-account-day__user-details-header">
                             Self-description:
                         </h3>
@@ -82,40 +83,60 @@
                         <button onclick="editProfile()" id="buttonEditProfile">
                             <p>Edit Profile</p>
                         </button>
-                        <button style="display: none;" onclick="stopEditingProfile()" id="buttonSaveProfileChanges">
+                        <button style="display: none;" onclick="saveChanges()" id="buttonSaveProfileChanges">
                             <p>Save Changes</p>
                         </button>
-                        <button style="display: none;" onclick="stopEditingProfile()" id="buttonCancelProfileChanges">
+                        <button style="display: none;" onclick="cancelChanges()" id="buttonCancelProfileChanges">
                             <p>Cancel</p>
                         </button>
 
                         <script>
+                            var originalText;
+                            var buttonEdit = document.getElementById("buttonEditProfile");
+                            var buttonAccept = document.getElementById("buttonSaveProfileChanges");
+                            var buttonCancel = document.getElementById("buttonCancelProfileChanges");
+                            var descTextArea = document.getElementById("selfDescriptionText");
+                            
                             function editProfile() {
-                                var buttonEdit = document.getElementById("buttonEditProfile");
-                                var buttonAccept = document.getElementById("buttonSaveProfileChanges");
-                                var buttonCancel = document.getElementById("buttonCancelProfileChanges");
-                                var descTextArea = document.getElementById("selfDescriptionText");
-
+                                originalText = descTextArea.value;
                                 buttonEdit.style.display = "none";
                                 buttonAccept.style.display = "block";
                                 buttonCancel.style.display = "block";
                                 descTextArea.readOnly = false;
                                 descTextArea.style.outline = "outset 1px"
                             }
-                            function stopEditingProfile() {
-                                var buttonEdit = document.getElementById("buttonEditProfile");
-                                var buttonAccept = document.getElementById("buttonSaveProfileChanges");
-                                var buttonCancel = document.getElementById("buttonCancelProfileChanges");
-                                var descTextArea = document.getElementById("selfDescriptionText");
+                            
+                            function cancelChanges() {
+                                buttonEdit.style.display = "block";
+                                buttonAccept.style.display = "none";
+                                buttonCancel.style.display = "none";
+                                descTextArea.readOnly = true;
+                                descTextArea.style.outline = "none";
+                                descTextArea.value = originalText;
+                            }
+                            
+                            function saveChanges() {
+                                var updatedDescription = descTextArea.value;
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/Account/Account/SaveProfileChanges",
+                                    data: { updatedDescription: updatedDescription },
+                                    success: function (data) {
+                                        console.log("Changes saved successfully");
+                                    },
+                                    error: function (error) {
+                                        console.error("Error saving changes", error);
+                                    }
+                                });
 
                                 buttonEdit.style.display = "block";
                                 buttonAccept.style.display = "none";
                                 buttonCancel.style.display = "none";
                                 descTextArea.readOnly = true;
-                                descTextArea.style.outline = "none"
+                                descTextArea.style.outline = "none";
                             }
                         </script>
-
                     </div>
                 </div>
             </div>
@@ -152,7 +173,7 @@
                             <div class="user-account-day__project-info">
                                 <div>
                                     <h3>Owner:</h3>
-                                        <p>@projectsUser.Projects.Users.FirstName</p>
+                                        <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName</p>
                                 </div>
                                 <div>
                                     <h3>
