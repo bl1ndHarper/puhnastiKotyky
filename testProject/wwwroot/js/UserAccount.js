@@ -17,7 +17,6 @@ window.onload = function () {
 }
 
 function editProfile() {
-
     buttonEdit.style.display = "none";
     buttonAccept.style.display = "block";
     buttonCancel.style.display = "block";
@@ -26,16 +25,34 @@ function editProfile() {
     userImageContainer.classList.add("hover-active");
 
     userImageContainer.addEventListener("click", imageButtonClickHandler);
+
+    imageInput.onchange = function () {
+        if (imageInput.files[0] != null && imageInput.files[0] != "") {
+            userImage.src = URL.createObjectURL(imageInput.files[0]);
+        }
+    }
+
+    buttonCancel.onclick = function () {
+        imageInput.onchange = null;
+        stopEditingProfile();
+    };
+    buttonAccept.onclick = function () {
+        var form = document.querySelector('form');
+        form.submit();
+    };
 }
 
 function stopEditingProfile() {
-
     buttonEdit.style.display = "block";
     buttonAccept.style.display = "none";
     buttonCancel.style.display = "none";
     descTextArea.readOnly = true;
     descTextArea.style.outline = "none"
     userImageContainer.classList.remove("hover-active");
+
+    var form = document.querySelector('form');
+    form.reset();
+    location.reload();
 
     userImageContainer.removeEventListener("click", imageButtonClickHandler);
 }

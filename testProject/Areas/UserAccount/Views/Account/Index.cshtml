@@ -17,12 +17,12 @@
         <div class="user-account-day__page-content">
             <div class="user-account-day__sign-out">
             </div>
-            <div class="user-account-day__user-account">
+            <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("UpdateProfilePhoto", "Account")" asp-action="UpdateProfilePhoto" asp-area="UserAccount" asp-controller="Account">
                 <div class="user-account-day__user-image-container" id="userImageContainer">
-                    <img src="~/images/default-profile-icon (1).png" class="user-account-day__user-image" id="userImage" />
+                    <img src="@Model.Photo" class="user-account-day__user-image" id="userImage" />
                     <div class="user-account-day__change-user-image-overlay">
                         <p id="changeUserImageText">Click to change</p>
-                        <input class="user-account-day__input-user-image" type="file" accept="image/jpeg, image/jpg, image/png" id="imageInput" />
+                        <input class="user-account-day__input-user-image" type="file" accept="image/jpeg, image/jpg, image/png" name="file" id="imageInput" />
                         <label for="imageInput"></label>
                         <img src="~/images/cancel.png" class="user-account-day__delete-user-image-button" id="deleteUserImageButton" onclick="deleteUserImage()" />
                     </div>
@@ -60,18 +60,19 @@
                                   onresize="auto_height(this)">@Model.About</textarea>
                     </div>
                     <div class="user-account-day__profile-buttons">
-                        <button onclick="editProfile()" id="buttonEditProfile">
-                            <p>Edit Profile</p>
-                        </button>
-                        <button style="display: none;" onclick="stopEditingProfile()" id="buttonSaveProfileChanges">
+                        <button style="display: none;" id="buttonSaveProfileChanges" type="submit">
                             <p>Save Changes</p>
                         </button>
-                        <button style="display: none;" onclick="cancelUserProfileChanges()" id="buttonCancelProfileChanges">
+                        <button onclick="editProfile()" id="buttonEditProfile" type="button">
+                            <p>Edit Profile</p>
+                        </button>
+                        <button style="display: none;" id="buttonCancelProfileChanges" type="reset" onclick="stopEditingProfile()">
                             <p>Cancel</p>
                         </button>
                     </div>
                 </div>
-            </div>
+            </form>
+            
             <div class="user-account-day__horizontal-container">
                 <div class="user-account-day__user-projects">
                     @if (!Model.ProjectsUser.Any())

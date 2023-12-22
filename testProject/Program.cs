@@ -3,6 +3,10 @@ using testProject.Data;
 using Microsoft.AspNetCore.Identity;
 using testProject.Models;
 using Microsoft.Extensions.Options;
+using testProject.Helpers;
+using testProject.Services;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -22,6 +26,8 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<CloudinaryService>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
 var app = builder.Build();
 
