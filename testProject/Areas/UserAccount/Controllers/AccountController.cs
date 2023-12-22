@@ -21,39 +21,18 @@ namespace testProject.Areas.UserAccount.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly AppDbContext _context;
+        private readonly AppDbContext _db;
 
-        public AccountController(UserManager<User> userManager, AppDbContext context)
+        public AccountController(UserManager<User> userManager, AppDbContext db)
         {
             _userManager = userManager;
-            _context = context;
+            _db = db;
         }
 
         public IActionResult Index()
         {
-            User user = GetUser();
-            return View(user);
-        }
-
-        [HttpPost]
-        public IActionResult SaveProfileChanges(string updatedDescription)
-        {
-            if (ModelState.IsValid)
-            {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                User currentUser = _context.Users.FirstOrDefault(u => u.Id.ToString() == userId);
-                currentUser.About = updatedDescription;
-                _context.Users.Update(currentUser);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View("Index", GetUser());
-        }
-
-        private User GetUser()
-        {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User user = _context.Users
+            User user = _db.Users
                 .Include(u => u.Requests)
                 .ThenInclude(u => u.Projects)
                 .Include(user => user.UsersTechnologies)
@@ -67,7 +46,8 @@ namespace testProject.Areas.UserAccount.Controllers
                 .ThenInclude(user => user.Technologies)
                 .Include(user => user.Projects)
                 .FirstOrDefault(u => u.Id.ToString() == userId);
-            return user;
+
+            return View(user);
         }
 
         [HttpPost]
