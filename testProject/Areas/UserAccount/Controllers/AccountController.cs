@@ -1,10 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using testProject.Data;
 using testProject.Models;
+using testProject.Services;
 
 namespace testProject.Areas.UserAccount.Controllers
 {
@@ -41,6 +48,31 @@ namespace testProject.Areas.UserAccount.Controllers
                 .FirstOrDefault(u => u.Id.ToString() == userId);
 
             return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProfilePhoto(IFormFile file, [FromServices] CloudinaryService cloudinaryService)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+            if (user != null)
+            {
+                string safeUserEmail = user.Email.Replace('@', '_').Replace('.', '_');
+
+                if (file == null)
+                {
+                    cloudinaryService.DeleteImage("PuhnastiKotyky/UsersProfileImages/" + safeUserEmail);
+                    user.Photo = "https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png";
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    string imageUrl = cloudinaryService.UploadImage(file, "PuhnastiKotyky/UsersProfileImages", safeUserEmail);
+                    user.Photo = imageUrl;
+                    _db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index");
         }
     }
 }
