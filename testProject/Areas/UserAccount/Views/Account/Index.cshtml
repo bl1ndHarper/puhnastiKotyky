@@ -4,7 +4,7 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,16 +12,22 @@
     <link rel="stylesheet" href="~/css/UserAccount.css" />
     <script src="@Url.Content("~/js/UserAccount.js")"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <title>Document</title>
 </head>
 <body>
     <div class="user-account-day">
         <div class="user-account-day__page-content">
             <div class="user-account-day__sign-out">
-              
             </div>
-            <div class="user-account-day__user-account">
-                <img src="~/images/default-profile-icon (1).png" />
+            <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("UpdateProfilePhoto", "Account")" asp-action="UpdateProfilePhoto" asp-area="UserAccount" asp-controller="Account">
+                <div class="user-account-day__user-image-container" id="userImageContainer">
+                    <img src="@Model.Photo" class="user-account-day__user-image" id="userImage" />
+                    <div class="user-account-day__change-user-image-overlay">
+                        <p id="changeUserImageText">Click to change</p>
+                        <input class="user-account-day__input-user-image" type="file" accept="image/jpeg, image/jpg, image/png" name="file" id="imageInput" />
+                        <label for="imageInput"></label>
+                        <img src="~/images/cancel.png" class="user-account-day__delete-user-image-button" id="deleteUserImageButton" onclick="deleteUserImage()" />
+                    </div>
+                </div>
                 <div class="user-account-day__user-account-details">
                     <h2>
                         @Model.FirstName @Model.LastName
@@ -47,11 +53,6 @@
                         <h3 class="user-account-day__user-details-header">
                             Self-description:
                         </h3>
-                        <script>
-                            window.onload = function () {
-                                auto_height(document.getElementById("selfDescriptionText"))
-                            }
-                        </script>
                         <textarea readonly
                                   spellcheck="false"
                                   id="selfDescriptionText"
@@ -71,7 +72,8 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </form>
+            
             <div class="user-account-day__horizontal-container">
                 <div class="user-account-day__user-projects">
                     @if (!Model.ProjectsUser.Any())
@@ -80,26 +82,29 @@
                             Here will be the projects you are a part of
                         </h2>
                     }
-                    else {
-                    <h2>
-                        Here are the projects you are a part of:
-                    </h2>
+                    else
+                    {
+                        <h2>
+                            Here are the projects you are a part of:
+                        </h2>
                     }
                     <div class="user-account-day__projects-container">
-                        @foreach(var projectsUser in Model.ProjectsUser){
-                        <div class="user-account-day__project">
-                            <h2>@projectsUser.Projects.Name</h2>
-                            <div class="user-account-day__project-technologies-container">
-                                <h3>
-                                    Technologies:
-                                </h3>
-                                <div class="user-account-day__technologies">
-                                        @foreach(var projectTechnology in projectsUser.Projects.ProjectsTechnologies)
+                        @foreach (var projectsUser in Model.ProjectsUser)
+                        {
+                            <div class="user-account-day__project">
+                                <h2>@projectsUser.Projects.Name</h2>
+                                <div class="user-account-day__project-technologies-container">
+                                    <h3>
+                                        Technologies:
+                                    </h3>
+                                    <div class="user-account-day__technologies">
+                                        @foreach (var projectTechnology in projectsUser.Projects.ProjectsTechnologies)
                                         {
                                             <div>
                                                 <p>@projectTechnology.Technologies.Name</p>
                                             </div>
-                                        }      
+                                        }
+                                    </div>
                                 </div>
                             </div>
                             <div class="user-account-day__project-info">
@@ -112,13 +117,13 @@
                                         Creation Date:
                                     </h3>
                                         <p>@projectsUser.Projects.CreationDate.ToString("dd.MM.yyyy")</p>
-                                </div>
-                                <div>
-                                    <h3>Status:</h3>
+                                    </div>
+                                    <div>
+                                        <h3>Status:</h3>
                                         <p>@projectsUser.Projects.Status</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         }
                     </div>
                 </div>
@@ -133,13 +138,6 @@
                                       maxlength="100"
                                       placeholder="Enter the app name or a project title here..."
                                       oninput="auto_height(this)"></textarea>
-                            <script>
-                                function auto_height(elem) {
-                                    elem.style.height = '1px';
-                                    elem.style.height = `${elem.scrollHeight}px`;
-                                }
-                            </script>
-
                         </div>
                         <button onclick="showDetailed()" type="submit" class="user-account-day__apply-title-button">
                             <p>
@@ -147,29 +145,6 @@
                             </p>
                         </button>
                     </div>
-                    <script>
-                        function showDetailed() {
-                            var createNewProject = document.getElementById("createNewProjectLayout");
-                            var createNewProjectDetailed = document.getElementById("createNewProjectDetailed");
-                            var newAppName = document.getElementById("newAppName");
-
-                            if (newAppName.value != "") {
-                                createNewProject.style.display = "none";
-                                createNewProjectDetailed.style.display = "flex";
-                                newAppName.value = "";
-                                newAppName.style.height = "fit-content";
-                            }
-                        }
-
-                        function hideDetailed() {
-                            var createNewProject = document.getElementById("createNewProjectLayout");
-                            var createNewProjectDetailed = document.getElementById("createNewProjectDetailed");
-
-                            createNewProject.style.display = "flex";
-                            createNewProjectDetailed.style.display = "none"
-                        }
-                    </script>
-
                     <div id="createNewProjectDetailed" style="display: none;" class="user-account-day__create-new-project-detailed">
                         <div>
                             <h2>Project Title Project Title Project Title Project Title</h2>
@@ -226,13 +201,14 @@
                     </div>
                     <div class="user-account-day__user-requests">
                         @if (!Model.Requests.Any())
-                            {
-                                <h2 class="user-account-day__user-requests-title">You don't have any requests to partcipate in other projects at the moment.</h2>
-                            }
-                        else{
-                        <h2 class="user-account-day__user-requests-title">
-                            Your requests to participate in other projects:
-                        </h2>
+                        {
+                            <h2 class="user-account-day__user-requests-title">You don't have any requests to partcipate in other projects at the moment.</h2>
+                        }
+                        else
+                        {
+                            <h2 class="user-account-day__user-requests-title">
+                                Your requests to participate in other projects:
+                            </h2>
                         }
                         <div class="user-account-day__user-requests-container">
                             @foreach (var request in Model.Requests)
@@ -253,7 +229,6 @@
                                     </div>
                                 </div>
                             }
-                            </div>
                         </div>
                     </div>
                 </div>

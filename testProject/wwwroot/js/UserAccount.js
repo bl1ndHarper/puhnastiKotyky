@@ -19,13 +19,13 @@ window.onload = function () {
 }
 
 function editProfile() {
+    originalText = descTextArea.value;
     buttonEdit.style.display = "none";
     buttonAccept.style.display = "block";
     buttonCancel.style.display = "block";
     descTextArea.readOnly = false;
     descTextArea.style.outline = "outset 1px"
     userImageContainer.classList.add("hover-active");
-    originalText = descTextArea.value;
 
     userImageContainer.addEventListener("click", imageButtonClickHandler);
 
@@ -113,7 +113,6 @@ function cancelUserProfileChanges() {
     stopEditingProfile();
     location.reload();
 }
-
 
 var clickCounter = 0;
 function deleteUserImage() {
