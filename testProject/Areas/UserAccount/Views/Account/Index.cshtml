@@ -9,8 +9,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="stylesheet" href="~/css/UserAccount.css" />
     <script src="@Url.Content("~/js/UserAccount.js")"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
     <div class="user-account-day">
@@ -48,7 +49,7 @@
                             }
                         </div>
                     </div>
-                    <div class="user-account-day__self-description">
+                        <div class="user-account-day__self-description">
                         <h3 class="user-account-day__user-details-header">
                             Self-description:
                         </h3>
@@ -60,13 +61,13 @@
                                   onresize="auto_height(this)">@Model.About</textarea>
                     </div>
                     <div class="user-account-day__profile-buttons">
-                        <button style="display: none;" id="buttonSaveProfileChanges" type="submit">
+                        <button style="display: none;" id="buttonSaveProfileChanges" type="submit" onclick="saveChanges()">
                             <p>Save Changes</p>
                         </button>
                         <button onclick="editProfile()" id="buttonEditProfile" type="button">
                             <p>Edit Profile</p>
                         </button>
-                        <button style="display: none;" id="buttonCancelProfileChanges" type="reset" onclick="stopEditingProfile()">
+                        <button style="display: none;" id="buttonCancelProfileChanges" type="reset" onclick="cancelUserProfileChanges()">
                             <p>Cancel</p>
                         </button>
                     </div>
@@ -105,15 +106,16 @@
                                         }
                                     </div>
                                 </div>
-                                <div class="user-account-day__project-info">
-                                    <div>
-                                        <h3>Owner:</h3>
-                                        <p>@projectsUser.Projects.Users.FirstName</p>
-                                    </div>
-                                    <div>
-                                        <h3>
-                                            Creation Date:
-                                        </h3>
+                            </div>
+                            <div class="user-account-day__project-info">
+                                <div>
+                                    <h3>Owner:</h3>
+                                        <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName</p>
+                                </div>
+                                <div>
+                                    <h3>
+                                        Creation Date:
+                                    </h3>
                                         <p>@projectsUser.Projects.CreationDate.ToString("dd.MM.yyyy")</p>
                                     </div>
                                     <div>

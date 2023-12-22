@@ -7,6 +7,8 @@ var userImage = document.getElementById("userImage");
 var imageInput = document.getElementById("imageInput");
 var deleteUserImageButton = document.getElementById("deleteUserImageButton");
 var changeUserImageText = document.getElementById("changeUserImageText");
+var originalText;
+
 function auto_height(elem) {
     elem.style.height = '1px';
     elem.style.height = `${elem.scrollHeight}px`;
@@ -17,6 +19,7 @@ window.onload = function () {
 }
 
 function editProfile() {
+    originalText = descTextArea.value;
     buttonEdit.style.display = "none";
     buttonAccept.style.display = "block";
     buttonCancel.style.display = "block";
@@ -40,6 +43,23 @@ function editProfile() {
         var form = document.querySelector('form');
         form.submit();
     };
+}
+
+function saveChanges() {
+    var updatedDescription = descTextArea.value;
+
+    $.ajax({
+        type: "POST",
+        url: "/Account/Account/SaveProfileChanges",
+        data: { updatedDescription: updatedDescription },
+        success: function (data) {
+            console.log("Changes saved successfully");
+        },
+        error: function (error) {
+            console.error("Error saving changes", error);
+        }
+    });
+    stopEditingProfile();
 }
 
 function stopEditingProfile() {
@@ -89,10 +109,10 @@ imageInput.onchange = function () {
 }
 
 function cancelUserProfileChanges() {
+    descTextArea.value = originalText;
     stopEditingProfile();
     location.reload();
 }
-
 
 var clickCounter = 0;
 function deleteUserImage() {
