@@ -10,29 +10,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/UserAccount.css" />
-    
-    <style>
-        a,
-        button,
-        input,
-        select,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        p,
-        * {
-            margin: 0;
-            padding: 0;
-            border: none;
-            text-decoration: none;
-            appearance: none;
-            background: none;
-        }
-    </style>
-    <title>Document</title>
+    <script src="@Url.Content("~/js/UserAccount.js")"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Document</title>
 </head>
 <body>
     <div class="user-account-day">
@@ -80,63 +60,15 @@
                                   onresize="auto_height(this)">@Model.About</textarea>
                     </div>
                     <div class="user-account-day__profile-buttons">
-                        <button onclick="editProfile()" id="buttonEditProfile">
-                            <p>Edit Profile</p>
-                        </button>
-                        <button style="display: none;" onclick="saveChanges()" id="buttonSaveProfileChanges">
+                        <button style="display: none;" id="buttonSaveProfileChanges" type="submit" onclick="saveChanges()">
                             <p>Save Changes</p>
                         </button>
-                        <button style="display: none;" onclick="cancelChanges()" id="buttonCancelProfileChanges">
+                        <button onclick="editProfile()" id="buttonEditProfile" type="button">
+                            <p>Edit Profile</p>
+                        </button>
+                        <button style="display: none;" id="buttonCancelProfileChanges" type="reset" onclick="cancelUserProfileChanges()">
                             <p>Cancel</p>
                         </button>
-
-                        <script>
-                            var originalText;
-                            var buttonEdit = document.getElementById("buttonEditProfile");
-                            var buttonAccept = document.getElementById("buttonSaveProfileChanges");
-                            var buttonCancel = document.getElementById("buttonCancelProfileChanges");
-                            var descTextArea = document.getElementById("selfDescriptionText");
-                            
-                            function editProfile() {
-                                originalText = descTextArea.value;
-                                buttonEdit.style.display = "none";
-                                buttonAccept.style.display = "block";
-                                buttonCancel.style.display = "block";
-                                descTextArea.readOnly = false;
-                                descTextArea.style.outline = "outset 1px"
-                            }
-                            
-                            function cancelChanges() {
-                                buttonEdit.style.display = "block";
-                                buttonAccept.style.display = "none";
-                                buttonCancel.style.display = "none";
-                                descTextArea.readOnly = true;
-                                descTextArea.style.outline = "none";
-                                descTextArea.value = originalText;
-                            }
-                            
-                            function saveChanges() {
-                                var updatedDescription = descTextArea.value;
-
-                                $.ajax({
-                                    type: "POST",
-                                    url: "/Account/Account/SaveProfileChanges",
-                                    data: { updatedDescription: updatedDescription },
-                                    success: function (data) {
-                                        console.log("Changes saved successfully");
-                                    },
-                                    error: function (error) {
-                                        console.error("Error saving changes", error);
-                                    }
-                                });
-
-                                buttonEdit.style.display = "block";
-                                buttonAccept.style.display = "none";
-                                buttonCancel.style.display = "none";
-                                descTextArea.readOnly = true;
-                                descTextArea.style.outline = "none";
-                            }
-                        </script>
                     </div>
                 </div>
             </div>
@@ -344,5 +276,6 @@
                   fill="#DEF5E5" />
         </svg>
     </div>
+    <script async src="@Url.Content("~/js/UserAccount.js")"></script>
 </body>
 </html>
