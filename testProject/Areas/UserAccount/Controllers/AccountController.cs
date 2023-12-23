@@ -51,7 +51,40 @@ namespace testProject.Areas.UserAccount.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProfilePhoto(IFormFile file, [FromServices] CloudinaryService cloudinaryService)
+        public ActionResult SaveUserChanges(IFormFile file, [FromServices] CloudinaryService cloudinaryService, string updatedDescription)
+        {
+            UpdateProfilePhoto(file, cloudinaryService);
+            UpdateProfileDescription(updatedDescription);
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UpdateProfileDescription(string updatedDescription)
+        {
+            Console.WriteLine("------------" + updatedDescription);
+            return RedirectToAction("Index");
+        }
+
+        private ActionResult UpdateProfilePhoto(IFormFile file, [FromServices] CloudinaryService cloudinaryService)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+            if (user != null)
+            {
+                string safeUserEmail = user.Email.Replace('@', '_').Replace('.', '_');
+
+                if (file != null)
+                {
+                    string imageUrl = cloudinaryService.UploadImage(file, "PuhnastiKotyky/UsersProfileImages", safeUserEmail);
+                    user.Photo = imageUrl;
+                    _db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteProfilePhoto(IFormFile file, [FromServices] CloudinaryService cloudinaryService)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
@@ -63,12 +96,6 @@ namespace testProject.Areas.UserAccount.Controllers
                 {
                     cloudinaryService.DeleteImage("PuhnastiKotyky/UsersProfileImages/" + safeUserEmail);
                     user.Photo = "https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png";
-                    _db.SaveChanges();
-                }
-                else
-                {
-                    string imageUrl = cloudinaryService.UploadImage(file, "PuhnastiKotyky/UsersProfileImages", safeUserEmail);
-                    user.Photo = imageUrl;
                     _db.SaveChanges();
                 }
             }

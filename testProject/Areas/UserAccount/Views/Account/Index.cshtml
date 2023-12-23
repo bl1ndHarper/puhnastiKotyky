@@ -17,7 +17,7 @@
         <div class="user-account-day__page-content">
             <div class="user-account-day__sign-out">
             </div>
-            <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("UpdateProfilePhoto", "Account")" asp-action="UpdateProfilePhoto" asp-area="UserAccount" asp-controller="Account">
+            <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("SaveUserChanges", "Account")">
                 <div class="user-account-day__user-image-container" id="userImageContainer">
                     <img src="@Model.Photo" class="user-account-day__user-image" id="userImage" />
                     <div class="user-account-day__change-user-image-overlay">
@@ -39,13 +39,34 @@
                         <h3 class="user-account-day__user-details-header">
                             Skills:
                         </h3>
-                        <div class="user-account-day__technologies">
+                        <div class="user-account-day__technologies" id="userAccountTechnologies">
                             @foreach (var technology in Model.UsersTechnologies)
                             {
                                 <div>
+                                    <span class="user-account-day__tooltip">Click to delete</span>
+                                    <div class="removeTechOverlay"></div>
                                     <p>@technology.Technologies.Name</p>
                                 </div>
                             }
+                            <div class="hidden" id="addUserTechnology" onclick="openUserTechsDropdown()" style="cursor: pointer">
+                                <img src="~/images/plus-image0.png" />
+                            </div>
+                            <div class="user-account-day__technologies-dropdown hidden" id="userTechsDropdown">
+                                <div class="header">
+                                    <input type="text" placeholder="Search..." id="userTechSearchInput" onkeyup="dropdownFilterFunction()">
+                                    <img src="~/images/cancel.png" onclick="closeUserTechsDropdown()" />
+                                </div>
+                                <div class="container">
+                                    <p>.NET</p>
+                                    <p>SQL</p>
+                                    <p>HTML/CSS</p>
+                                    <p>JavaScript</p>
+                                    <p>Kotlin</p>
+                                    <p>C++</p>
+                                    <p>Algorythms</p>
+                                    <p>Graphics Design</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="user-account-day__self-description">
@@ -53,6 +74,7 @@
                             Self-description:
                         </h3>
                         <textarea readonly
+                                  name="updatedDescription"
                                   spellcheck="false"
                                   id="selfDescriptionText"
                                   oninput="auto_height(this)"
@@ -60,13 +82,13 @@
                                   onresize="auto_height(this)">@Model.About</textarea>
                     </div>
                     <div class="user-account-day__profile-buttons">
-                        <button style="display: none;" id="buttonSaveProfileChanges" type="submit">
+                        <button class="hidden" id="buttonSaveProfileChanges" type="submit">
                             <p>Save Changes</p>
                         </button>
                         <button onclick="editProfile()" id="buttonEditProfile" type="button">
                             <p>Edit Profile</p>
                         </button>
-                        <button style="display: none;" id="buttonCancelProfileChanges" type="reset" onclick="stopEditingProfile()">
+                        <button onclick="stopEditingProfile()" class="hidden" id="buttonCancelProfileChanges" type="reset">
                             <p>Cancel</p>
                         </button>
                     </div>
@@ -143,9 +165,9 @@
                             </p>
                         </button>
                     </div>
-                    <div id="createNewProjectDetailed" style="display: none;" class="user-account-day__create-new-project-detailed">
+                    <div id="createNewProjectDetailed" class="user-account-day__create-new-project-detailed hidden">
                         <div>
-                            <h2>Project Title Project Title Project Title Project Title</h2>
+                            <h2 id="newAppNameDetailed">Project Title</h2>
                         </div>
                         <div class="user-account-day__project-description">
                             <h3>Describe your idea more:</h3>
