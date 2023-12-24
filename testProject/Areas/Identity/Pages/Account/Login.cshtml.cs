@@ -67,6 +67,7 @@ namespace testProject.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
+            [MaxLength (100)]
             public string Email { get; set; }
 
             /// <summary>
@@ -75,6 +76,7 @@ namespace testProject.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
+            [RegularExpression("^[a-zA-Z0-9._-+!?*:;/]{8,32}$")]
             public string Password { get; set; }
 
             /// <summary>
