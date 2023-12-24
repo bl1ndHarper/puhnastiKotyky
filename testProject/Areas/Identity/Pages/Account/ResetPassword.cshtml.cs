@@ -43,6 +43,7 @@ namespace testProject.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
+            [MaxLength(100)]
             public string Email { get; set; }
 
             /// <summary>
@@ -50,8 +51,9 @@ namespace testProject.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [RegularExpression("^[a-zA-Z0-9._-+!?*:;/]{8,32}$")]
             [DataType(DataType.Password)]
+            [Display(Name = "Password")]
             public string Password { get; set; }
 
             /// <summary>
