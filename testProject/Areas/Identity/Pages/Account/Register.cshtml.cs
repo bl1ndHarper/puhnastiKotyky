@@ -95,7 +95,8 @@ namespace testProject.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [RegularExpression("^[a-zA-Z0-9._-+!?*:;/]{8,32}$")]
+            [RegularExpression("[a-zA-Z0-9._-+!?*:;/]")]
+            [Range(8, 32)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
