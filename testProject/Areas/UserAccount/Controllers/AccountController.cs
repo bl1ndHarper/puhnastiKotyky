@@ -51,6 +51,30 @@ namespace testProject.Areas.UserAccount.Controllers
         }
 
         [HttpPost]
+        public ActionResult SaveUserChanges(IFormFile file, [FromServices] CloudinaryService cloudinaryService, string updatedDescription)
+        {
+            UpdateProfileDescription(updatedDescription);
+            UpdateProfilePhoto(file, cloudinaryService);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProfileDescription(string updatedDescription)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+
+            if (user != null)
+            {
+                user.About = updatedDescription;
+                _db.Users.Update(user);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public ActionResult UpdateProfilePhoto(IFormFile file, [FromServices] CloudinaryService cloudinaryService)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
