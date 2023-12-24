@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using testProject.Data;
 using testProject.Models;
 using testProject.Services;
+using testProject.Areas.UserAccount.Models;
 
 namespace testProject.Areas.UserAccount.Controllers
 {
@@ -47,7 +48,11 @@ namespace testProject.Areas.UserAccount.Controllers
                 .Include(user => user.Projects)
                 .FirstOrDefault(u => u.Id.ToString() == userId);
 
-            return View(user);
+            var tech = _db.Technologies.ToList();
+
+            AccountViewModel accountViewModel = new AccountViewModel { User = user, Technologies = tech };
+
+            return View(accountViewModel);
         }
 
         [HttpPost]

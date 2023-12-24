@@ -1,4 +1,4 @@
-﻿@model testProject.Models.User
+﻿@model testProject.Areas.UserAccount.Models.AccountViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -19,7 +19,7 @@
             </div>
             <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("SaveUserChanges", "Account")">
                 <div class="user-account-day__user-image-container" id="userImageContainer">
-                    <img src="@Model.Photo" class="user-account-day__user-image" id="userImage" />
+                    <img src="@Model.User.Photo" class="user-account-day__user-image" id="userImage" />
                     <div class="user-account-day__change-user-image-overlay">
                         <p id="changeUserImageText">Click to change</p>
                         <input class="user-account-day__input-user-image" type="file" accept="image/jpeg, image/jpg, image/png" name="file" id="imageInput" />
@@ -29,18 +29,18 @@
                 </div>
                 <div class="user-account-day__user-account-details">
                     <h2>
-                        @Model.FirstName @Model.LastName
+                        @Model.User.FirstName @Model.User.LastName
                     </h2>
                     <div class="user-account-day__user-email">
                         <p>Email:</p>
-                        <p>@Model.Email</p>
+                        <p>@Model.User.Email</p>
                     </div>
                     <div>
                         <h3 class="user-account-day__user-details-header">
                             Skills:
                         </h3>
                         <div class="user-account-day__technologies" id="userAccountTechnologies">
-                            @foreach (var technology in Model.UsersTechnologies)
+                            @foreach (var technology in Model.User.UsersTechnologies)
                             {
                                 <div>
                                     <span class="user-account-day__tooltip">Click to delete</span>
@@ -57,14 +57,10 @@
                                     <img src="~/images/cancel.png" onclick="closeUserTechsDropdown()" />
                                 </div>
                                 <div class="container">
-                                    <p>.NET</p>
-                                    <p>SQL</p>
-                                    <p>HTML/CSS</p>
-                                    <p>JavaScript</p>
-                                    <p>Kotlin</p>
-                                    <p>C++</p>
-                                    <p>Algorythms</p>
-                                    <p>Graphics Design</p>
+                                    @foreach(var tech in Model.Technologies)
+                                    {
+                                        <p>@tech.Name</p>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -79,7 +75,7 @@
                                   id="selfDescriptionText"
                                   oninput="auto_height(this)"
                                   onmousemove="auto_height(this)"
-                                  onresize="auto_height(this)">@Model.About</textarea>
+                                  onresize="auto_height(this)">@Model.User.About</textarea>
                     </div>
                     <div class="user-account-day__profile-buttons">
                         <button class="hidden" id="buttonSaveProfileChanges" type="submit">
@@ -97,7 +93,7 @@
             
             <div class="user-account-day__horizontal-container">
                 <div class="user-account-day__user-projects">
-                    @if (!Model.ProjectsUser.Any())
+                    @if (!Model.User.ProjectsUser.Any())
                     {
                         <h2>
                             Here will be the projects you are a part of
@@ -110,7 +106,7 @@
                         </h2>
                     }
                     <div class="user-account-day__projects-container">
-                        @foreach (var projectsUser in Model.ProjectsUser)
+                        @foreach (var projectsUser in Model.User.ProjectsUser)
                         {
                             <div class="user-account-day__project">
                                 <h2>@projectsUser.Projects.Name</h2>
@@ -220,7 +216,7 @@
                         </div>
                     </div>
                     <div class="user-account-day__user-requests">
-                        @if (!Model.Requests.Any())
+                        @if (!Model.User.Requests.Any())
                         {
                             <h2 class="user-account-day__user-requests-title">You don't have any requests to partcipate in other projects at the moment.</h2>
                         }
@@ -231,7 +227,7 @@
                             </h2>
                         }
                         <div class="user-account-day__user-requests-container">
-                            @foreach (var request in Model.Requests)
+                            @foreach (var request in Model.User.Requests)
                             {
                                 <div class="user-account-day__request">
                                     <h2>
