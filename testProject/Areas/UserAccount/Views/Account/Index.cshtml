@@ -17,7 +17,7 @@
         <div class="user-account-day__page-content">
             <div class="user-account-day__sign-out">
             </div>
-            <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("UpdateProfilePhoto", "Account")" asp-action="UpdateProfilePhoto" asp-area="UserAccount" asp-controller="Account">
+            <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("SaveUserChanges", "Account")">
                 <div class="user-account-day__user-image-container" id="userImageContainer">
                     <img src="@Model.Photo" class="user-account-day__user-image" id="userImage" />
                     <div class="user-account-day__change-user-image-overlay">
@@ -53,7 +53,9 @@
                             Self-description:
                         </h3>
                         <textarea readonly
+                                  name="updatedDescription"
                                   spellcheck="false"
+                                  type="text"
                                   id="selfDescriptionText"
                                   oninput="auto_height(this)"
                                   onmousemove="auto_height(this)"
@@ -66,13 +68,13 @@
                         <button onclick="editProfile()" id="buttonEditProfile" type="button">
                             <p>Edit Profile</p>
                         </button>
-                        <button style="display: none;" id="buttonCancelProfileChanges" type="reset" onclick="stopEditingProfile()">
+                        <button style="display: none;" id="buttonCancelProfileChanges" type="reset" onclick="cancelUserProfileChanges()">
                             <p>Cancel</p>
                         </button>
                     </div>
                 </div>
             </form>
-            
+  
             <div class="user-account-day__horizontal-container">
                 <div class="user-account-day__user-projects">
                     @if (!Model.ProjectsUser.Any())
@@ -108,7 +110,7 @@
                                 <div class="user-account-day__project-info">
                                     <div>
                                         <h3>Owner:</h3>
-                                        <p>@projectsUser.Projects.Users.FirstName</p>
+                                        <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName</p>
                                     </div>
                                     <div>
                                         <h3>
