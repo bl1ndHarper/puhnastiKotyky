@@ -84,6 +84,7 @@ namespace testProject.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
+            [MaxLength(100)]
             public string Email { get; set; }
         }
         
