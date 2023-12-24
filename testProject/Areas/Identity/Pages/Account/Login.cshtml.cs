@@ -76,7 +76,8 @@ namespace testProject.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
-            [RegularExpression("^[a-zA-Z0-9._-+!?*:;/]{8,32}$")]
+            [RegularExpression("[a-zA-Z0-9._-+!?*:;/]")]
+            [Range(8,32)]
             public string Password { get; set; }
 
             /// <summary>
