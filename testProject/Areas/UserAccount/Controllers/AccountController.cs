@@ -56,10 +56,11 @@ namespace testProject.Areas.UserAccount.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveUserChanges(IFormFile file, [FromServices] CloudinaryService cloudinaryService, string updatedDescription)
+        public ActionResult SaveUserChanges(IFormFile file, [FromServices] CloudinaryService cloudinaryService, string updatedDescription, string userTechsArray, string updatedUserTechsArray)
         {
             UpdateProfilePhoto(file, cloudinaryService);
             UpdateProfileDescription(updatedDescription);
+            UpdateUserTechnologies(userTechsArray, updatedUserTechsArray);
 
             return RedirectToAction("Index");
         }
@@ -67,6 +68,17 @@ namespace testProject.Areas.UserAccount.Controllers
         public ActionResult UpdateProfileDescription(string updatedDescription)
         {
             Console.WriteLine("------------" + updatedDescription);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult UpdateUserTechnologies(string userTechsArray, string updatedUserTechsArray)
+        {
+            Console.WriteLine("------------User technologies before editing: " + userTechsArray);
+            Console.WriteLine("------------User technologies after editing: " + updatedUserTechsArray);
+            if (updatedUserTechsArray != null && updatedUserTechsArray.Length > 0)
+            {
+                // rewrite the data in database
+            }
             return RedirectToAction("Index");
         }
 

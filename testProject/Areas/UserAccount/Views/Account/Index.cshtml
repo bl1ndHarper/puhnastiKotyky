@@ -9,8 +9,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <script src="@Url.Content("~/js/UserAccount.js")"></script>
 </head>
 <body>
     <div class="user-account-day">
@@ -42,24 +40,26 @@
                         <div class="user-account-day__technologies" id="userAccountTechnologies">
                             @foreach (var technology in Model.User.UsersTechnologies)
                             {
-                                <div>
+                                <div onclick="dropdownItem_removeUserTech(this, '@technology.Technologies.Name')">
                                     <span class="user-account-day__tooltip">Click to delete</span>
                                     <div class="removeTechOverlay"></div>
                                     <p>@technology.Technologies.Name</p>
                                 </div>
                             }
+                            <input type="text" class="hidden" name="userTechsArray" id="userTechsInput" />
+                            <input type="text" class="hidden" name="updatedUserTechsArray" id="updatedUserTechsArray" />
                             <div class="hidden" id="addUserTechnology" onclick="openUserTechsDropdown()" style="cursor: pointer">
                                 <img src="~/images/plus-image0.png" />
                             </div>
                             <div class="user-account-day__technologies-dropdown hidden" id="userTechsDropdown">
                                 <div class="header">
-                                    <input type="text" placeholder="Search..." id="userTechSearchInput" onkeyup="dropdownFilterFunction()">
+                                    <input type="text" placeholder="Search..." id="userTechSearchInput" onkeyup="dropdownFilterFunction()" />
                                     <img src="~/images/cancel.png" onclick="closeUserTechsDropdown()" />
                                 </div>
-                                <div class="container">
+                                <div class="container" id="dropdownTechsContainer">
                                     @foreach(var tech in Model.Technologies)
                                     {
-                                        <p>@tech.Name</p>
+                                        <p onclick="dropdownItem_chooseUserTech('@tech.Name')" id="userTechsDropdownItem">@tech.Name</p>
                                     }
                                 </div>
                             </div>
@@ -267,6 +267,18 @@
                   fill="#DEF5E5" />
         </svg>
     </div>
-    <script async src="@Url.Content("~/js/UserAccount.js")"></script>
+    <script src="@Url.Content("~/js/UserAccount.js")"></script>
+    <script>
+        window.onload = function () {
+            var userTechsInput = document.getElementById("userTechsInput");
+            @foreach (var technology in Model.User.UsersTechnologies)
+            {
+                <text>
+                    addTechToArray('@technology.Technologies.Name');
+                </text>
+            }
+            userTechsInput.value = userTechsArray;
+        };
+    </script>
 </body>
 </html>
