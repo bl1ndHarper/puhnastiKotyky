@@ -9,6 +9,9 @@ var deleteUserImageButton = document.getElementById("deleteUserImageButton");
 var changeUserImageText = document.getElementById("changeUserImageText");
 var addUserTechnology = document.getElementById("addUserTechnology");
 var userAccountTechnologies = document.getElementById("userAccountTechnologies");
+var userTechsArray = [];
+var updatedUserTechsArray = document.getElementById("updatedUserTechsArray");
+var modelTechsArray = [];
 
 function auto_height(elem) {
     elem.style.height = '1px';
@@ -94,6 +97,8 @@ var userTechsDropdown = document.getElementById("userTechsDropdown");
 function openUserTechsDropdown() {
     userTechsDropdown.classList.remove("hidden");
     addUserTechnology.classList.add("hidden");
+
+    removeChosen();
 };
 function closeUserTechsDropdown() {
     userTechsDropdown.classList.add("hidden");
@@ -114,6 +119,71 @@ function dropdownFilterFunction() {
             p[i].style.display = "none";
         }
     }
+}
+
+/* In work... */
+function removeChosen() {
+    var container = document.getElementById("dropdownTechsContainer");
+    container.replaceChildren();
+    for (var i = 0; i < modelTechsArray.length; i++) {
+        const p = document.createElement("p");
+        p.id = "userTechsDropdownItem";
+        p.textContent = modelTechsArray[i];
+        p.onclick = function () { dropdownItem_chooseUserTech(p.textContent); };
+        container.appendChild(p);
+    }
+    for (var i = 0; i < userTechsArray.length; i++) {
+        for (var j = 0; j < container.childElementCount; j++) {
+            if (userTechsArray[i] == container.children[j].textContent) {
+                container.children[j].remove();
+            }
+        }
+    }
+}
+/* ---------- */
+
+var userTechsDropdownItem = document.getElementById("userTechsDropdownItem");
+function dropdownItem_chooseUserTech(techName) {
+    const divElement = document.createElement("div");
+    const tooltip = document.createElement("span");
+    const removeOverlay = document.createElement("div");
+    const paragraph = document.createElement("p");
+
+    tooltip.classList.add("user-account-day__tooltip");
+    tooltip.textContent = "Click to delete";
+    removeOverlay.classList.add("removeTechOverlay");
+
+    paragraph.append(techName);
+    divElement.append(tooltip);
+    divElement.append(removeOverlay);
+    divElement.append(paragraph);
+
+    divElement.onclick = function() {
+        dropdownItem_removeUserTech(divElement, techName)
+    }
+
+    const container = document.getElementById("userAccountTechnologies");
+    container.insertBefore(divElement, addUserTechnology);
+
+    addTechToArray(techName);
+    updatedUserTechsArray.value = userTechsArray;
+
+    removeChosen()
+}
+
+function dropdownItem_removeUserTech(element, techName) {
+    if (!buttonAccept.classList.contains("hidden")) {
+        element.remove();
+        var index = userTechsArray.indexOf(techName);
+        userTechsArray.splice(index, 1);
+        updatedUserTechsArray.value = userTechsArray;
+
+        removeChosen()
+    }
+}
+
+function addTechToArray(techName) {
+    userTechsArray.push(techName);
 }
 
 /* CREATE PROJECT */
