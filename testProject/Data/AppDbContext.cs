@@ -201,9 +201,7 @@ public partial class AppDbContext : IdentityDbContext<User, IdentityRole<uint>, 
 
             entity.HasIndex(e => e.UsersId, "users_tech_users_id_foreign");
 
-            entity.Property(e => e.UsersTechnologiesId)
-                .ValueGeneratedNever()
-                .HasColumnName("users_technologies_id");
+            entity.Property(e => e.UsersTechnologiesId).HasColumnName("users_technologies_id");
             entity.Property(e => e.TechnologiesId).HasColumnName("technologies_id");
             entity.Property(e => e.UsersId).HasColumnName("users_id");
 

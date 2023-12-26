@@ -22,7 +22,7 @@ namespace testProject.Areas.UserAccount.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly AppDbContext _db;
+        private AppDbContext _db;
 
         public AccountController(UserManager<User> userManager, AppDbContext db)
         {
@@ -78,6 +78,50 @@ namespace testProject.Areas.UserAccount.Controllers
             if (updatedUserTechsArray != null && updatedUserTechsArray.Length > 0)
             {
                 // rewrite the data in database
+            }
+            _db = new AppDbContext();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+
+            var uId = Convert.ToUInt32(userId);
+
+            string[] originalUserTechs = string.IsNullOrEmpty(userTechsArray) ? new string[0] : userTechsArray.Split(',');
+            string[] updatedUserTechs = string.IsNullOrEmpty(updatedUserTechsArray) ? new string[0] : updatedUserTechsArray.Split(',');
+
+            if (updatedUserTechs.Any() || originalUserTechs.Any())
+            {
+                var addedItems = updatedUserTechs.Except(originalUserTechs);
+                var deletedItems = originalUserTechs.Except(updatedUserTechs);
+
+                foreach (var item in addedItems)
+                {
+                    var techId = _db.Technologies
+                        .Where(e => e.Name == item)
+                        .Select(e => e.TechnologiesId)
+                        .FirstOrDefault();
+
+                    UsersTechnology usersTech = new UsersTechnology { UsersId = uId, TechnologiesId = techId };
+                    _db.UsersTechnologies.Add(usersTech);
+                    _db.SaveChanges();
+                }
+
+                foreach (var item in deletedItems)
+                {
+                    var techId = _db.Technologies
+                        .Where(e => e.Name == item)
+                        .Select(e => e.TechnologiesId)
+                        .FirstOrDefault();
+
+                    var usersTech = _db.UsersTechnologies
+                        .Where(ut => ut.UsersId == uId && ut.TechnologiesId == techId)
+                        .FirstOrDefault();
+
+                    if (usersTech != null)
+                    {
+                        _db.UsersTechnologies.Remove(usersTech);
+                    }
+                }
+                _db.SaveChanges();
             }
             return RedirectToAction("Index");
         }
