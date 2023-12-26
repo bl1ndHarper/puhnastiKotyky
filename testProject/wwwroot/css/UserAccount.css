@@ -19,562 +19,767 @@ user-account-day * {
     background: none;
 }
 
-.hidden {
-    display: none;
+::-webkit-scrollbar {
+    width: 20px;
+    z-index: 2;
 }
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #bcead5;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #8ec3b0;
+    }
+
+.hidden {
+    display: none !important;
+}
+
+.user-account-day__tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #183d3dc6;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 2;
+    top: 120%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+    .user-account-day__tooltip::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #183d3dc6 transparent;
+    }
 
 .user-account-day,
 .user-account-day * {
-  box-sizing: border-box;
-}
-.user-account-day {
-  background: #def5e5;
-  width: auto;
-  height: auto;
-  position: static;
-  overflow-y: auto;
-}
-.user-account-day__page-content {
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-  align-items: flex-end;
-  justify-content: flex-start;
-  position: absolute;
-  top: 0;
-  right: 2.5%;
-  left: 2.5%;
-  width: 95%;
-  top: 70px;
-}
-.user-account-day__horizontal-container {
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-  gap: 60px;
-  align-items: flex-start;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-}
-.user-account-day__user-projects {
-  background: #bcead5;
-  border-radius: 24px;
-  border-style: solid;
-  border-color: #8ec3b0;
-  border-width: 1px;
-  padding: 33px 36px 33px 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  min-width: 550px;
-  position: relative;
-  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-}
-.user-account-day__user-projects h2 {
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 32px;
-  font-weight: 700;
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.user-account-day__projects-container {
-  display: flex;
-  flex-direction: row;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__project {
-  background: #bcead5;
-  border-radius: 16px;
-  border-style: solid;
-  border-color: #183d3d;
-  border-width: 2px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex: 1;
-  min-width: 415px;
-  position: relative;
-}
-.user-account-day__project h2 {
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  position: relative;
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.user-account-day__project-technologies-container {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  align-items: center;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__project-technologies-container h3 {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  position: relative;
-}
-.user-account-day__technologies {
-  border-radius: 5px;
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  align-self: stretch;
-  flex-shrink: 1;
-  position: relative;
-  overflow: hidden;
-}
-.user-account-day__technologies div {
-  background: #def5e5;
-  border-radius: 16px;
-  border-style: solid;
-  border-color: #bcead5;
-  border-width: 2px;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__technologies p, button {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  position: relative;
-}
-.user-account-day__project-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__project-info div {
-  padding: 0px 56px 0px 0px;
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  align-items: center;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__project-info div h3 {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  position: relative;
-}
-.user-account-day__project-info div p {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: relative;
-}
-.user-account-day__vertical-container {
-  display: flex;
-  flex-direction: column;
-  gap: 65px;
-  align-items: flex-end;
-  justify-content: flex-start;
-  flex: 1;
-  min-width: 550px;
-  position: relative;
-}
-.user-account-day__create-new-project {
-  background: #bcead5;
-  border-radius: 24px;
-  border-style: solid;
-  border-color: #8ec3b0;
-  border-width: 1px;
-  padding: 33px 0px 33px 0px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-}
-.user-account-day__create-new-project-header {
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 28px;
-  font-weight: 600;
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.user-account-day__project-name-container {
-  border-radius: 12px;
-  padding: 0px 10px 0px 10px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0px;
-  align-items: center;
-  justify-content: center;
-  align-self: center;
-  flex-shrink: 0;
-  min-width: 500px;
-  position: relative;
-}
-.user-account-day__project-name-container textarea {
-  width: 100%;
-  resize: none;
-  outline: #183d3d;
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 28px;
-  font-weight: 500;
-}
-.user-account-day__apply-title-button {
-  background: #bcead5;
-  border-radius: 12px;
-  border-style: solid;
-  border-color: #183d3d;
-  border-width: 2px;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__apply-title-button p {
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  position: relative;
-}
-.user-account-day__create-new-project-detailed {
-  background: #bcead5;
-  border-radius: 24px;
-  border-style: solid;
-  border-color: #8ec3b0;
-  border-width: 1px;
-  padding: 33px 12px 33px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-}
-.user-account-day__create-new-project-detailed h2 {
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 32px;
-  font-weight: 600;
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.user-account-day__project-description {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__create-new-project-detailed h3 {
-  color: #183d3d;
-  text-align: left;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 24px;
-  font-weight: 600;
-  position: relative;
-  align-self: stretch;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.user-account-day__project-desc {
-  background: #def5e5;
-  border-radius: 12px;
-  border-style: solid;
-  border-color: #183d3d;
-  border-width: 1px;
-  padding: 8px 12px;
-  display: flex;
-  flex-direction: row;
-  gap: 0px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__project-desc textarea {
-  width: 100%;
-  resize: none;
-  outline: #183d3d;
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-}
-.user-account-day__new-project-technologies-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__buttons p {
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  position: relative;
-}
-.user-account-day__create-project-button {
-  background: #bcead5;
-  border-radius: 12px;
-  border-style: solid;
-  border-color: #183d3d;
-  border-width: 2px;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__cancel-button {
-  border-color: #c81d1d;
-}
-.user-account-day__user-requests {
-  background: #bcead5;
-  border-radius: 24px;
-  border-style: solid;
-  border-color: #8ec3b0;
-  border-width: 1px;
-  padding: 33px 36px 33px 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-}
-.user-account-day__user-requests-title {
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 32px;
-  font-weight: 600;
-  position: relative;
-  align-self: stretch;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.user-account-day__user-requests-container {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__request {
-  background: #bcead5;
-  border-radius: 16px;
-  border-style: solid;
-  border-color: #183d3d;
-  border-width: 2px;
-  padding: 12px 24px 12px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  min-width: 415px;
-  position: relative;
-}
-.user-account-day__request h2 {
-  color: #183d3d;
-  text-align: center;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  position: relative;
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.user-account-day__request-info {
-  display: flex;
-  flex-direction: row;
-  gap: 56px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__request-info div {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  position: relative;
-}
-.user-account-day__request-info h3 {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  position: relative;
-}
-.user-account-day__request-info p {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: relative;
-}
-.user-account-day__user-account {
-  background: #9ed5c5;
-  border-radius: 24px;
-  border-style: solid;
-  border-color: #8ec3b0;
-  border-width: 1px;
-  padding: 40px 90px 40px 90px;
-  display: flex;
-  flex-direction: row;
-  gap: 100px;
-  align-items: center;
-  align-self: stretch;
-  justify-content: center;
-  flex-shrink: 0;
-  height: auto;
-  position: relative;
-  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
+    box-sizing: border-box;
 }
 
+.user-account-day {
+    background: #def5e5;
+    width: auto;
+    height: auto;
+    position: static;
+    overflow-y: auto;
+}
+
+.user-account-day__page-content {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    position: absolute;
+    top: 0;
+    right: 2.5%;
+    left: 2.5%;
+    width: 95%;
+    top: 70px;
+}
+
+.user-account-day__horizontal-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-account-day__user-projects {
+    background: #bcead5;
+    border-radius: 24px;
+    border-style: solid;
+    border-color: #8ec3b0;
+    border-width: 1px;
+    padding: 33px 36px 33px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 550px;
+    position: relative;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+    .user-account-day__user-projects h2 {
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 32px;
+        font-weight: 700;
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+.user-account-day__projects-container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.user-account-day__project {
+    background: #bcead5;
+    border-radius: 16px;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: 2px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex: 1;
+    min-width: 415px;
+    position: relative;
+}
+
+    .user-account-day__project h2 {
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        position: relative;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+.user-account-day__project-technologies-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+    .user-account-day__project-technologies-container h3 {
+        color: #183d3d;
+        text-align: justify;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        position: relative;
+    }
+
+.user-account-day__technologies {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-self: stretch;
+    flex-shrink: 1;
+    position: relative;
+    overflow: visible;
+}
+
+    .user-account-day__technologies .removeTechOverlay {
+        position: absolute;
+        background: rgb(180, 63, 63, 0.70);
+        width: calc(100% + 4px);
+        height: 100%;
+        transition: .5s ease-in-out;
+        opacity: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        user-select: none;
+        pointer-events: none;
+    }
+
+    .user-account-day__technologies div {
+        background: #def5e5;
+        min-height: 48px;
+        min-width: 48px;
+        border-radius: 16px;
+        border-style: solid;
+        border-color: #bcead5;
+        border-width: 2px;
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        position: relative;
+        overflow: visible;
+    }
+    .user-account-day__technologies.hover-active div:hover {
+        cursor: pointer;
+    }
+
+        .user-account-day__technologies.hover-active div:hover .removeTechOverlay {
+            transition: .5s ease;
+            opacity: 1;
+        }
+        .user-account-day__technologies.hover-active div:hover .user-account-day__tooltip {
+            visibility: visible;
+        }
+
+    .user-account-day__technologies p {
+        color: #183d3d;
+        text-align: justify;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        position: relative;
+    }
+
+    .user-account-day__technologies .user-account-day__technologies-dropdown {
+        background: #def5e5;
+        border: 2px solid #bcead5;
+        border-radius: 16px;
+        padding: 4px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+        min-width: 150px;
+        max-width: 200px;
+        max-height: 200px;
+        overflow: hidden;
+    }
+
+        .user-account-day__technologies .user-account-day__technologies-dropdown .header {
+            width: 100%;
+            border: 0;
+            margin: 0;
+            padding: 0;
+            min-height: unset;
+            flex-direction: row;
+        }
+
+            .user-account-day__technologies .user-account-day__technologies-dropdown .header input {
+                box-sizing: border-box;
+                background: #bcead5;
+                border-radius: 12px;
+                width: 100%;
+                text-align: left;
+                font-family: "Fira Sans", sans-serif;
+                font-size: 16px;
+                font-weight: 500;
+                text-decoration: none;
+                color: #183d3d;
+                position: relative;
+                padding: 8px;
+                margin: 0;
+                z-index: 1;
+            }
+
+            .user-account-day__technologies .user-account-day__technologies-dropdown .header img {
+                width: 15%;
+                border: 0;
+                margin: 0;
+                padding: 0;
+                cursor: pointer;
+            }
+
+        .user-account-day__technologies .user-account-day__technologies-dropdown .container {
+            border: 0;
+            width: 100%;
+            border-radius: 0;
+            border-bottom-left-radius: 12px;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-shrink: 1;
+            position: relative;
+            overflow: hidden auto;
+        }
+
+            .user-account-day__technologies .user-account-day__technologies-dropdown .container p {
+                background-image: linear-gradient(to right, #def5e5, #bcead5, #def5e5);
+                background-size: 0 100%;
+                background-repeat: no-repeat;
+                width: 100%;
+                color: #183d3d;
+                text-align: left;
+                font-family: "Fira Sans", sans-serif;
+                font-size: 16px;
+                font-weight: 400;
+                text-decoration: none;
+                position: relative;
+                cursor: pointer;
+                transition: .5s;
+            }
+                .user-account-day__technologies .user-account-day__technologies-dropdown .container p:hover {
+                    background-size: 100% 100%;
+                }
+
+.user-account-day__project-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+    .user-account-day__project-info div {
+        padding: 0px 56px 0px 0px;
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        align-items: center;
+        justify-content: flex-start;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+        .user-account-day__project-info div h3 {
+            color: #183d3d;
+            text-align: justify;
+            font-family: "Fira Sans", sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .user-account-day__project-info div p {
+            color: #183d3d;
+            text-align: justify;
+            font-family: "Fira Sans", sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            position: relative;
+        }
+
+.user-account-day__vertical-container {
+    display: flex;
+    flex-direction: column;
+    gap: 65px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    flex: 1;
+    min-width: 550px;
+    position: relative;
+}
+
+.user-account-day__create-new-project {
+    background: #bcead5;
+    border-radius: 24px;
+    border-style: solid;
+    border-color: #8ec3b0;
+    border-width: 1px;
+    padding: 33px 0px 33px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.user-account-day__create-new-project-header {
+    color: #183d3d;
+    text-align: center;
+    font-family: "Fira Sans", sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-account-day__project-name-container {
+    border-radius: 12px;
+    padding: 0px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    flex-shrink: 0;
+    min-width: 500px;
+    position: relative;
+}
+
+    .user-account-day__project-name-container textarea {
+        width: 100%;
+        resize: none;
+        outline: #183d3d;
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 28px;
+        font-weight: 500;
+    }
+
+.user-account-day__apply-title-button {
+    background: #bcead5;
+    border-radius: 12px;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: 2px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+    .user-account-day__apply-title-button p {
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        position: relative;
+    }
+
+.user-account-day__create-new-project-detailed {
+    background: #bcead5;
+    border-radius: 24px;
+    border-style: solid;
+    border-color: #8ec3b0;
+    border-width: 1px;
+    padding: 33px 12px 33px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+    .user-account-day__create-new-project-detailed h2 {
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 32px;
+        font-weight: 600;
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+.user-account-day__project-description {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.user-account-day__create-new-project-detailed h3 {
+    color: #183d3d;
+    text-align: left;
+    font-family: "Fira Sans", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    position: relative;
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.user-account-day__project-desc {
+    background: #def5e5;
+    border-radius: 12px;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: 1px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+    .user-account-day__project-desc textarea {
+        width: 100%;
+        resize: none;
+        outline: #183d3d;
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+.user-account-day__new-project-technologies-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.user-account-day__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+    .user-account-day__buttons p {
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        position: relative;
+    }
+
+.user-account-day__create-project-button {
+    background: #bcead5;
+    border-radius: 12px;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: 2px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.user-account-day__cancel-button {
+    border-color: #c81d1d;
+}
+
+.user-account-day__user-requests {
+    background: #bcead5;
+    border-radius: 24px;
+    border-style: solid;
+    border-color: #8ec3b0;
+    border-width: 1px;
+    padding: 33px 36px 33px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.user-account-day__user-requests-title {
+    color: #183d3d;
+    text-align: center;
+    font-family: "Fira Sans", sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    position: relative;
+    align-self: stretch;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-account-day__user-requests-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.user-account-day__request {
+    background: #bcead5;
+    border-radius: 16px;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: 2px;
+    padding: 12px 24px 12px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    min-width: 415px;
+    position: relative;
+}
+
+    .user-account-day__request h2 {
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        position: relative;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+.user-account-day__request-info {
+    display: flex;
+    flex-direction: row;
+    gap: 56px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+    .user-account-day__request-info div {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        position: relative;
+    }
+
+    .user-account-day__request-info h3 {
+        color: #183d3d;
+        text-align: justify;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        position: relative;
+    }
+
+    .user-account-day__request-info p {
+        color: #183d3d;
+        text-align: justify;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        position: relative;
+    }
+
+.user-account-day__user-account {
+    background: #9ed5c5;
+    border-radius: 24px;
+    border-style: solid;
+    border-color: #8ec3b0;
+    border-width: 1px;
+    padding: 40px 90px 40px 90px;
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    align-items: center;
+    align-self: stretch;
+    justify-content: center;
+    flex-shrink: 0;
+    height: auto;
+    position: relative;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
 
 .user-account-day__user-image-container {
-  border-radius: 50%;
-  border-style: solid;
-  border-color: #183d3d;
-  border-width: 5px;
-  flex-shrink: 0;
-  width: 311px;
-  height: 311px;
-  position: relative;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: 5px;
+    flex-shrink: 0;
+    width: 311px;
+    height: 311px;
+    position: relative;
 }
+
 .user-account-day__user-image {
     border-radius: 50%;
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .user-account-day__input-user-image {
     display: none;
 }
+
 .user-account-day__change-user-image-overlay {
     position: absolute;
     bottom: 0;
@@ -589,6 +794,7 @@ user-account-day * {
     user-select: none;
     pointer-events: none;
 }
+
     .user-account-day__change-user-image-overlay label {
         position: absolute;
         left: 0;
@@ -598,6 +804,7 @@ user-account-day * {
         border-radius: 50%;
         cursor: pointer;
     }
+
     .user-account-day__change-user-image-overlay p {
         color: #def5e5;
         text-align: center;
@@ -613,14 +820,17 @@ user-account-day * {
         width: 70%;
         cursor: pointer;
     }
+
 .user-account-day__user-image-container.hover-active:hover {
     transition: .5s ease;
     border-color: #def5e5;
 }
+
     .user-account-day__user-image-container.hover-active:hover .user-account-day__change-user-image-overlay {
         opacity: 1;
         pointer-events: auto;
     }
+
 .user-account-day__delete-user-image-button {
     position: absolute;
     right: 0;
@@ -641,136 +851,149 @@ user-account-day * {
     min-width: 400px;
     position: relative;
 }
-.user-account-day__user-account-details h2 {
-  color: #183d3d;
-  text-align: left;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 48px;
-  font-weight: 500;
-  position: relative;
-  align-self: stretch;
-  min-width: 400px;
-}
+
+    .user-account-day__user-account-details h2 {
+        color: #183d3d;
+        text-align: left;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 48px;
+        font-weight: 500;
+        position: relative;
+        align-self: stretch;
+        min-width: 400px;
+    }
+
 .user-account-day__user-email {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative;
 }
-.user-account-day__user-email p {
-  color: #183d3d;
-  text-align: left;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 24px;
-  font-weight: 600;
-  position: relative;
-  width: 66px;
-}
+
+    .user-account-day__user-email p {
+        color: #183d3d;
+        text-align: left;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        position: relative;
+        width: 66px;
+    }
+
 .user-account-day__user-details-header {
-  color: #183d3d;
-  text-align: justified;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  position: relative;
-  width: 209px;
+    color: #183d3d;
+    text-align: justify;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-family: "Fira Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    position: relative;
+    width: 209px;
 }
+
 .user-account-day__self-description {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
 }
-.user-account-day__self-description textarea {
-  width: 100%;
-  resize: none;
-  padding: 5px;
-  overflow: hidden;
-  outline: #183d3d;
-  color: #183d3d;
-  text-align: justify;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  outline: none;
-  border-radius: 12px;
-}
+
+    .user-account-day__self-description textarea {
+        width: 100%;
+        resize: none;
+        padding: 5px;
+        overflow: hidden;
+        outline: #183d3d;
+        color: #183d3d;
+        text-align: justify;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        outline: none;
+        border-radius: 12px;
+    }
+
 .user-account-day__profile-buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    position: relative;
 }
-.user-account-day__profile-buttons button {
-  background: #bcead5;
-  border-radius: 12px;
-  border-style: solid;
-  border-color: #183d3d;
-  border-width: 2px;
-  padding: 8px 16px 8px 16px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  position: relative;
-}
-.user-account-day__profile-buttons button p {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  position: relative;
-}
+
+    .user-account-day__profile-buttons button {
+        background: #bcead5;
+        border-radius: 12px;
+        border-style: solid;
+        border-color: #183d3d;
+        border-width: 2px;
+        padding: 8px 16px 8px 16px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+        .user-account-day__profile-buttons button p {
+            color: #183d3d;
+            text-align: justify;
+            font-family: "Fira Sans", sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            position: relative;
+        }
+
 .user-account-day__sign-out {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  align-items: flex-end;
-  justify-content: flex-start;
-  align-self: stretch;
-  flex-shrink: 0;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    align-items: flex-end;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
 }
-.user-account-day__sign-out p {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  position: relative;
-}
-.user-account-day__sign-out a {
-  color: #183d3d;
-  text-align: justified;
-  font-family: "Fira Sans", sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  position: relative;
-}
+
+    .user-account-day__sign-out p {
+        color: #183d3d;
+        text-align: justify;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 20px;
+        font-weight: 400;
+        position: relative;
+    }
+
+    .user-account-day__sign-out a {
+        color: #183d3d;
+        text-align: justify;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 24px;
+        font-weight: 400;
+        position: relative;
+    }
+
 .user-account-day__color-mode-switch {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  height: auto;
-  position: fixed;
-  left: 45px;
-  bottom: 45px;
-  overflow: visible;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    position: fixed;
+    left: 45px;
+    bottom: 45px;
+    overflow: visible;
 }

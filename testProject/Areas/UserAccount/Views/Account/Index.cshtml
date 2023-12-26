@@ -1,4 +1,4 @@
-﻿@model testProject.Models.User
+﻿@model testProject.Areas.UserAccount.Models.AccountViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,8 +9,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <script src="@Url.Content("~/js/UserAccount.js")"></script>
 </head>
 <body>
     <div class="user-account-day">
@@ -19,7 +17,7 @@
             </div>
             <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("SaveUserChanges", "Account")">
                 <div class="user-account-day__user-image-container" id="userImageContainer">
-                    <img src="@Model.Photo" class="user-account-day__user-image" id="userImage" />
+                    <img src="@Model.User.Photo" class="user-account-day__user-image" id="userImage" />
                     <div class="user-account-day__change-user-image-overlay">
                         <p id="changeUserImageText">Click to change</p>
                         <input class="user-account-day__input-user-image" type="file" accept="image/jpeg, image/jpg, image/png" name="file" id="imageInput" />
@@ -29,23 +27,42 @@
                 </div>
                 <div class="user-account-day__user-account-details">
                     <h2>
-                        @Model.FirstName @Model.LastName
+                        @Model.User.FirstName @Model.User.LastName
                     </h2>
                     <div class="user-account-day__user-email">
                         <p>Email:</p>
-                        <p>@Model.Email</p>
+                        <p>@Model.User.Email</p>
                     </div>
                     <div>
                         <h3 class="user-account-day__user-details-header">
                             Skills:
                         </h3>
-                        <div class="user-account-day__technologies">
-                            @foreach (var technology in Model.UsersTechnologies)
+                        <div class="user-account-day__technologies" id="userAccountTechnologies">
+                            @foreach (var technology in Model.User.UsersTechnologies)
                             {
-                                <div>
+                                <div onclick="dropdownItem_removeUserTech(this, '@technology.Technologies.Name')">
+                                    <span class="user-account-day__tooltip">Click to delete</span>
+                                    <div class="removeTechOverlay"></div>
                                     <p>@technology.Technologies.Name</p>
                                 </div>
                             }
+                            <input type="text" class="hidden" name="userTechsArray" id="userTechsInput" />
+                            <input type="text" class="hidden" name="updatedUserTechsArray" id="updatedUserTechsArray" />
+                            <div class="hidden" id="addUserTechnology" onclick="openUserTechsDropdown()" style="cursor: pointer">
+                                <img src="~/images/plus-image0.png" />
+                            </div>
+                            <div class="user-account-day__technologies-dropdown hidden" id="userTechsDropdown">
+                                <div class="header">
+                                    <input type="text" placeholder="Search..." id="userTechSearchInput" onkeyup="dropdownFilterFunction()" />
+                                    <img src="~/images/cancel.png" onclick="closeUserTechsDropdown()" />
+                                </div>
+                                <div class="container" id="dropdownTechsContainer">
+                                    @foreach(var tech in Model.Technologies)
+                                    {
+                                        <p onclick="dropdownItem_chooseUserTech('@tech.Name')" id="userTechsDropdownItem">@tech.Name</p>
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="user-account-day__self-description">
@@ -59,16 +76,16 @@
                                   id="selfDescriptionText"
                                   oninput="auto_height(this)"
                                   onmousemove="auto_height(this)"
-                                  onresize="auto_height(this)">@Model.About</textarea>
+                                  onresize="auto_height(this)">@Model.User.About</textarea>
                     </div>
                     <div class="user-account-day__profile-buttons">
-                        <button style="display: none;" id="buttonSaveProfileChanges" type="submit">
+                        <button class="hidden" id="buttonSaveProfileChanges" type="submit">
                             <p>Save Changes</p>
                         </button>
                         <button onclick="editProfile()" id="buttonEditProfile" type="button">
                             <p>Edit Profile</p>
                         </button>
-                        <button style="display: none;" id="buttonCancelProfileChanges" type="reset" onclick="cancelUserProfileChanges()">
+                        <button onclick="stopEditingProfile()" class="hidden" id="buttonCancelProfileChanges" type="reset">
                             <p>Cancel</p>
                         </button>
                     </div>
@@ -77,7 +94,7 @@
   
             <div class="user-account-day__horizontal-container">
                 <div class="user-account-day__user-projects">
-                    @if (!Model.ProjectsUser.Any())
+                    @if (!Model.User.ProjectsUser.Any())
                     {
                         <h2>
                             Here will be the projects you are a part of
@@ -90,7 +107,7 @@
                         </h2>
                     }
                     <div class="user-account-day__projects-container">
-                        @foreach (var projectsUser in Model.ProjectsUser)
+                        @foreach (var projectsUser in Model.User.ProjectsUser)
                         {
                             <div class="user-account-day__project">
                                 <h2>@projectsUser.Projects.Name</h2>
@@ -145,9 +162,9 @@
                             </p>
                         </button>
                     </div>
-                    <div id="createNewProjectDetailed" style="display: none;" class="user-account-day__create-new-project-detailed">
+                    <div id="createNewProjectDetailed" class="user-account-day__create-new-project-detailed hidden">
                         <div>
-                            <h2>Project Title Project Title Project Title Project Title</h2>
+                            <h2 id="newAppNameDetailed">Project Title</h2>
                         </div>
                         <div class="user-account-day__project-description">
                             <h3>Describe your idea more:</h3>
@@ -200,7 +217,7 @@
                         </div>
                     </div>
                     <div class="user-account-day__user-requests">
-                        @if (!Model.Requests.Any())
+                        @if (!Model.User.Requests.Any())
                         {
                             <h2 class="user-account-day__user-requests-title">You don't have any requests to partcipate in other projects at the moment.</h2>
                         }
@@ -211,7 +228,7 @@
                             </h2>
                         }
                         <div class="user-account-day__user-requests-container">
-                            @foreach (var request in Model.Requests)
+                            @foreach (var request in Model.User.Requests)
                             {
                                 <div class="user-account-day__request">
                                     <h2>
@@ -251,6 +268,25 @@
                   fill="#DEF5E5" />
         </svg>
     </div>
-    <script async src="@Url.Content("~/js/UserAccount.js")"></script>
+    <script src="@Url.Content("~/js/UserAccount.js")"></script>
+    <script>
+        window.onload = function () {
+            var userTechsInput = document.getElementById("userTechsInput");
+            @foreach (var technology in Model.User.UsersTechnologies)
+            {
+                <text>
+                    addTechToArray('@technology.Technologies.Name');
+                </text>
+            }
+            userTechsInput.value = userTechsArray;
+
+            @foreach (var tech in Model.Technologies)
+            {
+                <text>
+                    modelTechsArray.push('@tech.Name');
+                </text>
+            }
+        };
+    </script>
 </body>
 </html>
