@@ -72,6 +72,7 @@
                         <textarea readonly
                                   name="updatedDescription"
                                   spellcheck="false"
+                                  type="text"
                                   id="selfDescriptionText"
                                   oninput="auto_height(this)"
                                   onmousemove="auto_height(this)"
@@ -90,7 +91,7 @@
                     </div>
                 </div>
             </form>
-            
+  
             <div class="user-account-day__horizontal-container">
                 <div class="user-account-day__user-projects">
                     @if (!Model.User.ProjectsUser.Any())
@@ -126,7 +127,7 @@
                                 <div class="user-account-day__project-info">
                                     <div>
                                         <h3>Owner:</h3>
-                                        <p>@projectsUser.Projects.Users.FirstName</p>
+                                        <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName</p>
                                     </div>
                                     <div>
                                         <h3>

@@ -12,6 +12,7 @@ var userAccountTechnologies = document.getElementById("userAccountTechnologies")
 var userTechsArray = [];
 var updatedUserTechsArray = document.getElementById("updatedUserTechsArray");
 var modelTechsArray = [];
+var originalText;
 
 function auto_height(elem) {
     elem.style.height = '1px';
@@ -27,6 +28,9 @@ function editProfile() {
     buttonEdit.classList.add("hidden");
     buttonAccept.classList.remove("hidden");
     buttonCancel.classList.remove("hidden");
+  
+    originalText = descTextArea.value;
+  
     descTextArea.readOnly = false;
     descTextArea.style.outline = "outset 1px"
     userImageContainer.classList.add("hover-active");
@@ -57,6 +61,8 @@ function stopEditingProfile() {
     userAccountTechnologies.classList.remove("hover-active");
     addUserTechnology.classList.add("hidden");
 
+    descTextArea.value = originalText;
+  
     var form = document.querySelector('form');
     form.reset();
     location.reload();
@@ -64,11 +70,6 @@ function stopEditingProfile() {
     userImageContainer.removeEventListener("click", imageButtonClickHandler);
 }
 function imageButtonClickHandler() {
-}
-
-function cancelUserProfileChanges() {
-    stopEditingProfile();
-    location.reload();
 }
 
 var clickCounter = 0;
@@ -121,7 +122,6 @@ function dropdownFilterFunction() {
     }
 }
 
-/* In work... */
 function removeChosen() {
     var container = document.getElementById("dropdownTechsContainer");
     container.replaceChildren();
@@ -140,7 +140,6 @@ function removeChosen() {
         }
     }
 }
-/* ---------- */
 
 var userTechsDropdownItem = document.getElementById("userTechsDropdownItem");
 function dropdownItem_chooseUserTech(techName) {

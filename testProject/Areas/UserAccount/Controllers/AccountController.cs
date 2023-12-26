@@ -67,7 +67,15 @@ namespace testProject.Areas.UserAccount.Controllers
 
         public ActionResult UpdateProfileDescription(string updatedDescription)
         {
-            Console.WriteLine("------------" + updatedDescription);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+
+            if (user != null)
+            {
+                user.About = updatedDescription;
+                _db.Users.Update(user);
+                _db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
