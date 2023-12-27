@@ -94,21 +94,24 @@ function deleteUserImage() {
     }
 }
 
-function openTechsDropdown(dropDown, plusButton) {
-    dropDown.classList.remove("hidden");
-    plusButton.classList.add("hidden");
+var userTechsDropdown = document.getElementById("userTechsDropdown");
+function openUserTechsDropdown() {
+    userTechsDropdown.classList.remove("hidden");
+    addUserTechnology.classList.add("hidden");
 
     removeChosen();
 };
-function closeTechsDropdown(dropDown, plusButton) {
-    dropDown.classList.add("hidden");
-    plusButton.classList.remove("hidden");
+function closeUserTechsDropdown() {
+    userTechsDropdown.classList.add("hidden");
+    addUserTechnology.classList.remove("hidden");
 }
 
-function dropdownFilterFunction(input, dropdown) {
-    var filter, p, i;
+function dropdownFilterFunction() {
+    var input, filter, p, i;
+    input = document.getElementById("userTechSearchInput");
     filter = input.value.toUpperCase();
-    p = dropdown.getElementsByTagName("p");
+    div = document.getElementById("userTechsDropdown");
+    p = div.getElementsByTagName("p");
     for (i = 0; i < p.length; i++) {
         txtValue = p[i].textContent || p[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -126,7 +129,7 @@ function removeChosen() {
         const p = document.createElement("p");
         p.id = "userTechsDropdownItem";
         p.textContent = modelTechsArray[i];
-        p.onclick = function () { chooseUserTech(p.textContent); };
+        p.onclick = function () { dropdownItem_chooseUserTech(p.textContent); };
         container.appendChild(p);
     }
     for (var i = 0; i < userTechsArray.length; i++) {
@@ -138,8 +141,8 @@ function removeChosen() {
     }
 }
 
-var techsDropdownItem = document.getElementById("userTechsDropdownItem");
-function chooseUserTech(techName) {
+var userTechsDropdownItem = document.getElementById("userTechsDropdownItem");
+function dropdownItem_chooseUserTech(techName) {
     const divElement = document.createElement("div");
     const tooltip = document.createElement("span");
     const removeOverlay = document.createElement("div");
@@ -155,19 +158,19 @@ function chooseUserTech(techName) {
     divElement.append(paragraph);
 
     divElement.onclick = function() {
-        removeUserTech(divElement, techName)
+        dropdownItem_removeUserTech(divElement, techName)
     }
 
     const container = document.getElementById("userAccountTechnologies");
     container.insertBefore(divElement, addUserTechnology);
 
-    addUserTechToArray(techName);
+    addTechToArray(techName);
     updatedUserTechsArray.value = userTechsArray;
 
     removeChosen()
 }
 
-function removeUserTech(element, techName) {
+function dropdownItem_removeUserTech(element, techName) {
     if (!buttonAccept.classList.contains("hidden")) {
         element.remove();
         var index = userTechsArray.indexOf(techName);
@@ -178,6 +181,40 @@ function removeUserTech(element, techName) {
     }
 }
 
-function addUserTechToArray(techName) {
+function addTechToArray(techName) {
     userTechsArray.push(techName);
+}
+
+/* CREATE PROJECT */
+
+function showDetailed() {
+    var createNewProject = document.getElementById("createNewProjectLayout");
+    var createNewProjectDetailed = document.getElementById("createNewProjectDetailed");
+    var newAppName = document.getElementById("newAppName");
+    var appNameDetailed = document.getElementById("newAppNameDetailed");
+    var appNameInput = document.getElementById("newAppNameInput");
+
+    if (newAppName.value != "") {
+        appNameDetailed.innerHTML = newAppName.value;
+        appNameInput.value = newAppName.value;
+        createNewProject.classList.add("hidden");
+        createNewProjectDetailed.classList.remove("hidden");
+        newAppName.value = "";
+        newAppName.style.height = "fit-content";
+    }
+}
+
+function hideDetailed() {
+    var createNewProject = document.getElementById("createNewProjectLayout");
+    var createNewProjectDetailed = document.getElementById("createNewProjectDetailed");
+
+    createNewProject.classList.remove("hidden");
+    createNewProjectDetailed.classList.add("hidden");
+}
+
+function selectLevel(levelName) {
+    var levelLabel = document.querySelector(".user-account-day__new-project-level-dropdown label");
+    var levelInput = document.querySelector(".user-account-day__new-project-level-dropdown input");
+    levelLabel.textContent = levelName;
+    levelInput.value = levelName;
 }

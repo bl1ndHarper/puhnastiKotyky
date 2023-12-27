@@ -40,7 +40,7 @@
                         <div class="user-account-day__technologies" id="userAccountTechnologies">
                             @foreach (var technology in Model.User.UsersTechnologies)
                             {
-                                <div onclick="removeUserTech(this, '@technology.Technologies.Name')">
+                                <div onclick="dropdownItem_removeUserTech(this, '@technology.Technologies.Name')">
                                     <span class="user-account-day__tooltip">Click to delete</span>
                                     <div class="removeTechOverlay"></div>
                                     <p>@technology.Technologies.Name</p>
@@ -48,18 +48,18 @@
                             }
                             <input type="text" class="hidden" name="userTechsArray" id="userTechsInput" />
                             <input type="text" class="hidden" name="updatedUserTechsArray" id="updatedUserTechsArray" />
-                            <div class="hidden" id="addUserTechnology" onclick="openTechsDropdown(userTechsDropdown, addUserTechnology)" style="cursor: pointer">
+                            <div class="hidden" id="addUserTechnology" onclick="openUserTechsDropdown()" style="cursor: pointer">
                                 <img src="~/images/plus-image0.png" />
                             </div>
                             <div class="user-account-day__technologies-dropdown hidden" id="userTechsDropdown">
                                 <div class="header">
-                                    <input type="text" placeholder="Search..." id="userTechSearchInput" onkeyup="dropdownFilterFunction(userTechSearchInput, userTechsDropdown)" />
-                                    <img src="~/images/cancel.png" onclick="closeTechsDropdown(userTechsDropdown, addUserTechnology)" />
+                                    <input type="text" placeholder="Search..." id="userTechSearchInput" onkeyup="dropdownFilterFunction()" />
+                                    <img src="~/images/cancel.png" onclick="closeUserTechsDropdown()" />
                                 </div>
                                 <div class="container" id="dropdownTechsContainer">
                                     @foreach(var tech in Model.Technologies)
                                     {
-                                        <p onclick="chooseUserTech('@tech.Name')" id="userTechsDropdownItem">@tech.Name</p>
+                                        <p onclick="dropdownItem_chooseUserTech('@tech.Name')" id="userTechsDropdownItem">@tech.Name</p>
                                     }
                                 </div>
                             </div>
@@ -181,24 +181,26 @@
                             <h3>
                                 Choose the technologies your app will be based on:
                             </h3>
-                            <div class="user-account-day__technologies hover-active" id="newProjectTechnologies">
-                                <input type="text" class="hidden" name="projectTechnologies" id="projectTechnologiesInput" />
-                                <div id="addProjectTechnology" onclick="openTechsDropdown(projectTechsDropdown, addProjectTechnology)" style="cursor: pointer">
-                                    <img src="~/images/plus-image0.png" />
+                            <div class="user-account-day__technologies">
+                                <div>
+                                    <button>ASP.Net Core MVC</button>
                                 </div>
-                                <div class="user-account-day__technologies-dropdown hidden" id="projectTechsDropdown">
-                                    <div class="header">
-                                        <input type="text" placeholder="Search..." id="projectTechSearchInput" onkeyup="dropdownFilterFunction(projectTechSearchInput, projectTechsDropdown)" />
-                                        <img src="~/images/cancel.png" onclick="closeTechsDropdown(projectTechsDropdown, addProjectTechnology)" />
-                                    </div>
-                                    <div class="container" id="projectDropdownTechsContainer">
-                                        @foreach (var tech in Model.Technologies)
-                                        {
-                                            <p onclick="chooseProjectTech('@tech.Name')" id="projectTechsDropdownItem">@tech.Name</p>
-                                        }
-                                    </div>
+                                <div>
+                                    <button>C#</button>
                                 </div>
+                                <div>
+                                    <button>SQL</button>
+                                </div>
+                                <div>
+                                    <button>HTML/CSS</button>
+                                </div>
+                                <button>
+                                    <div>
+                                        <img src="~/images/plus-image0.png" />
+                                    </div>
+                                </button>
                             </div>
+                            <input type="text" class="hidden" name="projectTechnologies" id="newAppTechnologies" />
                         </div>
                         <div class="user-account-day__new-project-level">
                             <h3>
@@ -294,7 +296,6 @@
         </svg>
     </div>
     <script src="@Url.Content("~/js/UserAccount.js")"></script>
-    <script src="@Url.Content("~/js/CreateProject.js")"></script>
     <script src="@Url.Content("~/js/NumberInput.js")"></script>
     <script>
         window.onload = function () {
@@ -302,7 +303,7 @@
             @foreach (var technology in Model.User.UsersTechnologies)
             {
                 <text>
-                    addUserTechToArray('@technology.Technologies.Name');
+                    addTechToArray('@technology.Technologies.Name');
                 </text>
             }
             userTechsInput.value = userTechsArray;
