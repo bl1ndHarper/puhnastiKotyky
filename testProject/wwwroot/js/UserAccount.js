@@ -28,9 +28,9 @@ function editProfile() {
     buttonEdit.classList.add("hidden");
     buttonAccept.classList.remove("hidden");
     buttonCancel.classList.remove("hidden");
-  
+
     originalText = descTextArea.value;
-  
+
     descTextArea.readOnly = false;
     descTextArea.style.outline = "outset 1px"
     userImageContainer.classList.add("hover-active");
@@ -62,7 +62,7 @@ function stopEditingProfile() {
     addUserTechnology.classList.add("hidden");
 
     descTextArea.value = originalText;
-  
+
     var form = document.querySelector('form');
     form.reset();
     location.reload();
@@ -94,24 +94,21 @@ function deleteUserImage() {
     }
 }
 
-var userTechsDropdown = document.getElementById("userTechsDropdown");
-function openUserTechsDropdown() {
-    userTechsDropdown.classList.remove("hidden");
-    addUserTechnology.classList.add("hidden");
+function openTechsDropdown(dropDown, plusButton) {
+    dropDown.classList.remove("hidden");
+    plusButton.classList.add("hidden");
 
     removeChosen();
 };
-function closeUserTechsDropdown() {
-    userTechsDropdown.classList.add("hidden");
-    addUserTechnology.classList.remove("hidden");
+function closeTechsDropdown(dropDown, plusButton) {
+    dropDown.classList.add("hidden");
+    plusButton.classList.remove("hidden");
 }
 
-function dropdownFilterFunction() {
-    var input, filter, p, i;
-    input = document.getElementById("userTechSearchInput");
+function dropdownFilterFunction(input, dropdown) {
+    var filter, p, i;
     filter = input.value.toUpperCase();
-    div = document.getElementById("userTechsDropdown");
-    p = div.getElementsByTagName("p");
+    p = dropdown.getElementsByTagName("p");
     for (i = 0; i < p.length; i++) {
         txtValue = p[i].textContent || p[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -129,7 +126,7 @@ function removeChosen() {
         const p = document.createElement("p");
         p.id = "userTechsDropdownItem";
         p.textContent = modelTechsArray[i];
-        p.onclick = function () { dropdownItem_chooseUserTech(p.textContent); };
+        p.onclick = function () { chooseUserTech(p.textContent); };
         container.appendChild(p);
     }
     for (var i = 0; i < userTechsArray.length; i++) {
@@ -141,8 +138,8 @@ function removeChosen() {
     }
 }
 
-var userTechsDropdownItem = document.getElementById("userTechsDropdownItem");
-function dropdownItem_chooseUserTech(techName) {
+var techsDropdownItem = document.getElementById("userTechsDropdownItem");
+function chooseUserTech(techName) {
     const divElement = document.createElement("div");
     const tooltip = document.createElement("span");
     const removeOverlay = document.createElement("div");
@@ -157,20 +154,20 @@ function dropdownItem_chooseUserTech(techName) {
     divElement.append(removeOverlay);
     divElement.append(paragraph);
 
-    divElement.onclick = function() {
-        dropdownItem_removeUserTech(divElement, techName)
+    divElement.onclick = function () {
+        removeUserTech(divElement, techName)
     }
 
     const container = document.getElementById("userAccountTechnologies");
     container.insertBefore(divElement, addUserTechnology);
 
-    addTechToArray(techName);
+    addUserTechToArray(techName);
     updatedUserTechsArray.value = userTechsArray;
 
     removeChosen()
 }
 
-function dropdownItem_removeUserTech(element, techName) {
+function removeUserTech(element, techName) {
     if (!buttonAccept.classList.contains("hidden")) {
         element.remove();
         var index = userTechsArray.indexOf(techName);
@@ -181,40 +178,6 @@ function dropdownItem_removeUserTech(element, techName) {
     }
 }
 
-function addTechToArray(techName) {
+function addUserTechToArray(techName) {
     userTechsArray.push(techName);
-}
-
-/* CREATE PROJECT */
-
-function showDetailed() {
-    var createNewProject = document.getElementById("createNewProjectLayout");
-    var createNewProjectDetailed = document.getElementById("createNewProjectDetailed");
-    var newAppName = document.getElementById("newAppName");
-    var appNameDetailed = document.getElementById("newAppNameDetailed");
-    var appNameInput = document.getElementById("newAppNameInput");
-
-    if (newAppName.value != "") {
-        appNameDetailed.innerHTML = newAppName.value;
-        appNameInput.value = newAppName.value;
-        createNewProject.classList.add("hidden");
-        createNewProjectDetailed.classList.remove("hidden");
-        newAppName.value = "";
-        newAppName.style.height = "fit-content";
-    }
-}
-
-function hideDetailed() {
-    var createNewProject = document.getElementById("createNewProjectLayout");
-    var createNewProjectDetailed = document.getElementById("createNewProjectDetailed");
-
-    createNewProject.classList.remove("hidden");
-    createNewProjectDetailed.classList.add("hidden");
-}
-
-function selectLevel(levelName) {
-    var levelLabel = document.querySelector(".user-account-day__new-project-level-dropdown label");
-    var levelInput = document.querySelector(".user-account-day__new-project-level-dropdown input");
-    levelLabel.textContent = levelName;
-    levelInput.value = levelName;
 }
