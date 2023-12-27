@@ -123,7 +123,7 @@ user-account-day * {
     align-items: center;
     justify-content: center;
     flex: 1;
-    min-width: 550px;
+    min-width: 400px;
     position: relative;
     box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
     overflow: hidden;
@@ -167,7 +167,7 @@ user-account-day * {
     align-items: flex-start;
     justify-content: flex-start;
     flex: 1;
-    min-width: 415px;
+    min-width: 350px;
     position: relative;
 }
 
@@ -276,7 +276,7 @@ user-account-day * {
         border: 2px solid #bcead5;
         border-radius: 16px;
         padding: 4px;
-        display: block;
+        display: flex;
         flex-direction: column;
         gap: 4px;
         align-items: flex-start;
@@ -402,7 +402,7 @@ user-account-day * {
     align-items: flex-end;
     justify-content: flex-start;
     flex: 1;
-    min-width: 550px;
+    min-width: 400px;
     position: relative;
 }
 
@@ -449,7 +449,7 @@ user-account-day * {
     justify-content: center;
     align-self: center;
     flex-shrink: 0;
-    min-width: 500px;
+    min-width: 400px;
     position: relative;
 }
 
@@ -505,7 +505,7 @@ user-account-day * {
     flex-shrink: 0;
     position: relative;
     box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
+    overflow: visible;
 }
 
     .user-account-day__create-new-project-detailed h2 {
@@ -768,10 +768,10 @@ user-account-day * {
     border-style: solid;
     border-color: #8ec3b0;
     border-width: 1px;
-    padding: 33px 36px 33px 36px;
+    padding: 33px 12px 33px 12px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 32px;
     align-items: center;
     justify-content: center;
     align-self: stretch;
@@ -785,11 +785,9 @@ user-account-day * {
     color: #183d3d;
     text-align: center;
     font-family: "Fira Sans", sans-serif;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 600;
     position: relative;
-    align-self: stretch;
-    height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -812,15 +810,13 @@ user-account-day * {
     border-style: solid;
     border-color: #183d3d;
     border-width: 2px;
-    padding: 12px 24px 12px 24px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
     justify-content: flex-start;
     align-self: stretch;
-    flex-shrink: 0;
-    min-width: 415px;
     position: relative;
 }
 
@@ -840,10 +836,10 @@ user-account-day * {
 .user-account-day__request-info {
     display: flex;
     flex-direction: row;
-    gap: 56px;
+    gap: 36px;
     align-items: flex-start;
     justify-content: flex-start;
-    align-self: stretch;
+    align-self: center;
     flex-shrink: 0;
     position: relative;
 }
@@ -854,7 +850,6 @@ user-account-day * {
         gap: 16px;
         align-items: center;
         justify-content: center;
-        flex: 1;
         position: relative;
     }
 
@@ -894,6 +889,7 @@ user-account-day * {
     position: relative;
     box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
     overflow: hidden;
+    flex-wrap: wrap;
 }
 
 .user-account-day__user-image-container {
@@ -1134,4 +1130,5 @@ user-account-day * {
     left: 45px;
     bottom: 45px;
     overflow: visible;
+    z-index: 5;
 }
