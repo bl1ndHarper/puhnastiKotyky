@@ -156,23 +156,25 @@
                                       placeholder="Enter the app name or a project title here..."
                                       oninput="auto_height(this)"></textarea>
                         </div>
-                        <button onclick="showDetailed()" type="submit" class="user-account-day__apply-title-button">
+                        <button onclick="showDetailed()" type="button" class="user-account-day__apply-title-button">
                             <p>
                                 Go to the next step!
                             </p>
                         </button>
                     </div>
-                    <div id="createNewProjectDetailed" class="user-account-day__create-new-project-detailed hidden">
+                    <form id="createNewProjectDetailed" class="user-account-day__create-new-project-detailed hidden" method="post" enctype="multipart/form-data" @*action = "MethodName(projectName, projectDescription, projectTechnologies, projectLevel, projectDuration)"*@>
                         <div>
                             <h2 id="newAppNameDetailed">Project Title</h2>
+                            <input class="hidden" id="newAppNameInput" name="projectName" />
                         </div>
                         <div class="user-account-day__project-description">
                             <h3>Describe your idea more:</h3>
                             <div class="user-account-day__project-desc">
-                                <textarea minlength="12"
-                                          maxlength="1024"
-                                          placeholder="Write a description for your idea (up to 1024 characters)"
-                                          oninput="auto_height(this)"></textarea>
+                                <textarea name="projectDescription"
+                                        minlength="12"
+                                        maxlength="1024"
+                                        placeholder="Write a description for your idea (up to 1024 characters)"
+                                        oninput="auto_height(this)"></textarea>
                             </div>
                         </div>
                         <div class="user-account-day__new-project-technologies-container">
@@ -198,6 +200,31 @@
                                     </div>
                                 </button>
                             </div>
+                            <input type="text" class="hidden" name="projectTechnologies" id="newAppTechnologies" />
+                        </div>
+                        <div class="user-account-day__new-project-level">
+                            <h3>
+                                Select the complexity level for your project:
+                            </h3>
+                            <div class="user-account-day__new-project-level-dropdown">
+                                <input class="hidden" type="text" name="projectLevel" />
+                                <label for="projectLevel">Hover to choose</label>
+                                <div>
+                                    <p onclick="selectLevel('Easy')">Easy</p>
+                                    <p onclick="selectLevel('Medium')">Medium</p>
+                                    <p onclick="selectLevel('Hard')">Hard</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-account-day__new-project-duration">
+                            <h3>
+                                Enter the expected duration of the work:
+                            </h3>
+                            <div class="customNumberInput">
+                                <i class="arrow left"></i>
+                                <input type="number" name="projectDuration" min="1" max="100" value="1" />
+                                <i class="arrow right"></i>
+                            </div>
                         </div>
                         <div class="user-account-day__buttons">
                             <button onclick="hideDetailed()"
@@ -215,7 +242,7 @@
                                 </p>
                             </button>
                         </div>
-                    </div>
+                    </form>
                     <div class="user-account-day__user-requests">
                         @if (!Model.User.Requests.Any())
                         {
@@ -269,6 +296,7 @@
         </svg>
     </div>
     <script src="@Url.Content("~/js/UserAccount.js")"></script>
+    <script src="@Url.Content("~/js/NumberInput.js")"></script>
     <script>
         window.onload = function () {
             var userTechsInput = document.getElementById("userTechsInput");

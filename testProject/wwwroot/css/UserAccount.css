@@ -276,7 +276,7 @@ user-account-day * {
         border: 2px solid #bcead5;
         border-radius: 16px;
         padding: 4px;
-        display: flex;
+        display: block;
         flex-direction: column;
         gap: 4px;
         align-items: flex-start;
@@ -584,6 +584,144 @@ user-account-day * {
     flex-shrink: 0;
     position: relative;
 }
+
+.user-account-day__new-project-level {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+    .user-account-day__new-project-level .user-account-day__new-project-level-dropdown {
+        position: relative;
+        display: inline-block;
+        border: none;
+        display: flex;
+        flex-direction: row;
+    }
+
+        .user-account-day__new-project-level .user-account-day__new-project-level-dropdown label {
+            background-color: #def5e5;
+            color: #183d3d;
+            padding: 12px;
+            font-family: "Fira Sans", sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            border: 2px solid #bcead5;
+            border-radius: 16px;
+        }
+
+        .user-account-day__new-project-level .user-account-day__new-project-level-dropdown div {
+            display: none;
+            position: relative;
+            background-color: #def5e5;
+        }
+
+        .user-account-day__new-project-level .user-account-day__new-project-level-dropdown div:last-child {
+            border-top-right-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
+
+            .user-account-day__new-project-level .user-account-day__new-project-level-dropdown div p {
+                color: #183d3d;
+                padding: 12px;
+                font-family: "Fira Sans", sans-serif;
+                font-size: 16px;
+                font-weight: 400;
+            }
+
+                .user-account-day__new-project-level .user-account-day__new-project-level-dropdown div p:hover {
+                    background-image: radial-gradient(#bcead5, transparent);
+                }
+
+        .user-account-day__new-project-level .user-account-day__new-project-level-dropdown:hover label {
+            background-color: #bcead5;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border: 2px solid #183d3d;
+            transition: border-color ease-in 0.5s, background-color ease-in 0.3s;
+        }
+
+            .user-account-day__new-project-level .user-account-day__new-project-level-dropdown:hover div {
+                display: flex;
+                flex-direction: row;
+            }
+
+.user-account-day__new-project-duration {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.arrow {
+    border: solid #183d3d;
+    border-width: 0 4px 4px 0;
+    border-radius: 1px;
+    display: inline-block;
+    padding: 4px;
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.user-account-day__new-project-duration .customNumberInput {
+    padding: 1rem;
+    color: #def5e5;
+    background: #def5e5;
+    display: flex;
+    width: 9rem;
+    height: 3rem;
+    border: 2px #def5e5 solid;
+    border-radius: 3em;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    transition: .3s;
+}
+
+    .user-account-day__new-project-duration .customNumberInput input {
+        font-family: "Fira Sans", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        text-align: center;
+        background: none;
+        color: #183d3d;
+        width: auto;
+        position: relative;
+        margin: 0;
+    }
+
+        .user-account-day__new-project-duration .customNumberInput input::-webkit-outer-spin-button,
+        .user-account-day__new-project-duration .customNumberInput input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+    .user-account-day__new-project-duration .customNumberInput i {
+        cursor: pointer;
+    }
+
+        .user-account-day__new-project-duration .customNumberInput i:hover {
+            border-width: 0 7px 7px 0;
+            border-radius: 3px;
+            transition: ease-in .1s;
+        }
 
 .user-account-day__buttons {
     display: flex;

@@ -192,9 +192,11 @@ function showDetailed() {
     var createNewProjectDetailed = document.getElementById("createNewProjectDetailed");
     var newAppName = document.getElementById("newAppName");
     var appNameDetailed = document.getElementById("newAppNameDetailed");
+    var appNameInput = document.getElementById("newAppNameInput");
 
     if (newAppName.value != "") {
         appNameDetailed.innerHTML = newAppName.value;
+        appNameInput.value = newAppName.value;
         createNewProject.classList.add("hidden");
         createNewProjectDetailed.classList.remove("hidden");
         newAppName.value = "";
@@ -208,4 +210,11 @@ function hideDetailed() {
 
     createNewProject.classList.remove("hidden");
     createNewProjectDetailed.classList.add("hidden");
+}
+
+function selectLevel(levelName) {
+    var levelLabel = document.querySelector(".user-account-day__new-project-level-dropdown label");
+    var levelInput = document.querySelector(".user-account-day__new-project-level-dropdown input");
+    levelLabel.textContent = levelName;
+    levelInput.value = levelName;
 }
