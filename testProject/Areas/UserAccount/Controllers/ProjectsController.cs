@@ -25,7 +25,8 @@ namespace testProject.Areas.UserAccount.Controllers
 
             Project project = new Project { Name = projectName, Description = projectDescription, 
                 UsersId = userId, CreationDate = DateTime.Now, 
-                Level = projectLevel, Duration = projectDuration, Status = "in development" };
+                Level = projectLevel, Duration = projectDuration, Status = "searching for participants"
+            };
             _db.Projects.Add(project);
             _db.SaveChanges();
 

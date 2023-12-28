@@ -70,7 +70,7 @@ public partial class AppDbContext : IdentityDbContext<User, IdentityRole<uint>, 
                 .HasMaxLength(100)
                 .HasColumnName("name");
             entity.Property(e => e.Status)
-                .HasColumnType("enum('draft','in development','completed')")
+                .HasColumnType("enum('searching for participants','draft','in development','completed')")
                 .HasColumnName("status");
             entity.Property(e => e.UsersId).HasColumnName("users_id");
 
