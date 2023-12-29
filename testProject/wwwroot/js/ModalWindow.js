@@ -5,8 +5,11 @@ const closeBtn = document.querySelector(".close-modal-btn");
 document.querySelectorAll('.open-modal-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
         var modalId = this.getAttribute('data-modal-id');
-        var modal = document.getElementById(modalId);
-        modal.classList.remove('hidden');
+        var currentModal = document.getElementById(modalId);
+        currentModal.classList.remove('hidden');
+        currentModal.addEventListener("click", function (e) {
+            closeModal(e, true);
+        });
     });
 });
 
@@ -22,12 +25,14 @@ function openModal() {
 }
 
 function closeModal(e, clickedOutside) {
-	if (clickedOutside) {
-		if (e.target.classList.contains("modal-overlay"))
-			modal.classList.add("hidden");
-	} else modal.classList.add("hidden");
+    var modal = e.target.closest('.modal-overlay');
+    if (modal) {
+        if (clickedOutside || e.target.classList.contains("close-modal-btn")) {
+            modal.classList.add("hidden");
+        }
+    }
 }
 
+modal.addEventListener("click", (e) => closeModal(e, !modal.contains(e.target)));
 openBtn.addEventListener("click", openModal);
-modal.addEventListener("click", (e) => closeModal(e, true));
 closeBtn.addEventListener("click", closeModal);
