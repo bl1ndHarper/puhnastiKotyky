@@ -81,12 +81,15 @@ namespace testProject.Areas.UserAccount.Controllers
 
         public ActionResult UpdateUserTechnologies(string userTechsArray, string updatedUserTechsArray)
         {
+            if (updatedUserTechsArray == "none") // user deleteв everything
+                updatedUserTechsArray = "";
+            else if (updatedUserTechsArray == "" || updatedUserTechsArray == null) // user didn't change anything
+                updatedUserTechsArray = userTechsArray;
+            // else there were some changes
+
             Console.WriteLine("------------User technologies before editing: " + userTechsArray);
             Console.WriteLine("------------User technologies after editing: " + updatedUserTechsArray);
-            if (updatedUserTechsArray != null && updatedUserTechsArray.Length > 0)
-            {
-                // rewrite the data in database
-            }
+
             _db = new AppDbContext();
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);

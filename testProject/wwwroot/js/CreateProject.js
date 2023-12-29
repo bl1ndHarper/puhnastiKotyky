@@ -1,4 +1,33 @@
-﻿function showDetailed() {
+﻿function validateAndSubmit() {
+    const projectDescriptionInput = document.querySelector(".user-account-day__project-desc textarea");
+    const projectTechsContainer = document.getElementById("newProjectTechnologies");
+    const projectLevelInput = document.querySelector(".user-account-day__new-project-level-dropdown input");
+
+    const createProjectForm = document.getElementById("createNewProjectDetailed");
+
+    if (projectDescriptionInput.value.length < 12) {
+        const tooltip = document.querySelector(".user-account-day__project-desc .user-account-day__tooltip");
+        tooltip.style.border = "3px dashed tomato";
+        tooltip.style.visibility = "visible";
+        setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000)
+    } else
+        if (projectTechsContainer.querySelector("#projectTechItem") == null) {
+            tooltip = document.querySelector("#newProjectTechnologies .user-account-day__tooltip");
+            tooltip.style.border = "3px dashed tomato";
+            tooltip.style.visibility = "visible";
+            setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000)
+        } else
+            if (projectLevelInput.value == "") {
+                tooltip = document.querySelector(".user-account-day__new-project-level-dropdown .user-account-day__tooltip");
+                tooltip.style.border = "3px dashed tomato";
+                tooltip.style.visibility = "visible";
+                setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000)
+            } else {
+                createProjectForm.submit();
+            }
+}
+
+function showDetailed() {
     var createNewProject = document.getElementById("createNewProjectLayout");
     var createNewProjectDetailed = document.getElementById("createNewProjectDetailed");
     var newAppName = document.getElementById("newAppName");
@@ -66,6 +95,7 @@ function chooseProjectTech(techName) {
     divElement.append(tooltip);
     divElement.append(removeOverlay);
     divElement.append(paragraph);
+    divElement.id = "projectTechItem"
 
     divElement.onclick = function () {
         removeProjectTech(divElement, techName)

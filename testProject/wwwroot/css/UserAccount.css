@@ -50,7 +50,7 @@ user-account-day * {
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 4px 8px;
     position: absolute;
     z-index: 2;
     top: 120%;
@@ -186,9 +186,9 @@ user-account-day * {
 
 .user-account-day__project-technologies-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 16px;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
     align-self: stretch;
     flex-shrink: 0;
@@ -197,7 +197,7 @@ user-account-day * {
 
     .user-account-day__project-technologies-container h3 {
         color: #183d3d;
-        text-align: justify;
+        text-align: left;
         font-family: "Fira Sans", sans-serif;
         font-size: 20px;
         font-weight: 700;
@@ -382,7 +382,7 @@ user-account-day * {
 
         .user-account-day__project-info div h3 {
             color: #183d3d;
-            text-align: justify;
+            text-align: left;
             font-family: "Fira Sans", sans-serif;
             font-size: 20px;
             font-weight: 700;
@@ -391,7 +391,7 @@ user-account-day * {
 
         .user-account-day__project-info div p {
             color: #183d3d;
-            text-align: justify;
+            text-align: left;
             font-family: "Fira Sans", sans-serif;
             font-size: 20px;
             font-weight: 400;
@@ -439,6 +439,75 @@ user-account-day * {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.user-account-day__new-project-info {
+    position: relative;
+    border-radius: 8px;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+    cursor: default;
+}
+
+    .user-account-day__new-project-info img {
+        background: transparent;
+        width: 24px;
+        height: 24px;
+        position: relative;
+        margin: 0 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+.user-account-day__info-tooltip {
+    visibility: hidden;
+    z-index: 1;
+    text-align: justify;
+    opacity: .40;
+    width: 400px;
+    padding: 8px;
+    background: #def5e5;
+    color: #183d3d;
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    border-radius: 8px;
+    font: 16px;
+    transform: translateY(9px);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 3px rgba(56, 54, 54, 0.86);
+}
+
+    .user-account-day__info-tooltip::after {
+        content: " ";
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 12px 12.5px 0 12.5px;
+        border-color: #def5e5 transparent transparent transparent;
+        position: absolute;
+        top: 100%;
+        right: 10px;
+    }
+
+.user-account-day__new-project-info:hover .user-account-day__info-tooltip {
+    visibility: visible;
+    transform: translateY(-10px);
+    opacity: 1;
+    transition: .3s linear;
+    animation: odsoky 1s ease-in-out infinite alternate;
+}
+@keyframes odsoky {
+    0% {
+        transform: translateY(6px);
+    }
+
+    100% {
+        transform: translateY(1px);
+    }
+}
+
+.top:hover {
+    transform: translateY(-6px);
 }
 
 .user-account-day__project-name-container {
@@ -511,6 +580,16 @@ user-account-day * {
     overflow: visible;
 }
 
+    .user-account-day__create-new-project-detailed .header {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        align-self: stretch;
+        position: relative;
+    }
+
     .user-account-day__create-new-project-detailed h2 {
         color: #183d3d;
         text-align: center;
@@ -542,11 +621,7 @@ user-account-day * {
     font-size: 24px;
     font-weight: 600;
     position: relative;
-    align-self: stretch;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    align-self: flex-start;
 }
 
 .user-account-day__project-desc {
@@ -659,7 +734,7 @@ user-account-day * {
     flex-direction: column;
     gap: 8px;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     align-self: stretch;
     flex-shrink: 0;
     position: relative;

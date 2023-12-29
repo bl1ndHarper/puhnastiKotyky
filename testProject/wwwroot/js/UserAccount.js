@@ -168,11 +168,17 @@ function chooseUserTech(techName) {
 }
 
 function removeUserTech(element, techName) {
+    const userTechsInput = document.getElementById("userTechsInput");
     if (!buttonAccept.classList.contains("hidden")) {
         element.remove();
         var index = userTechsArray.indexOf(techName);
-        userTechsArray.splice(index, 1);
-        updatedUserTechsArray.value = userTechsArray;
+        if (userTechsArray.length == 1) { // user is trying to delete the last element left
+            updatedUserTechsArray.value = "none";
+            userTechsArray.splice(index, 1);
+        } else {
+            userTechsArray.splice(index, 1);
+            updatedUserTechsArray.value = userTechsArray;
+        }
 
         removeChosen()
     }
