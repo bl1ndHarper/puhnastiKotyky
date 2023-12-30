@@ -20,7 +20,7 @@
                 <div class="user-account-day__user-image-container" id="userImageContainer">
                     <img src="@Model.User.Photo" class="user-account-day__user-image" id="userImage" />
                     <div class="user-account-day__change-user-image-overlay">
-                        <p id="changeUserImageText">Click to change</p>
+                        <p id="changeUserImageText">Click to change<span>(Maximum image size: 7 MB)</span></p>
                         <input class="user-account-day__input-user-image" type="file" accept="image/jpeg, image/jpg, image/png" name="file" id="imageInput" />
                         <label for="imageInput"></label>
                         <img src="~/images/cancel.png" class="user-account-day__delete-user-image-button" id="deleteUserImageButton" onclick="deleteUserImage()" />

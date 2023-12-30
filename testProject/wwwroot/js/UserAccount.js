@@ -40,6 +40,15 @@ function editProfile() {
     userImageContainer.addEventListener("click", imageButtonClickHandler);
 
     imageInput.onchange = function () {
+        if (imageInput.files.length > 0) {
+            const fileSize = imageInput.files[0].size;
+            const fileMb = fileSize / 1024 / 1024;
+            if (fileMb >= 7) {
+                alert("Please select a file less than 7 MB.");
+                imageInput.value = null;
+            }
+        }
+
         if (imageInput.files[0] != null && imageInput.files[0] != "") {
             userImage.src = URL.createObjectURL(imageInput.files[0]);
         }
