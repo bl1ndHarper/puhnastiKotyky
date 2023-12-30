@@ -1033,6 +1033,13 @@ user-account-day * {
         cursor: pointer;
     }
 
+    .user-account-day__change-user-image-overlay span {
+        font-size: 16px;
+        font-weight: 600;
+        display: block;
+        margin-top: 15px;
+    }
+
 .user-account-day__user-image-container.hover-active:hover {
     transition: .5s ease;
     border-color: #def5e5;
