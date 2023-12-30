@@ -179,19 +179,22 @@
                             </p>
                         </button>
                     </div>
-                    <form id="createNewProjectDetailed" class="user-account-day__create-new-project-detailed hidden" method="post" enctype="multipart/form-data" action="@Url.Action("SaveNewProject", "Projects")" @*action = "MethodName(projectName, projectDescription, projectTechnologies, projectLevel, projectDuration)"*@>
+                    <form id="createNewProjectDetailed" class="user-account-day__create-new-project-detailed hidden" method="post" enctype="multipart/form-data" action="@Url.Action("SaveNewProject", "Projects")">
                         <div>
                             <h2 id="newAppNameDetailed">Project Title</h2>
                             <input class="hidden" id="newAppNameInput" name="projectName" />
                         </div>
                         <div class="user-account-day__project-description">
-                            <h3>Describe your idea more:</h3>
+                            <h3>
+                                Describe your idea more:
+                            </h3>
                             <div class="user-account-day__project-desc">
                                 <textarea name="projectDescription"
                                         minlength="12"
                                         maxlength="1024"
                                         placeholder="Write a description for your idea (up to 1024 characters)"
                                         oninput="auto_height(this)"></textarea>
+                                <span class="user-account-day__tooltip">Write a valid description!</span>
                             </div>
                         </div>
                         <div class="user-account-day__new-project-technologies-container">
@@ -203,6 +206,7 @@
                                 <div id="addProjectTechnology" onclick="openTechsDropdown(projectTechsDropdown, addProjectTechnology)" style="cursor: pointer">
                                     <img src="~/images/plus-image0.png" />
                                 </div>
+                                <span class="user-account-day__tooltip">Choose at least one technology!</span>
                                 <div class="user-account-day__technologies-dropdown hidden" id="projectTechsDropdown">
                                     <div class="header">
                                         <input type="text" placeholder="Search..." id="projectTechSearchInput" onkeyup="dropdownFilterFunction(projectTechSearchInput, projectTechsDropdown)" />
@@ -218,12 +222,23 @@
                             </div>
                         </div>
                         <div class="user-account-day__new-project-level">
-                            <h3>
-                                Select the complexity level for your project:
-                            </h3>
+                            <div class="header">
+                                <h3>
+                                    Select the complexity level for your project:
+                                </h3>
+                                <div class="user-account-day__new-project-info top">
+                                    <img src="~/images/information.png" />
+                                    <div class="user-account-day__info-tooltip">
+                                        Declare the complexity level of your project so others learn if they're ready
+                                        to be a part of your team. For exapmle, it must be easy to create a static one-page website
+                                        but it is pretty hard to build a full-fledged analog of a popular social media.
+                                    </div>
+                                </div>
+                            </div>
                             <div class="user-account-day__new-project-level-dropdown">
                                 <input class="hidden" type="text" name="projectLevel" />
                                 <label for="projectLevel">Hover to choose</label>
+                                <span class="user-account-day__tooltip">Set a complexity level!</span>
                                 <div>
                                     <p onclick="selectLevel('Easy')">Easy</p>
                                     <p onclick="selectLevel('Medium')">Medium</p>
@@ -232,9 +247,17 @@
                             </div>
                         </div>
                         <div class="user-account-day__new-project-duration">
-                            <h3>
-                                Enter the expected duration of the work:
-                            </h3>
+                            <div class="header">
+                                <h3>Enter the expected duration of the work:</h3>
+                                <div class="user-account-day__new-project-info top">
+                                    <img src="~/images/information.png" />
+                                    <div class="user-account-day__info-tooltip">
+                                        Enter the expected time needed to complete your project (in weeks).
+                                        It might help other developers to calculate their efforts, time
+                                        and make the right decision.
+                                    </div>
+                                </div>
+                            </div>
                             <div class="customNumberInput">
                                 <i class="arrow left"></i>
                                 <input type="number" name="projectDuration" min="1" max="100" value="1" />
@@ -249,9 +272,10 @@
                                     Dismiss all
                                 </p>
                             </button>
-                            <button onclick="hideDetailed()"
-                                    type="submit"
-                                    class="user-account-day__create-project-button">
+                            <button onclick="validateAndSubmit()"
+                                    type="button"
+                                    class="user-account-day__create-project-button"
+                                    id="createProjectButton">
                                 <p>
                                     Create the project!
                                 </p>
@@ -336,7 +360,7 @@
             @foreach (var technology in Model.User.UsersTechnologies)
             {
                 <text>
-                    addUserTechToArray('@technology.Technologies.Name');
+                    addUserTechToArray('@Html.Raw(@technology.Technologies.Name)');
                 </text>
             }
             userTechsInput.value = userTechsArray;
@@ -344,7 +368,7 @@
             @foreach (var tech in Model.Technologies)
             {
                 <text>
-                    modelTechsArray.push('@tech.Name');
+                    modelTechsArray.push('@Html.Raw(@tech.Name)');
                 </text>
             }
         };
