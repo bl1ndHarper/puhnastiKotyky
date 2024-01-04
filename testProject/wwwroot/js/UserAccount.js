@@ -115,6 +115,8 @@ function closeTechsDropdown(dropDown, plusButton) {
 }
 
 function dropdownFilterFunction(input, dropdown) {
+    console.log("filtering...");
+    console.log(input);
     var filter, p, i;
     filter = input.value.toUpperCase();
     p = dropdown.getElementsByTagName("p");

@@ -69,5 +69,12 @@ namespace testProject.Areas.UserAccount.Controllers
                
             return RedirectToAction("Index", "Account");
         }
+
+        [HttpPost]
+        public ActionResult DeleteUserFormProject(string deleteUserIdInput, string deleteUserProjectInput)
+        {
+            Console.WriteLine("--------Deleting the user №" + deleteUserIdInput + " from the project №" + deleteUserProjectInput);
+            return RedirectToAction("Index", "Account");
+        }
     }
 }
