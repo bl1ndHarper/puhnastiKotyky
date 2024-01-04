@@ -29,7 +29,7 @@ namespace testProject.Services
             {
                 File = new FileDescription(fileName, stream),
                 Folder = folder,
-                Transformation = new Transformation().Height(512).Width(512).Crop("fill").Gravity("face"),
+                Transformation = new Transformation().Height(512).Width(512).Crop("fill"),
                 FilenameOverride = fileName,
                 UseFilenameAsDisplayName = true,
                 PublicId = fileName

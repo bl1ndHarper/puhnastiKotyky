@@ -140,21 +140,103 @@
                                         <h3>Status:</h3>
                                         <p>@projectsUser.Projects.Status</p>
                                     </div>
-                                    <button class="open-modal-btn" id="user-account-day__detailed-info-button" data-modal-id="project-modal-@projectsUser.Projects.ProjectsId" type="button">
+                                    <button class="modal__open-button" id="user-account-day__detailed-info-button" data-modal-id="project-modal-@projectsUser.Projects.ProjectsId" type="button">
                                         <p>View more</p>
                                     </button>
                                 </div>
                             </div>
 
-                            <div class="modal-overlay hidden" id="project-modal-@projectsUser.Projects.ProjectsId">
-                                <div class="modal-wrapper">
-                                    <div class="close-btn-wrapper">
-                                        <button class="close-modal-btn">
-                                            <i class="fa fa-close"></i>
+                            <div class="modal__container hidden" id="project-modal-@projectsUser.Projects.ProjectsId">
+                                <div class="modal__body">
+                                    <div class="modal__header">
+                                        <h1>@projectsUser.Projects.Name</h1>
+                                        <button class="modal__close-button">
+                                            <div class="cross-line"></div>
+                                            <div class="cross-line"></div>
                                         </button>
                                     </div>
-                                    <div class="modal-content">
-                                        <h1>@projectsUser.Projects.Name</h1>
+                                    <div class="modal__project-status">
+                                        <p>Status: @projectsUser.Projects.Status</p>
+                                    </div>
+                                    <div class="modal__body-subject">
+                                        <h3>
+                                            Technologies:
+                                        </h3>
+                                        <div class="modal__technologies-container">
+                                            @foreach (var projectTechnology in projectsUser.Projects.ProjectsTechnologies)
+                                            {
+                                                <div>
+                                                    <p>@projectTechnology.Technologies.Name</p>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="modal__body-subject">
+                                        <h3>Project description:</h3>
+                                        <p class="modal__text-expandable">@projectsUser.Projects.Description</p>
+                                        <button id="buttonExpandDescription" class="button align-self-end">More</button>
+                                    </div>
+                                    <div class="modal__body-subject modal__flex-row-item">
+                                        <h3>Team:</h3>
+                                        <div class="modal__user-item">
+                                            <img src="@projectsUser.Projects.Users.Photo" />
+                                            <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName (Owner)</p>
+                                        </div>
+                                        <div class="modal__team-dropdown-header">
+                                            <p id="showTeamMembers" class="">and [] more...</p> @*[] is the count of project members -1*@
+                                            <i class="arrow up hidden"></i>
+                                        </div>
+                                        <div class="modal__team-dropdown hidden">
+                                            <div class="modal__team-dropdown-items" id="teamMembersDropdown">
+                                                @*foreach (var member in projectMembers)
+                                                {*@
+                                                <div class="modal__user-item">
+                                                    <img src="@projectsUser.Projects.Users.Photo" />
+                                                    <p onclick="">User1 Name Surname</p>
+                                                </div>
+                                                @*}*@
+                                                <div class="modal__user-item">
+                                                    <img src="@projectsUser.Projects.Users.Photo" />
+                                                    <p onclick="">User2 Name Surname</p>
+                                                </div>
+                                                <div class="modal__user-item">
+                                                    <img src="@projectsUser.Projects.Users.Photo" />
+                                                    <p onclick="">User3 Name Surname</p>
+                                                </div>
+                                                <div class="modal__user-item">
+                                                    <img src="@projectsUser.Projects.Users.Photo" />
+                                                    <p onclick="">User4 Name Surname</p>
+                                                </div>
+                                                <div class="modal__user-item">
+                                                    <img src="@projectsUser.Projects.Users.Photo" />
+                                                    <p onclick="">User4 Name Surname</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal__body-subject modal__flex-row-item">
+                                        <h3>Additional information:</h3>
+                                        <p>Complexity level: @projectsUser.Projects.Level</p>
+                                        <p>Creation date: @projectsUser.Projects.CreationDate</p>
+                                        <p>Expected duration: @projectsUser.Projects.Duration weeks</p>
+                                    </div>
+                                    <div class="modal__body-subject danger">
+                                        <h3 class="align-self-center">Danger zone!</h3>
+                                        <form id="leaveAndDeleteForm" class="modal__danger-item" method="post" enctype="multipart/form-data" action="@Url.Action("DeleteUserFormProject", "Projects")">
+                                            <p>Want to leave the team and delete this project from your dashboard?</p>
+                                            <button id="leaveAndDeleteButton" class="button" type="button" onclick="">Leave and delete</button>
+                                            <input name="deleteUserIdInput" class="hidden" value="@Model.User.Id" />
+                                            <input name="deleteUserProjectInput" class="hidden" value="@projectsUser.Projects.ProjectsId" />
+
+                                        </form>
+                                        <div id="leaveAndDeleteTooltip" class="modal__info-tooltip hidden">
+                                            <h3>Click again to confirm</h3>
+                                            <p>
+                                                Better think twice before doing it!
+                                                You will no longer be a part of the team and the project will be deleted from your dashboard.
+                                                The owner of this project will be notified about your decision.
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -310,20 +392,19 @@
                                             <p>@request.Status</p>
                                         </div>
                                     </div>
-                                    <button class="open-modal-btn" id="user-account-day__detailed-info-button" data-modal-id="request-modal-@request.RequestsId" type="button">
+                                    <button class="modal__open-button" id="user-account-day__detailed-info-button" data-modal-id="request-modal-@request.RequestsId" type="button">
                                         <p>View more</p>
                                     </button>
                                 </div>
 
-                                <div class="modal-overlay hidden" id="request-modal-@request.RequestsId">
-                                    <div class="modal-wrapper">
-                                        <div class="close-btn-wrapper">
-                                            <button class="close-modal-btn">
-                                                <i class="fa fa-close"></i>
+                                <div class="modal__container hidden" id="request-modal-@request.RequestsId">
+                                    <div class="modal__body">
+                                        <div class="modal__header">
+                                            <h1>Request to be a part of @request.Projects.Name team</h1>
+                                            <button class="modal__close-button">
+                                                <div class="cross-line"></div>
+                                                <div class="cross-line"></div>
                                             </button>
-                                        </div>
-                                        <div class="modal-content">
-                                            Request to be a part of @request.Projects.Name team
                                         </div>
                                     </div>
                                 </div>
