@@ -13,6 +13,8 @@ using testProject.Data;
 using testProject.Models;
 using testProject.Services;
 using testProject.Areas.UserAccount.Models;
+using System.Collections.Generic;
+using Microsoft.CodeAnalysis;
 
 namespace testProject.Areas.UserAccount.Controllers
 {
@@ -51,6 +53,18 @@ namespace testProject.Areas.UserAccount.Controllers
             var tech = _db.Technologies.ToList();
 
             AccountViewModel accountViewModel = new AccountViewModel { User = user, Technologies = tech };
+
+            if (user != null)
+            {
+                foreach (var projectsUser in user.ProjectsUser)
+                {
+                    testProject.Models.Project project = projectsUser.Projects;
+                    List<User> participants = _db.ProjectsUsers
+                        .Where(pu => pu.ProjectsId == project.ProjectsId)
+                        .Select(pu => pu.Users).ToList();
+                    accountViewModel.ProjectParticipants.Add(project.ProjectsId, participants);
+                }
+            }
 
             return View(accountViewModel);
         }

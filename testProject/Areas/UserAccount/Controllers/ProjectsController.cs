@@ -74,6 +74,17 @@ namespace testProject.Areas.UserAccount.Controllers
         public ActionResult DeleteUserFormProject(string deleteUserIdInput, string deleteUserProjectInput)
         {
             Console.WriteLine("--------Deleting the user №" + deleteUserIdInput + " from the project №" + deleteUserProjectInput);
+            _db = new AppDbContext();
+            var projectUser = _db.ProjectsUsers
+                        .Where(p => p.UsersId == uint.Parse(deleteUserIdInput) && p.ProjectsId == uint.Parse(deleteUserProjectInput))
+                        .FirstOrDefault();
+
+            if (projectUser != null)
+            {
+                _db.ProjectsUsers.Remove(projectUser);
+            }
+            _db.SaveChanges();
+
             return RedirectToAction("Index", "Account");
         }
     }
