@@ -274,7 +274,8 @@ user-account-day * {
         position: relative;
     }
 
-    .user-account-day__technologies .user-account-day__technologies-dropdown {
+    .user-account-day__technologies .user-account-day__technologies-dropdown,
+    .modal__technologies-container .modal__technologies-dropdown {
         background: #def5e5;
         border: 2px solid #bcead5;
         border-radius: 16px;
@@ -289,16 +290,21 @@ user-account-day * {
         overflow: hidden;
     }
 
-        .user-account-day__technologies .user-account-day__technologies-dropdown .header {
+        .user-account-day__technologies .user-account-day__technologies-dropdown .header,
+        .modal__technologies-container .modal__technologies-dropdown .header {
             width: 100%;
             border: 0;
             margin: 0;
             padding: 0;
             min-height: unset;
+            display: flex;
+            gap: 8px;
             flex-direction: row;
+            align-items: center;
         }
 
-            .user-account-day__technologies .user-account-day__technologies-dropdown .header input {
+            .user-account-day__technologies .user-account-day__technologies-dropdown .header input,
+            .modal__technologies-container .modal__technologies-dropdown .header input {
                 box-sizing: border-box;
                 background: #bcead5;
                 border-radius: 12px;
@@ -315,15 +321,18 @@ user-account-day * {
                 z-index: 1;
             }
 
-            .user-account-day__technologies .user-account-day__technologies-dropdown .header img {
+            .user-account-day__technologies .user-account-day__technologies-dropdown .header img,
+            .modal__technologies-container .modal__technologies-dropdown .header img {
                 width: 15%;
+                height: fit-content;
                 border: 0;
                 margin: 0;
                 padding: 0;
                 cursor: pointer;
             }
 
-        .user-account-day__technologies .user-account-day__technologies-dropdown .container {
+        .user-account-day__technologies .user-account-day__technologies-dropdown .container,
+        .modal__technologies-container .modal__technologies-dropdown .container {
             border: 0;
             width: 100%;
             border-radius: 0;
@@ -339,7 +348,8 @@ user-account-day * {
             overflow: hidden auto;
         }
 
-            .user-account-day__technologies .user-account-day__technologies-dropdown .container p {
+            .user-account-day__technologies .user-account-day__technologies-dropdown .container p,
+            .modal__technologies-container .modal__technologies-dropdown .container p {
                 background-image: linear-gradient(to right, #def5e5, #bcead5, #def5e5);
                 background-size: 0 100%;
                 background-repeat: no-repeat;
@@ -355,7 +365,8 @@ user-account-day * {
                 transition: .5s;
             }
 
-                .user-account-day__technologies .user-account-day__technologies-dropdown .container p:hover {
+                .user-account-day__technologies .user-account-day__technologies-dropdown .container p:hover,
+                .modal__technologies-container .modal__technologies-dropdown .container p:hover {
                     background-size: 100% 100%;
                 }
 

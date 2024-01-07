@@ -146,8 +146,14 @@
                                 </div>
                             </div>
 
-                            <div class="modal__container hidden" id="project-modal-@projectsUser.Projects.ProjectsId">
+                            <div class="modal__container hidden" id="project-modal-@projectsUser.Projects.ProjectsId" data-owner="@projectsUser.UsersId">
                                 <div class="modal__body">
+                                    @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
+                                    {
+                                        <input class="hidden" id="isUserOwner" data-isOwner="true" />
+                                    } else {
+                                        <input class="hidden" id="isUserOwner" data-isOwner="false" />
+                                    }
                                     <div class="modal__header">
                                         <h1>@projectsUser.Projects.Name</h1>
                                         <button class="modal__close-button">
@@ -156,19 +162,62 @@
                                         </button>
                                     </div>
                                     <div class="modal__project-status">
-                                        <p>Status: @projectsUser.Projects.Status</p>
+                                        <p>Status: </p>
+                                        <div>
+                                            <span>@projectsUser.Projects.Status</span>
+                                            <input class="hidden" name="updatedProjectStatus"
+                                                   data-url="@Url.Action("EditProjectStatus", "Projects", new { area = "UserAccount" })"
+                                                   data-projectId="@projectsUser.Projects.ProjectsId" />
+                                            @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
+                                            {
+                                                <div class="modal__project-status-select-items">
+                                                    <p>searching for participants</p>
+                                                    <p>draft</p>
+                                                    <p>in developmen</p>
+                                                    <p>completed</p>
+                                                </div>
+                                            }
+                                        </div>
+                                        
                                     </div>
                                     <div class="modal__body-subject">
                                         <h3>
                                             Technologies:
                                         </h3>
-                                        <div class="modal__technologies-container">
+                                        <div class="modal__technologies-container hover-active">
                                             @foreach (var projectTechnology in projectsUser.Projects.ProjectsTechnologies)
                                             {
-                                                <div>
+                                                <div id="tech">
+                                                    @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
+                                                    {
+                                                        <span class="modal__tooltip">Click to delete</span>
+                                                        <div class="removeTechOverlay"></div>
+                                                    }
                                                     <p>@projectTechnology.Technologies.Name</p>
                                                 </div>
                                             }
+                                            @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
+                                            {
+                                                <div id="modalAddProjectTechnology" style="cursor: pointer">
+                                                    <img src="~/images/plus-image0.png" onclick="openModalTechsDropdow(@projectsUser.Projects.ProjectsTechnologies)" />
+                                                </div>
+                                                <div class="modal__technologies-dropdown hidden" id="modalProjectTechnologiesDropdown">
+                                                    <div class="header">
+                                                        <input type="text" placeholder="Search..." id="projectTechSearchInput" />
+                                                        <img src="~/images/cancel.png" />
+                                                    </div>
+                                                    <div class="container" id="projectDropdownTechsContainer">
+                                                        @foreach (var tech in Model.Technologies)
+                                                        {
+                                                            <p onclick="chooseProjectTech('@tech.Name')" id="projectTechsDropdownItem">@tech.Name</p>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <div id="saveProjectsTechButton" class="hidden align-self-end" data-url="@Url.Action("EditProjectTechnologies", "Projects", new { area = "UserAccount" })">
+                                            <button class="button" type="button">Save changes</button>
                                         </div>
                                     </div>
                                     <div class="modal__body-subject">
@@ -190,27 +239,17 @@
                                             <div class="modal__team-dropdown-items" id="teamMembersDropdown">
                                                 @*foreach (var member in projectMembers)
                                                 {*@
-                                                <div class="modal__user-item">
+                                                <div class="modal__user-item" data-userId="@*@projectsUser.Users.Id Тут має бути айді цього члена команди*@"
+                                                     data-url="@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })"
+                                                     data-projectId="@projectsUser.Projects.ProjectsId">
                                                     <img src="@projectsUser.Projects.Users.Photo" />
                                                     <p onclick="">User1 Name Surname</p>
+                                                    @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
+                                                    {
+                                                        <i class="fa fa-user-times" aria-hidden="true"></i>
+                                                    }
                                                 </div>
                                                 @*}*@
-                                                <div class="modal__user-item">
-                                                    <img src="@projectsUser.Projects.Users.Photo" />
-                                                    <p onclick="">User2 Name Surname</p>
-                                                </div>
-                                                <div class="modal__user-item">
-                                                    <img src="@projectsUser.Projects.Users.Photo" />
-                                                    <p onclick="">User3 Name Surname</p>
-                                                </div>
-                                                <div class="modal__user-item">
-                                                    <img src="@projectsUser.Projects.Users.Photo" />
-                                                    <p onclick="">User4 Name Surname</p>
-                                                </div>
-                                                <div class="modal__user-item">
-                                                    <img src="@projectsUser.Projects.Users.Photo" />
-                                                    <p onclick="">User4 Name Surname</p>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -222,21 +261,24 @@
                                     </div>
                                     <div class="modal__body-subject danger">
                                         <h3 class="align-self-center">Danger zone!</h3>
-                                        <form id="leaveAndDeleteForm" class="modal__danger-item" method="post" enctype="multipart/form-data" action="@Url.Action("DeleteUserFormProject", "Projects")">
-                                            <p>Want to leave the team and delete this project from your dashboard?</p>
-                                            <button id="leaveAndDeleteButton" class="button" type="button" onclick="">Leave and delete</button>
-                                            <input name="deleteUserIdInput" class="hidden" value="@Model.User.Id" />
-                                            <input name="deleteUserProjectInput" class="hidden" value="@projectsUser.Projects.ProjectsId" />
 
-                                        </form>
-                                        <div id="leaveAndDeleteTooltip" class="modal__info-tooltip hidden">
-                                            <h3>Click again to confirm</h3>
-                                            <p>
-                                                Better think twice before doing it!
-                                                You will no longer be a part of the team and the project will be deleted from your dashboard.
-                                                The owner of this project will be notified about your decision.
-                                            </p>
-                                        </div>
+                                        @if (Model.User.Id != @projectsUser.Projects.Users.Id)    // якщо поточний користувач !!!НЕ!!! є власником
+                                        {
+                                            <form id="leaveAndDeleteForm" class="modal__danger-item" method="post" enctype="multipart/form-data" action="@Url.Action("DeleteUserFormProject", "Projects")">
+                                                <p>Want to leave the team and delete this project from your dashboard?</p>
+                                                <button id="leaveAndDeleteButton" class="button" type="button" onclick="">Leave and delete</button>
+                                                <input name="deleteUserIdInput" class="hidden" value="@Model.User.Id" />
+                                                <input name="deleteUserProjectInput" class="hidden" value="@projectsUser.Projects.ProjectsId" />
+                                            </form>
+                                            <div id="leaveAndDeleteTooltip" class="modal__info-tooltip hidden">
+                                                <h3>Click again to confirm</h3>
+                                                <p>
+                                                    Better think twice before doing it!
+                                                    You will no longer be a part of the team and the project will be deleted from your dashboard.
+                                                    The owner of this project will be notified about your decision.
+                                                </p>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -294,7 +336,7 @@
                                         <input type="text" placeholder="Search..." id="projectTechSearchInput" onkeyup="dropdownFilterFunction(projectTechSearchInput, projectTechsDropdown)" />
                                         <img src="~/images/cancel.png" onclick="closeTechsDropdown(projectTechsDropdown, addProjectTechnology)" />
                                     </div>
-                                    <div class="container" id="projectDropdownTechsContainer">
+                                    <div class="container" id="projectDropdownTechsContainer"> 
                                         @foreach (var tech in Model.Technologies)
                                         {
                                             <p onclick="chooseProjectTech('@tech.Name')" id="projectTechsDropdownItem">@tech.Name</p>
