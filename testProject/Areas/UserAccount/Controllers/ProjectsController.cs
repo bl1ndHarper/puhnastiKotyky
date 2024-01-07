@@ -73,7 +73,10 @@ namespace testProject.Areas.UserAccount.Controllers
         [HttpPost]
         public ActionResult DeleteUserFormProject(string deleteUserIdInput, string deleteUserProjectInput)
         {
+            var userId = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             Console.WriteLine("--------Deleting the user №" + deleteUserIdInput + " from the project №" + deleteUserProjectInput);
+            
+            /* логіка методу */
             _db = new AppDbContext();
             var projectUser = _db.ProjectsUsers
                         .Where(p => p.UsersId == uint.Parse(deleteUserIdInput) && p.ProjectsId == uint.Parse(deleteUserProjectInput))
@@ -84,8 +87,48 @@ namespace testProject.Areas.UserAccount.Controllers
                 _db.ProjectsUsers.Remove(projectUser);
             }
             _db.SaveChanges();
+            /* кінець основної логіки */
+            
+            if (Convert.ToInt32(deleteUserIdInput) == userId) // якщо користувач видаляє себе ж
+            {
+                return RedirectToAction("Index", "Account");    // оновлюємо (повертаємо) сторінку
+            }
+            else    // інакше - асинхронний виклик і жодних змін у view (повертаємо рядок із результатом)
+            {
+                return Json(new { success = true, message = "User " + deleteUserIdInput + " successfully deleted from project " + deleteUserProjectInput });
+            }
+        }
 
-            return RedirectToAction("Index", "Account");
+        [HttpPost]
+        public ActionResult EditProjectTechnologies(string projectId, string updatedProjectTechnologies)
+        {
+            try
+            {
+                Console.WriteLine("---------------EditProjectTechnologies called");
+                Console.WriteLine($"---------------after editing:{updatedProjectTechnologies}");
+
+                return Json(new { success = true, message = "Project " + projectId + " technologies list successfully changed to " + updatedProjectTechnologies });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while changing the project " + projectId + " technologies. Details: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditProjectStatus(string projectId, string projectStatus)
+        {
+            try
+            {
+                Console.WriteLine("---------------EditProjectStatus called");
+                Console.WriteLine($"---------------{projectId}/{projectStatus}");
+
+                return Json(new { success = true, message = "Project " + projectId + " status successfully changed to " + projectStatus });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while changing the status. Details: " + ex.Message });
+            }
         }
     }
 }
