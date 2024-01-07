@@ -75,10 +75,20 @@ namespace testProject.Areas.UserAccount.Controllers
         {
             var userId = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             Console.WriteLine("--------Deleting the user №" + deleteUserIdInput + " from the project №" + deleteUserProjectInput);
+            
             /* логіка методу */
+            _db = new AppDbContext();
+            var projectUser = _db.ProjectsUsers
+                        .Where(p => p.UsersId == uint.Parse(deleteUserIdInput) && p.ProjectsId == uint.Parse(deleteUserProjectInput))
+                        .FirstOrDefault();
 
-
+            if (projectUser != null)
+            {
+                _db.ProjectsUsers.Remove(projectUser);
+            }
+            _db.SaveChanges();
             /* кінець основної логіки */
+            
             if (Convert.ToInt32(deleteUserIdInput) == userId) // якщо користувач видаляє себе ж
             {
                 return RedirectToAction("Index", "Account");    // оновлюємо (повертаємо) сторінку

@@ -231,25 +231,32 @@
                                             <img src="@projectsUser.Projects.Users.Photo" />
                                             <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName (Owner)</p>
                                         </div>
+
                                         <div class="modal__team-dropdown-header">
-                                            <p id="showTeamMembers" class="">and [] more...</p> @*[] is the count of project members -1*@
-                                            <i class="arrow up hidden"></i>
+                                            @if (Model.ProjectParticipants[@projectsUser.Projects.ProjectsId].Count >= 2)
+                                            {
+                                                <p id="showTeamMembers" class="">and @(Model.ProjectParticipants[@projectsUser.Projects.ProjectsId].Count - 1) more...</p>
+                                                <i class="arrow up hidden"></i>
+                                            }
                                         </div>
                                         <div class="modal__team-dropdown hidden">
                                             <div class="modal__team-dropdown-items" id="teamMembersDropdown">
-                                                @*foreach (var member in projectMembers)
-                                                {*@
-                                                <div class="modal__user-item" data-userId="@*@projectsUser.Users.Id Тут має бути айді цього члена команди*@"
-                                                     data-url="@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })"
-                                                     data-projectId="@projectsUser.Projects.ProjectsId">
-                                                    <img src="@projectsUser.Projects.Users.Photo" />
-                                                    <p onclick="">User1 Name Surname</p>
-                                                    @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
+                                                @foreach (var member in Model.ProjectParticipants[@projectsUser.Projects.ProjectsId])
+                                                {
+                                                  @if (@projectsUser.Projects.UsersId != member.Id)
                                                     {
+                                                      <div class="modal__user-item" data-userId="@*@projectsUser.Users.Id Тут має бути айді цього члена команди*@"
+                                                      data-url="@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })"
+                                                      data-projectId="@projectsUser.Projects.ProjectsId">
+                                                      <img src="@member.Photo" />
+                                                      <p onclick="">@member.FirstName @member.LastName</p>
+                                                      @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
+                                                      {
                                                         <i class="fa fa-user-times" aria-hidden="true"></i>
-                                                    }
-                                                </div>
-                                                @*}*@
+                                                      }
+                                                  </div>
+                                                    } 
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -259,16 +266,18 @@
                                         <p>Creation date: @projectsUser.Projects.CreationDate</p>
                                         <p>Expected duration: @projectsUser.Projects.Duration weeks</p>
                                     </div>
-                                    <div class="modal__body-subject danger">
-                                        <h3 class="align-self-center">Danger zone!</h3>
 
-                                        @if (Model.User.Id != @projectsUser.Projects.Users.Id)    // якщо поточний користувач !!!НЕ!!! є власником
-                                        {
+                                    @if (Model.User.Id != @projectsUser.Projects.UsersId &&                             // this area should be available only for
+                                   Model.ProjectParticipants[@projectsUser.Projects.ProjectsId].Contains(Model.User))   // the project's participants (except the owner)
+                                    {
+                                        <div class="modal__body-subject danger">
+                                            <h3 class="align-self-center">Danger zone!</h3>
                                             <form id="leaveAndDeleteForm" class="modal__danger-item" method="post" enctype="multipart/form-data" action="@Url.Action("DeleteUserFormProject", "Projects")">
                                                 <p>Want to leave the team and delete this project from your dashboard?</p>
                                                 <button id="leaveAndDeleteButton" class="button" type="button" onclick="">Leave and delete</button>
                                                 <input name="deleteUserIdInput" class="hidden" value="@Model.User.Id" />
                                                 <input name="deleteUserProjectInput" class="hidden" value="@projectsUser.Projects.ProjectsId" />
+
                                             </form>
                                             <div id="leaveAndDeleteTooltip" class="modal__info-tooltip hidden">
                                                 <h3>Click again to confirm</h3>
@@ -278,8 +287,8 @@
                                                     The owner of this project will be notified about your decision.
                                                 </p>
                                             </div>
-                                        }
-                                    </div>
+                                        </div>
+                                    }       
                                 </div>
                             </div>
                         }
