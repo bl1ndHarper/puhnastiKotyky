@@ -451,7 +451,13 @@
                                 <div class="modal__container hidden" id="request-modal-@request.RequestsId">
                                     <div class="modal__body-request">
                                         <div class="modal__header">
-                                            <h1>Request to be a part of <span data-project-id="project-modal-@request.ProjectsId">@request.Projects.Name</span> team</h1>
+                                            @if (request.Status == "accepted")  // if request is accepted show project modal
+                                            {
+                                                <h1>Request to be a part of <span id="modalLink" data-project-id="project-modal-@request.ProjectsId">@request.Projects.Name</span> team</h1>
+                                            } else  // if not - show project's public page
+                                            {
+                                                <h1>Request to be a part of <span id="pageLink" data-project-id="">@request.Projects.Name</span> team</h1>
+                                            }
                                             <button class="modal__close-button">
                                                 <div class="cross-line"></div>
                                                 <div class="cross-line"></div>

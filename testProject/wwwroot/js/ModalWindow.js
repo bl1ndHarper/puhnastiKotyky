@@ -7,6 +7,7 @@ var initialProjectTechsArray = [];
 // request modal:
 document.querySelectorAll('.user-account-day__user-requests .modal__open-button').forEach(function (btn) {
     btn.addEventListener('click', function () {
+
         var modalId = this.getAttribute('data-modal-id');
         var currentModal = document.getElementById(modalId);
         currentModal.classList.remove("hidden");
@@ -15,17 +16,23 @@ document.querySelectorAll('.user-account-day__user-requests .modal__open-button'
                 closeModal(e, true);
             }
         }
-
         const projectLink = currentModal.querySelector(".modal__header span");
         const id = projectLink.getAttribute("data-project-id");
+
         projectLink.onclick = function () {
-            currentModal.click();
-            document.querySelectorAll("#project-card").forEach(function (card) {
-                if (card.getAttribute("data-modal-id") == id) {
-                    card.querySelector("#user-account-day__detailed-info-button").click();
-                }
-            });
+            if (projectLink.id == "modalLink") {
+                currentModal.click();
+                document.querySelectorAll("#project-card").forEach(function (card) {
+                    if (card.getAttribute("data-modal-id") == id) {
+                        card.querySelector("#user-account-day__detailed-info-button").click();
+                    }
+                });
+            } else if (projectLink.id == "pageLink") {
+                // redirrect to a project page (NOT modal)
+                console.log("Redirrecting to the project page...")
+            }
         }
+        
     });
 });
 // project modal:
