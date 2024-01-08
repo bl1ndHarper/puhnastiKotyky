@@ -42,15 +42,17 @@ document.querySelectorAll('.modal__open-button').forEach(function (btn) {
         var teamMembersDropdown = currentModal.querySelector('.modal__team-dropdown');
         var showMembersButton = currentModal.querySelector('#showTeamMembers');
         var hideMembersButton = currentModal.querySelector('.arrow.up');
-        showMembersButton.onclick = function () {
-            showMembersButton.classList.add("hidden");
-            teamMembersDropdown.classList.remove("hidden");
-            hideMembersButton.classList.remove("hidden");
-        }
-        hideMembersButton.onclick = function () {
-            showMembersButton.classList.remove("hidden");
-            teamMembersDropdown.classList.add("hidden");
-            hideMembersButton.classList.add("hidden");
+        if (showMembersButton != null) {
+            showMembersButton.onclick = function () {
+                showMembersButton.classList.add("hidden");
+                teamMembersDropdown.classList.remove("hidden");
+                hideMembersButton.classList.remove("hidden");
+            }
+            hideMembersButton.onclick = function () {
+                showMembersButton.classList.remove("hidden");
+                teamMembersDropdown.classList.add("hidden");
+                hideMembersButton.classList.add("hidden");
+            }
         }
 
         var clickCounter = 0;

@@ -173,7 +173,7 @@
                                                 <div class="modal__project-status-select-items">
                                                     <p>searching for participants</p>
                                                     <p>draft</p>
-                                                    <p>in developmen</p>
+                                                    <p>in development</p>
                                                     <p>completed</p>
                                                 </div>
                                             }
@@ -245,7 +245,7 @@
                                                 {
                                                   @if (@projectsUser.Projects.UsersId != member.Id)
                                                     {
-                                                      <div class="modal__user-item" data-userId="@*@projectsUser.Users.Id Тут має бути айді цього члена команди*@"
+                                                        <div class="modal__user-item" data-userId="@member.Id"
                                                       data-url="@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })"
                                                       data-projectId="@projectsUser.Projects.ProjectsId">
                                                       <img src="@member.Photo" />
