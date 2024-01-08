@@ -22,11 +22,11 @@
     }
 
 .align-self-end {
-    align-self: flex-end;
+    align-self: flex-end !important;
 }
 
 .align-self-center {
-    align-self: center;
+    align-self: center !important;
 }
 
 .modal__container {
@@ -45,7 +45,8 @@
     scrollbar-gutter: stable;
 }
 
-.modal__body {
+.modal__body,
+.modal__body-request {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -54,22 +55,41 @@
     gap: 40px 60px;
     width: 50%;
     min-width: 400px;
-    min-height: 400px;
+    min-height: 300px;
     background: #def5e5;
     border: 2px solid #183d3d;
     border-radius: 20px;
-    padding: 24px;
+    padding: 24px 36px;
     margin-top: 5vh;
 }
 
-    .modal__body .modal__project-status {
+.modal__body-request {
+    background: #bcead5;
+    min-height: 250px;
+    height: fit-content;
+    width: 70%;
+    gap: 28px;
+    align-self: center;
+}
+
+    .modal__body .modal__project-status,
+    .modal__body-request .modal__project-status {
         display: flex;
         flex-direction: row;
         gap: 8px;
         margin-top: -40px;
+        font: 400 18px "Fira Sans";
+        height: fit-content;
+        color: #183d3d;
     }
 
-        .modal__body .modal__project-status div {
+    .modal__body-request .modal__project-status {
+        margin-top: -24px;
+        margin-bottom: 24px;
+    }
+
+        .modal__body .modal__project-status div,
+        .modal__body-reques .modal__project-status div {
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -172,6 +192,21 @@
         color: #183d3d;
         width: fit-content;
     }
+
+    .modal__header span {
+        background-color: transparent;
+        color: #183d3d;
+        padding: 0 4px;
+        margin: 0 -4px;
+        text-decoration: underline;
+        cursor: pointer;
+        transition: color .5s ease-in-out, background-color .5s ease-in-out;
+    }
+
+        .modal__header span:hover {
+            color: #def5e5;
+            background-color: #183d3d;
+        }
 
 .modal__body-subject {
     flex-direction: column;
@@ -444,3 +479,72 @@
         bottom: 100%;
         right: 11%;
     }
+
+.modal__request-info,
+.modal__delete-request-button {
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    color: #183d3d;
+}
+
+    .modal__request-info h3 {
+        font: 500 24px "Fira Sans";
+    }
+
+    .modal__request-info span {
+        margin-right: 8px;
+        font-weight: 400;
+    }
+
+.modal__delete-request-button {
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.modal__body-request .modal__project-status p span {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.modal__body-request .button {
+    color: #183d3d;
+    font: 500 20px "Fira Sans";
+    padding: 8px;
+}
+
+    .modal__body-request .modal__info-tooltip {
+        visibility: hidden;
+        width: fit-content;
+    }
+
+        .modal__body-request .modal__info-tooltip p {
+            font: 300 18px "Fira Sans";
+            color: #183d3d;
+        }
+
+    .modal__body-request .modal__info-tooltip::after {
+        display: block;
+        left: 100%;
+        top: calc(50% - 8px);
+        transform: rotate(90deg);
+    }
+
+.modal__body-request .button:hover + .modal__info-tooltip {
+    visibility: visible;
+    animation: float 1s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+    0% {
+        transform: translateX(6px);
+    }
+
+    100% {
+        transform: translateX(1px);
+    }
+}

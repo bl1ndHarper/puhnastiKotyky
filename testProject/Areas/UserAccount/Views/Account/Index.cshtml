@@ -110,7 +110,7 @@
                     <div class="user-account-day__projects-container">
                         @foreach (var projectsUser in Model.User.ProjectsUser)
                         {
-                            <div class="user-account-day__project">
+                            <div id="project-card" data-modal-id="project-modal-@projectsUser.Projects.ProjectsId" class="user-account-day__project">
                                 <h2>@projectsUser.Projects.Name</h2>
                                 <div class="user-account-day__project-technologies-container">
                                     <h3>
@@ -449,14 +449,42 @@
                                 </div>
 
                                 <div class="modal__container hidden" id="request-modal-@request.RequestsId">
-                                    <div class="modal__body">
+                                    <div class="modal__body-request">
                                         <div class="modal__header">
-                                            <h1>Request to be a part of @request.Projects.Name team</h1>
+                                            <h1>Request to be a part of <span data-project-id="project-modal-@request.ProjectsId">@request.Projects.Name</span> team</h1>
                                             <button class="modal__close-button">
                                                 <div class="cross-line"></div>
                                                 <div class="cross-line"></div>
                                             </button>
                                         </div>
+                                        <div class="modal__project-status">
+                                            <p>by <span>@request.Projects.Users.FirstName @request.Projects.Users.LastName</span></p>
+                                        </div>
+                                        <div class="modal__request-info">
+                                            <div>
+                                                <h3>Request status:  <span>@request.Status</span></h3>
+                                            </div>
+                                            <div>
+                                                <h3>Creation date:  <span>@request.Date.ToString("dd.MM.yyyy HH:mm")</span></h3>
+                                            </div>
+                                        </div>
+                                        <form class="modal__delete-request-button" method="post" enctype="multipart/form-data" action="@Url.Action("WithdrawRequest", "Projects")">
+                                            <input class="hidden" name="requestId" value="@request.RequestsId" />
+                                            @if (@request.Status != "denied" && @request.Status != "accepted")
+                                            {
+                                                <button type="submit" class="button align-self-end">
+                                                    <p>Delete the request</p>
+                                                </button>
+                                                <div id="deleteRequestTooltip" class="modal__info-tooltip"><p>Click if you're sure you want to withdraw the request. It will be deleted completely but you always can create a new one!</p></div>
+                                            } else
+                                            {
+                                                <button type="button" class="button align-self-end">
+                                                    <p>Delete the request</p>
+                                                </button>
+                                                <div id="cannotDeleteRequestTooltip" class="modal__info-tooltip"><p>You cannot withdraw the request if it has already been accepted or denied by the project owner.</p></div>
+                                            }
+                                        </form>
+                                        
                                     </div>
                                 </div>
                             }
