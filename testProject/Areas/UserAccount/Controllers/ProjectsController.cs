@@ -182,12 +182,5 @@ namespace testProject.Areas.UserAccount.Controllers
                 return Json(new { success = false, message = "An error occurred while changing the status. Details: " + ex.Message });
             }
         }
-
-        [HttpPost]
-        public ActionResult WithdrawRequest(string requestId)
-        {
-            Console.WriteLine("-----------Deleting the request #" + requestId);
-            return RedirectToAction("Index", "Account");
-        }
     }
 }
