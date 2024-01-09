@@ -474,7 +474,7 @@
                                                 <h3>Creation date:  <span>@request.Date.ToString("dd.MM.yyyy HH:mm")</span></h3>
                                             </div>
                                         </div>
-                                        <form class="modal__delete-request-button" method="post" enctype="multipart/form-data" action="@Url.Action("WithdrawRequest", "Projects")">
+                                        <form class="modal__delete-request-button" method="post" enctype="multipart/form-data" action="@Url.Action("WithdrawRequest", "Requests")">
                                             <input class="hidden" name="requestId" value="@request.RequestsId" />
                                             @if (@request.Status != "denied" && @request.Status != "accepted")
                                             {

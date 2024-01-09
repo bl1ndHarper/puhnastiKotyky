@@ -130,24 +130,5 @@ namespace testProject.Areas.UserAccount.Controllers
                 return Json(new { success = false, message = "An error occurred while changing the status. Details: " + ex.Message });
             }
         }
-
-        [HttpPost]
-        public ActionResult WithdrawRequest(string requestId)
-        {
-            Console.WriteLine("-----------Deleting the request #" + requestId);
-            _db = new AppDbContext();
-            var request = _db.Requests
-                        .Where(r => r.RequestsId == Convert.ToUInt32(requestId))
-                        .FirstOrDefault();
-
-            if (request != null && request.Status == "considering")
-            {
-                request.Status = "deleted";
-                _db.Requests.Update(request);
-                _db.SaveChanges();
-            }
-            
-            return RedirectToAction("Index", "Account");
-        }
     }
 }
