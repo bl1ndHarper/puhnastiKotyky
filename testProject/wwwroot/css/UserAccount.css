@@ -506,9 +506,9 @@ user-account-day * {
     transform: translateY(-10px);
     opacity: 1;
     transition: .3s linear;
-    animation: odsoky 1s ease-in-out infinite alternate;
+    animation: float-vertical 1s ease-in-out infinite alternate;
 }
-@keyframes odsoky {
+@keyframes float-vertical {
     0% {
         transform: translateY(6px);
     }
