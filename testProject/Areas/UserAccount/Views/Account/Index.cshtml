@@ -427,7 +427,7 @@
                             </h2>
                         }
                         <div class="user-account-day__user-requests-container">
-                            @foreach (var request in Model.User.Requests)
+                            @foreach (var request in Model.User.Requests.Where(r => r.Status != "deleted"))
                             {
                                 <div class="user-account-day__request">
                                     <h2>
