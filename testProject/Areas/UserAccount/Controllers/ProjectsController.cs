@@ -107,6 +107,47 @@ namespace testProject.Areas.UserAccount.Controllers
                 Console.WriteLine("---------------EditProjectTechnologies called");
                 Console.WriteLine($"---------------after editing:{updatedProjectTechnologies}");
 
+                _db = new AppDbContext();
+
+                var originalProjectTechs = _db.ProjectsTechnologies
+                    .Where(pt => pt.ProjectsId == Convert.ToUInt32(projectId))
+                    .Select(pt => pt.Technologies.Name).ToArray();
+
+                string[] updatedProjectTechs = updatedProjectTechnologies.Split(',');
+
+                var addedItems = updatedProjectTechs.Except(originalProjectTechs);
+                var deletedItems = originalProjectTechs.Except(updatedProjectTechs);
+
+                foreach (var item in addedItems)
+                {
+                    var techId = _db.Technologies
+                        .Where(e => e.Name == item)
+                        .Select(e => e.TechnologiesId)
+                        .FirstOrDefault();
+
+                    ProjectsTechnology projTech = new ProjectsTechnology { ProjectsId = Convert.ToUInt32(projectId), TechnologiesId = techId };
+                    _db.ProjectsTechnologies.Add(projTech);
+                    _db.SaveChanges();
+                }
+
+                foreach (var item in deletedItems)
+                {
+                    var techId = _db.Technologies
+                        .Where(e => e.Name == item)
+                        .Select(e => e.TechnologiesId)
+                        .FirstOrDefault();
+
+                    var projTech = _db.ProjectsTechnologies
+                        .Where(pt => pt.ProjectsId == Convert.ToUInt32(projectId) && pt.TechnologiesId == techId)
+                        .FirstOrDefault();
+
+                    if (projTech != null)
+                    {
+                        _db.ProjectsTechnologies.Remove(projTech);
+                    }
+                }
+                _db.SaveChanges();
+
                 return Json(new { success = true, message = "Project " + projectId + " technologies list successfully changed to " + updatedProjectTechnologies });
             }
             catch (Exception ex)
@@ -122,6 +163,17 @@ namespace testProject.Areas.UserAccount.Controllers
             {
                 Console.WriteLine("---------------EditProjectStatus called");
                 Console.WriteLine($"---------------{projectId}/{projectStatus}");
+                _db = new AppDbContext();
+                
+                var project = _db.Projects
+                        .Where(p => p.ProjectsId == Convert.ToUInt32(projectId))
+                        .FirstOrDefault();
+
+                if (project != null)
+                {
+                    project.Status = projectStatus;
+                    _db.SaveChanges();
+                }
 
                 return Json(new { success = true, message = "Project " + projectId + " status successfully changed to " + projectStatus });
             }

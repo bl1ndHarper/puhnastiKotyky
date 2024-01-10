@@ -305,6 +305,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                 });
             }
         }
+
         function resetUnsavedTechsChanges() {
             if (!saveButton.classList.contains("hidden")) {
                 while (techsItems.children.length > 2) {
@@ -368,6 +369,7 @@ document.querySelectorAll('.modal__close-button').forEach(function (btn) {
     btn.addEventListener('click', function () {
         var modal = this.closest('.modal__container');
         modal.classList.add('hidden');
+        location.reload();
     });
 });
 
@@ -380,6 +382,7 @@ function closeModal(e, clickedOutside) {
     if (modal) {
         if (clickedOutside || e.target.classList.contains("modal__close-button")) {
             modal.classList.add("hidden");
+            location.reload();
         }
     }
 }
