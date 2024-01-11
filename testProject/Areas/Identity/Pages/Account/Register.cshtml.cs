@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -198,6 +199,7 @@ namespace testProject.Areas.Identity.Pages.Account
                 var user = Activator.CreateInstance<User>();
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.Photo = "https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png";
                 return user;
             }
             catch
