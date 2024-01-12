@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="project__body">
+        <div class="project__header">
+            <h1>Ban Lu - Tea App</h1>   @*TODO: "Ban Lu - Tea App" -> Model.name*@
+            <div class="project__header-info">
+                <div>
+                    <i class="fa fa-align-left"></i>
+                    <p>Complexity: hard</p>     @*TODO: "hard" -> Model.level*@
+                </div>
+                <div>
+                    <i class="fa fa-clock-o"></i>
+                    <p>Expected duration: 15 weeks</p>  @*TODO: "15 weeks" -> Model.duration*@
+                </div>
+                <div>
+                    <i class="fa fa-calendar"></i>
+                    <p>Creation date: 12.01.2024</p>     @*TODO: "12.01.2024" -> Model.date*@
+                </div>
+            </div>
+        </div>
+        <div class="project__content">
+            <div class="project__technologies">
+                <h2>Technologies:</h2>
+                <div>
+                    @*TODO: foreach tech in Model.technologies
+                        <p>tech.name</p>
+                    *@
+                    <p>ASP.NET</p>
+                    <p>C#</p>
+                    <p>SQL</p>
+                    <p>HTML/CSS</p>
+                </div>
+            </div>
+            <div class="project__description">
+                <h2>Project description:</h2>
+                @*TODO: <p>Model.description</p>*@
+                <p>The complete tea app for android phones which is both a store and a manual for tea lovers and those who want to be closer to Chinese tea culture. There must be a user authentication, categorized catalog with filtering search, everything that an e-store needs and a separate page with manuals and tea brewing timer for different types of Chinese tea. The main idea on interface is a cute, rounded and minimalistic green-colored look and as least page redirections as possible to create a feeling of confidence and stillness.</p>
+            </div>
+            <div class="project__actions">
+                <div>
+                    <i class="fa fa-info"></i>
+                    <h3>Status: <span>searching for participants</span></h3>
+                </div>
+                <div class="project__actions-buttons">
+                    <button>
+                        <i class="fa fa-user-plus"></i>
+                        <p>Join request!</p>
+                    </button>
+                    <button style="background: #DEF5E5;">
+                        <i class="fa fa-search"></i>
+                        <p>Other projects</p>
+                    </button>
+                </div>
+            </div>
+            <div class="project__team">
+                <h2>Team: <span>(5 members)</span></h2>
+                <div class="project__team-dropdown">
+                    @*TODO: foreach member in Model.team*@
+                    <div class="project__team-dropdown-item">
+                        @*TODO: member.photo*@
+                        <img src="https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png" />
+                        @*TODO: <p>member.name memder.surname</p>*@
+                        <p>Name Surname</p>
+                        @*TODO: if member is owner show this:*@
+                        <p>(Owner)</p>
+                    </div>
+                    <div class="project__team-dropdown-item">
+                        <img src="https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png" />
+                        <p>Name Surname</p>
+                        <p></p>
+                    </div>
+                    <div class="project__team-dropdown-item">
+                        <img src="https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png" />
+                        <p>Name Surname</p>
+                        <p></p>
+                    </div>
+                    <div class="project__team-dropdown-item">
+                        <img src="https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png" />
+                        <p>Name Surname</p>
+                        <p></p>
+                    </div>
+                    <div class="project__team-dropdown-item">
+                        <img src="https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png" />
+                        <p>Name Surname</p>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="project__alt">
+            <p>Can’t find a project interesting enough? Create a new one based on your own idea!</p>
+            <div>
+                <i class="fa fa-pencil"></i>
+                <a>Create a project</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
