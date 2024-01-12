@@ -1,0 +1,231 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap');
+
+.project__body {
+    width: 100%;
+    height: 92vh;
+    position: fixed;
+    left: 0;
+    top: 8vh;
+    background: linear-gradient(180deg, #BCEAD5 5%, #9ED5C5 250px, #DEF5E5 400px, #DEF5E5 100%);
+    overflow: hidden auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.project__header {
+    height: 250px;
+    width: 100%;
+    background-color: #BCEAD5;
+    background-image: url('/images/project-page-header-background.png');
+    background-repeat: repeat no-repeat;
+    background-size: auto 230px;
+    background-position-y: 100%;
+    padding: 80px 10vw 20px 10vw;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: center;
+    gap: 24px;
+    color: #183d3d;
+    animation: animatedBackground 1000s linear infinite;
+    position: fixed;
+    z-index: 1;
+}
+
+@keyframes animatedBackground {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -10000px;
+    }
+}
+
+    .project__header h1 {
+        font: 600 56px "Fira Sans";
+    }
+
+    .project__header .project__header-info {
+        margin-right: 20%;
+        font: 500 20px "Fira Sans";
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 8px 80px;
+    }
+
+        .project__header .project__header-info div,
+        .project__actions button {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 8px;
+        }
+
+.project__content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+    color: #183d3d;
+    width: 70%;
+    position: relative;
+    left: 15%;
+    padding: 310px 0 0 0;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+.project__technologies,
+.project__description,
+.project__actions,
+.project__team {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: #bcead5;
+    border-radius: 12px;
+    border: 1px solid #183d3d;
+    padding: 12px;
+    gap: 12px;
+}
+
+.project__actions,
+.project__team {
+    height: 156px;
+    padding: 32px;
+    width: stretch;
+    min-width: fit-content;
+    gap: 28px;
+    flex-wrap: nowrap;
+    flex: 1;
+}
+
+.project__team {
+    padding: 12px;
+    gap: 12px;
+}
+
+.project__technologies h2,
+.project__description h2,
+.project__team h2 {
+    font: 700 20px "Fira Sans";
+}
+
+    .project__description p {
+        text-align: justify;
+        font: 400 16px "Fira Sans";
+    }
+
+.project__technologies div,
+.project__actions div {
+    color: #183d3d;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.project__actions div {
+    width: max-content;
+    align-items: center;
+}
+
+.project__actions .project__actions-buttons {
+    flex-wrap: nowrap;
+}
+
+        .project__technologies div p {
+            background: #DEF5E5;
+            border-radius: 12px;
+            border: 2px solid #bcead5;
+            font: 500 16px "Fira Sans";
+            padding: 8px;
+        }
+
+.project__actions .project__actions-buttons button {
+    background: #BCEAD5;
+    border-radius: 8px;
+    border: 2px solid #183d3d;
+    width: fit-content;
+    padding: 4px 12px;
+    align-items: center;
+}
+
+    .project__actions .project__actions-buttons button i {
+        border: none;
+        font-size: 20px;
+        color: #183d3d;
+        width: 24px;
+        height: 24px;
+    }
+
+.project__actions i {
+    border-radius: 50%;
+    border: 2px solid #183d3d;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding: 2px;
+    font-size: 12px;
+}
+
+    .project__actions h3 {
+        font: 500 20px "Fira Sans";
+    }
+
+.project__team .project__team-dropdown {
+    background: #def5e5;
+    border-radius: 16px;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-height: 200px;
+    overflow: auto;
+}
+
+    .project__team .project__team-dropdown .project__team-dropdown-item {
+        padding: 4px;
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .project__team .project__team-dropdown .project__team-dropdown-item img {
+        width: 28px;
+    }
+
+        .project__team .project__team-dropdown .project__team-dropdown-item p {
+            font: 500 16px "Fira Sans";
+        }
+
+    .project__team h2 span {
+        font: 400 16px "Fira Sans";
+    }
+
+.project__alt {
+    position: relative;
+    width: 70%;
+    left: 15%;
+    text-align: center;
+    padding: 44px 0 12px 0;
+    font: 400 16px "Fira Sans";
+}
+
+    .project__alt div {
+        text-decoration: underline;
+        cursor: pointer;
+    }

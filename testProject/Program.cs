@@ -47,6 +47,11 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints => {
     endpoints.MapControllerRoute(
+          name: "Projects",
+          pattern: "{area:exists}/{controller=Public}/{action=Index}/{id?}"
+        );
+
+    endpoints.MapControllerRoute(
           name: "UserAccount",
           pattern: "{area:exists}/{controller=Account}/{action=Index}/{id?}"
         );
