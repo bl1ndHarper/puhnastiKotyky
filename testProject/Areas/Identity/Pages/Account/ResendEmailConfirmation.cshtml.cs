@@ -47,6 +47,7 @@ namespace testProject.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
+            [MaxLength(100)]
             [EmailAddress]
             public string Email { get; set; }
         }

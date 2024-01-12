@@ -81,8 +81,8 @@
             </div>
             <div>
                 <img src="~/images/password-icon0.png" />
-                <input asp-for="Input.Password" autocomplete="new-password" aria-required="true" placeholder="Password" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <input asp-for="Input.Password" autocomplete="new-password" id="Password" aria-required="true" placeholder="Password" />
+                <span id ="passwordError" class="text-danger"></span>
             </div>
             <div>
                 <img src="~/images/confirm-password-icon0.png" />
@@ -119,3 +119,34 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#Password').on('focusout', function () {
+            validatePassword();
+        });
+
+        function validatePassword() {
+            var password = $('#Password').val();
+            var isValidLength = password.length >= 8 && password.length <= 32;
+            var hasSpecialSymbol = /[!@@#$%^&*(),.?":{}|<>]/.test(password);
+            var hasDigit = /\d/.test(password);
+            var hasUppercase = /[A-Z]/.test(password);
+            var hasLowercase = /[a-z]/.test(password);
+            
+            if (!isValidLength) {
+                $('#passwordError').text("Length must be between 8 and 32");
+            }
+            else if (!hasUppercase || !hasLowercase) {
+                $('#passwordError').text("Must contain uppercase and lowercase letters");
+            } else if(!hasDigit){
+                $('#passwordError').text("Must contain at least one digit");
+            } else if (!hasSpecialSymbol) {
+                $('#passwordError').text("Must contain at least one special symbol");
+            } else{
+                $('#passwordError').text("");
+            }
+        }
+    });
+</script>
