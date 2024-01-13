@@ -6,7 +6,7 @@
     position: fixed;
     left: 0;
     top: 8vh;
-    background: linear-gradient(180deg, #BCEAD5 5%, #9ED5C5 250px, #DEF5E5 400px, #DEF5E5 100%);
+    background: linear-gradient(180deg, #9ED5C5 10%, #9ED5C5 250px, #DEF5E5 400px, #DEF5E5 100%);
     overflow: hidden auto;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@
 .project__header {
     height: 250px;
     width: 100%;
-    background-color: #BCEAD5;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)) no-repeat center center;
     background-image: url('/images/project-page-header-background.png');
     background-repeat: repeat no-repeat;
     background-size: auto 230px;
@@ -28,12 +28,33 @@
     gap: 24px;
     color: #183d3d;
     animation: animatedBackground 1000s linear infinite;
-    position: fixed;
+    transition: ease-in-out 1s;
+    position: sticky;
+    top: -150px;
     z-index: 1;
 }
 
-@keyframes animatedBackground {
-    from {
+    .project__header::before,
+    .project__header::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50px;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), #9ED5C5);
+    }
+
+    .project__header::before {
+        background: linear-gradient(to left, rgba(255, 255, 255, 0), #9ED5C5);
+        left: 0;
+    }
+
+        .project__header::after {
+            right: 0;
+        }
+
+        @keyframes animatedBackground {
+            from {
         background-position-x: 0;
     }
     to {
@@ -43,6 +64,8 @@
 
     .project__header h1 {
         font: 600 56px "Fira Sans";
+        height: 50px;
+        transition: all ease-in-out .3s;
     }
 
     .project__header .project__header-info {
@@ -74,7 +97,7 @@
     width: 70%;
     position: relative;
     left: 15%;
-    padding: 310px 0 0 0;
+    padding: 50px 0 0 0;
     align-self: stretch;
     flex-shrink: 0;
 }
