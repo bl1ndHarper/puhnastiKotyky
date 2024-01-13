@@ -267,6 +267,46 @@
                                         <p>Expected duration: @projectsUser.Projects.Duration weeks</p>
                                     </div>
 
+                                    @if (Model.User.Id == @projectsUser.Projects.Users.Id)
+                                    {
+                                        <div class="modal__body-subject">
+                                            @if (Model.Requests.Where(r => r.ProjectsId == @projectsUser.Projects.ProjectsId).Count() > 0)
+                                            {
+                                                <h3>Requests:</h3>
+                                                <div class="modal__request-container">
+
+                                                    @foreach (var request in Model.Requests.Where(r => r.ProjectsId == @projectsUser.Projects.ProjectsId 
+                                                                                                    && r.Status != "accepted")                 
+                                                                                           .OrderBy(r => r.Status == "considering" ? 0 : 1))
+                                                    {
+                                                        <div class="modal__request-item">
+                                                            <div class="modal__request-body">
+                                                                <h3>Request by <span>@request.Users.FirstName @request.Users.LastName</span></h3>
+                                                                <div class="modal__request-details">
+                                                                    <div>
+                                                                        <h4>Created: </h4>
+                                                                        <p>@request.Date.ToString("dd.MM.yyyy")</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <h4>Status: </h4>
+                                                                        <p>@request.Status</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal__request-buttons">
+                                                                <button class="button align-self-end" id="modal__request-accept-button">Accept</button>
+                                                                <button class="button align-self-end" id="modal__request-reject-button">Reject</button>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                
+                                            } else {
+                                                <h3>No requests have been sent yet</h3>
+                                            }   
+                                        </div>
+                                    }
+
                                     @if (Model.User.Id != @projectsUser.Projects.UsersId &&                             // this area should be available only for
                                    Model.ProjectParticipants[@projectsUser.Projects.ProjectsId].Contains(Model.User))   // the project's participants (except the owner)
                                     {

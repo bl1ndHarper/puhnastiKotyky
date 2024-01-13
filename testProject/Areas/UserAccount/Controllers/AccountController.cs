@@ -51,8 +51,12 @@ namespace testProject.Areas.UserAccount.Controllers
                 .FirstOrDefault(u => u.Id.ToString() == userId);
 
             var tech = _db.Technologies.ToList();
+            var requests = _db.Requests
+                .Where(r => r.Projects.UsersId == Convert.ToUInt32(userId))
+                .Include(r => r.Users)
+                .Include(r => r.Projects).ToList();
 
-            AccountViewModel accountViewModel = new AccountViewModel { User = user, Technologies = tech };
+            AccountViewModel accountViewModel = new AccountViewModel { User = user, Technologies = tech, Requests = requests };
 
             if (user != null)
             {

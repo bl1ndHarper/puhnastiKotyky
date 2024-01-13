@@ -454,6 +454,77 @@
             background-size: 100% 100%;
         }
 
+.modal__request-container {
+    background: #def5e5;
+    border: 2px solid #bcead5;
+    border-radius: 16px;
+    padding: 6px 6px 0px 6px;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+    width: 100%;
+    max-height: 200px;
+    overflow: auto;
+    animation: fadeOut .5s;
+}
+
+.modal__request-item {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background: #bcead5;
+    border-radius: 12px;
+    padding: 8px;
+    margin-bottom: 6px;
+}
+
+    .modal__request-item h3 span{
+        text-decoration: underline;
+    }
+
+    .modal__request-details h4 {
+        font: "Fira Sans";
+        color: #183d3d;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+.modal__request-details {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+
+    .modal__request-details > div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+.modal__request-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+#modal__request-reject-button,
+#modal__request-accept-button {
+    color: #183d3d;
+    font-size: 17px;
+}
+
+#modal__request-reject-button {
+    background: #def5e5;
+}
+
+    #modal__request-reject-button:hover {
+        background: #c9d4cc;
+    }
+
 .modal__info-tooltip {
     text-align: justify;
     width: 100%;
