@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -72,10 +73,12 @@ namespace testProject.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [MaxLength(50)]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
+            [MaxLength(50)]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
             /// <summary>
@@ -84,6 +87,7 @@ namespace testProject.Areas.Identity.Pages.Account
             /// </summary>
             [Required]
             [EmailAddress]
+            [MaxLength(100)]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
@@ -92,7 +96,7 @@ namespace testProject.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(32, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -195,6 +199,7 @@ namespace testProject.Areas.Identity.Pages.Account
                 var user = Activator.CreateInstance<User>();
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.Photo = "https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png";
                 return user;
             }
             catch

@@ -15,7 +15,6 @@
 .project__header {
     height: 250px;
     width: 100%;
-    /*background-color: #BCEAD5;*/
     background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)) no-repeat center center;
     background-image: url('/images/project-page-header-background.png');
     background-repeat: repeat no-repeat;
