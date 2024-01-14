@@ -1,5 +1,39 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&display=swap');
 
+.project__toast {
+    width: fit-content;
+    max-width: 300px;
+    background: #BCEAD5;
+    border-radius: 8px;
+    border: 1px solid #183d3d;
+    padding: 8px;
+    position: fixed;
+    top: 68px;
+    right: 8px;
+    z-index: 3;
+    animation: toastAppear .3s ease 1 normal;
+}
+
+    .project__toast p {
+        font: 400 16px "Fira Sans";
+        color: #183d3d;
+    }
+
+.toast-error {
+    background-color: #f1c0c0;
+    border: 2px solid tomato;
+}
+
+@keyframes toastAppear {
+    from {
+        right: -300px;
+    }
+
+    to {
+        right: 8px;
+    }
+}
+
 .project__body {
     width: 100%;
     height: 92vh;
@@ -14,6 +48,8 @@
 
 .project__header {
     height: 250px;
+    max-height: 250px;
+    min-height: 250px;
     width: 100%;
     background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)) no-repeat center center;
     background-image: url('/images/project-page-header-background.png');
@@ -28,7 +64,6 @@
     gap: 24px;
     color: #183d3d;
     animation: animatedBackground 1000s linear infinite;
-    transition: ease-in-out 1s;
     position: sticky;
     top: -150px;
     z-index: 1;
@@ -53,8 +88,8 @@
             right: 0;
         }
 
-        @keyframes animatedBackground {
-            from {
+@keyframes animatedBackground {
+    from {
         background-position-x: 0;
     }
     to {
@@ -190,6 +225,18 @@
         color: #183d3d;
         width: 24px;
         height: 24px;
+    }
+
+    .project__actions .project__actions-buttons button:hover {
+        background: #9ED5C5;
+    }
+    
+    .project__actions .project__actions-buttons .light {
+        background: #DEF5E5;
+    }
+
+    .project__actions .project__actions-buttons .light:hover {
+        background: #BCEAD5;
     }
 
 .project__actions i {

@@ -345,7 +345,7 @@
                                         <input type="text" placeholder="Search..." id="projectTechSearchInput" onkeyup="dropdownFilterFunction(projectTechSearchInput, projectTechsDropdown)" />
                                         <img src="~/images/cancel.png" onclick="closeTechsDropdown(projectTechsDropdown, addProjectTechnology)" />
                                     </div>
-                                    <div class="container" id="projectDropdownTechsContainer"> 
+                                    <div class="container" id="newProjectDropdownTechsContainer">
                                         @foreach (var tech in Model.Technologies)
                                         {
                                             <p onclick="chooseProjectTech('@tech.Name')" id="projectTechsDropdownItem">@tech.Name</p>
