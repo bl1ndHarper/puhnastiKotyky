@@ -63,7 +63,7 @@ function selectLevel(levelName) {
 var projectTechsArray = [];
 var addProjectTechnology = document.getElementById("addProjectTechnology");
 function projectRemoveChosen() {
-    var container = document.getElementById("projectDropdownTechsContainer");
+    var container = document.querySelector("#newProjectDropdownTechsContainer");
     container.replaceChildren();
     for (var i = 0; i < modelTechsArray.length; i++) {
         const p = document.createElement("p");
