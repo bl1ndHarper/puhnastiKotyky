@@ -146,7 +146,7 @@ public partial class AppDbContext : IdentityDbContext<User, IdentityRole<uint>, 
                 .HasColumnName("date");
             entity.Property(e => e.ProjectsId).HasColumnName("projects_id");
             entity.Property(e => e.Status)
-                .HasColumnType("enum('considering','denied','accepted','deleted')")
+                .HasColumnType("enum('considering','accepted','deleted')")
                 .HasColumnName("status");
             entity.Property(e => e.UsersId).HasColumnName("users_id");
 
