@@ -276,10 +276,14 @@
                                                 <div class="modal__request-container">
 
                                                     @foreach (var request in Model.Requests.Where(r => r.ProjectsId == @projectsUser.Projects.ProjectsId 
-                                                                                                    && r.Status != "accepted")                 
-                                                                                           .OrderBy(r => r.Status == "considering" ? 0 : 1))
+                                                                                                    && r.Status != "accepted" && r.Status != "deleted" &&
+                                                                                                    r.IsHidden == false))                                            
                                                     {
                                                         <div class="modal__request-item">
+                                                            <button class="modal__request-hide-button" data-requestId="@request.RequestsId">
+                                                                <div class="cross-line"></div>
+                                                                <div class="cross-line"></div>
+                                                            </button>
                                                             <div class="modal__request-body">
                                                                 <h3>Request by <span>@request.Users.FirstName @request.Users.LastName</span></h3>
                                                                 <div class="modal__request-details">
@@ -293,9 +297,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal__request-buttons">
-                                                                <button class="button align-self-end" id="modal__request-accept-button">Accept</button>
-                                                                <button class="button align-self-end" id="modal__request-reject-button">Reject</button>
+                                                            <div class="modal__request-button">
+                                                                <button class="button align-self-end modal__request-accept-button" data-requestId="@request.RequestsId">
+                                                                    Accept
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     }

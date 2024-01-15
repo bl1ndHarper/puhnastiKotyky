@@ -34,5 +34,19 @@ namespace testProject.Areas.UserAccount.Controllers
 
             return RedirectToAction("Index", "Account");
         }
+
+        [HttpPost]
+        public ActionResult AcceptRequest(string requestId) 
+        {
+            Console.WriteLine("============= (Accept) Request id: " + requestId);
+            return Json(new { success = true, message = "Participation request was accepted" });
+        }
+
+        [HttpPost]
+        public ActionResult HideRequest(string requestId)
+        {
+            Console.WriteLine("============= (Hide) Request id: " + requestId);
+            return Json(new { success = true, message = "Participation request was hidden" });
+        }
     }
 }

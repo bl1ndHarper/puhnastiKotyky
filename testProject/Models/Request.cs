@@ -14,6 +14,7 @@ public partial class Request
     public DateTime Date { get; set; }
 
     public string Status { get; set; } = null!;
+    public bool IsHidden { get; set; }
 
     public virtual Project Projects { get; set; } = null!;
 

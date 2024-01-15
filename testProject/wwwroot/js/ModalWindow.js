@@ -327,7 +327,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             const h3 = document.createElement("h3");
             const p = document.createElement("p");
             h3.appendChild(document.createTextNode("Click again to confirm deleting a user"));
-            p.appendChild(document.createTextNode("Better think twice before doing it! This user will not be a member of your project's team anymore. He will be notified about your decision."));
+            p.appendChild(document.createTextNode("Better think twice before doing it! This user will not be a member of your project's team anymore. They will be notified about your decision."));
             deleteMemberTooltip.classList.add("modal__info-tooltip", "hidden");
             deleteMemberTooltip.appendChild(h3);
             deleteMemberTooltip.appendChild(p);
@@ -357,6 +357,62 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                 }
             }
         });
+
+
+        var acceptRequestButtons = currentModal.querySelectorAll('.modal__request-accept-button');
+
+        acceptRequestButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                acceptRequest(button);
+            });
+        });
+
+        function acceptRequest(clickedButton) {
+            const requestId = clickedButton.getAttribute('data-requestId');
+
+            $.ajax({
+                url: '/Account/Requests/AcceptRequest',
+                type: 'POST',
+                data: {
+                    requestId: requestId.toString()
+                },
+                success: function () {
+                    const requestItem = clickedButton.closest('.modal__request-item');
+
+                    if (requestItem) {
+                        requestItem.remove();
+                    }
+                }
+            });
+        }
+
+        var hideRequestButtons = currentModal.querySelectorAll('.modal__request-hide-button');
+
+        hideRequestButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                hideRequest(button);
+            });
+        });
+
+        function hideRequest(clickedButton) {
+            const requestId = clickedButton.getAttribute('data-requestId');
+
+            $.ajax({
+                url: '/Account/Requests/HideRequest',
+                type: 'POST',
+                data: {
+                    requestId: requestId.toString()
+                },
+                success: function () {
+                    const requestItem = clickedButton.closest('.modal__request-item');
+
+                    if (requestItem) {
+                        requestItem.remove();
+                    }
+                }
+            });
+        }
+
     });
 });
 

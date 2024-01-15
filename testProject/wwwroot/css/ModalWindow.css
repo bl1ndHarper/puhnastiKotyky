@@ -461,7 +461,6 @@
     padding: 6px 6px 0px 6px;
     flex-direction: column;
     gap: 4px;
-    align-items: flex-start;
     width: 100%;
     max-height: 200px;
     overflow: auto;
@@ -481,6 +480,7 @@
     border-radius: 12px;
     padding: 8px;
     margin-bottom: 6px;
+    position: relative;
 }
 
     .modal__request-item h3 span{
@@ -506,24 +506,43 @@
         align-items: center;
     }
 
-.modal__request-buttons {
+.modal__request-button {
     display: flex;
     gap: 10px;
+    margin-right: 40px;
 }
 
-#modal__request-reject-button,
-#modal__request-accept-button {
+.modal__request-accept-button {
     color: #183d3d;
     font-size: 17px;
 }
 
-#modal__request-reject-button {
-    background: #def5e5;
+.modal__request-hide-button {
+    display: flex;
+    height: 25px;
+    width: 25px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #183d3d;
+    position: absolute;
+    top: 3px;
+    right: 3px;
 }
 
-    #modal__request-reject-button:hover {
-        background: #c9d4cc;
+    .modal__request-hide-button .cross-line {
+        position: absolute;
+        width: 13px;
+        height: 3px;
+        border-radius: 2px;
+        background: #183d3d;
+        transform-origin: center;
+        transform: rotate(45deg);
     }
+
+        .modal__request-hide-button .cross-line:nth-child(2) {
+            transform: rotate(-45deg);
+        }
 
 .modal__info-tooltip {
     text-align: justify;
