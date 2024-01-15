@@ -7,7 +7,6 @@ namespace testProject.Areas.Projects.Models
         public Project Project { get; set; }
         public IEnumerable<Technology> Technologies { get; set; }
         public IEnumerable<User> Team { get; set; }
-        public string CurrentUserId { get; set; }
 
     }
 }

@@ -18,7 +18,7 @@ namespace testProject.Areas.Projects.Controllers
         {
             _db = db;
         }
-        public IActionResult Index(int id, string uId)
+        public IActionResult Index(int id)
         {
             var project = _db.Projects.Where(p => p.ProjectsId == id)
                 .Include(p => p.Users)
@@ -32,7 +32,7 @@ namespace testProject.Areas.Projects.Controllers
                 .Where(t => t.ProjectsUser.Any(pt => pt.ProjectsId == id))
                 .ToList();
 
-            var projectViewModel = new ProjectViewModel { Project = project, Technologies = technologies, Team = team, CurrentUserId = uId};
+            var projectViewModel = new ProjectViewModel { Project = project, Technologies = technologies, Team = team};
 
             return View(projectViewModel);
         }
