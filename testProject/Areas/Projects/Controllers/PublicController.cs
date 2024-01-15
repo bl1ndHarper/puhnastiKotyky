@@ -1,15 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using testProject.Areas.Projects.Models;
+using testProject.Data;
+using testProject.Models;
 
 namespace testProject.Areas.Projects.Controllers
 {
     [Area("Projects")]
-    [Route("Projects/Public/[action]")]
+    [Route("Projects/Public/[action]/{id}")]
     public class PublicController : Controller
     {
-        public IActionResult Index()
+        private AppDbContext _db;
+
+        public PublicController(AppDbContext db)
         {
-            return View();
+            _db = db;
+        }
+        public IActionResult Index(int id, string uId)
+        {
+            var project = _db.Projects.Where(p => p.ProjectsId == id)
+                .Include(p => p.Users)
+                .FirstOrDefault();
+
+            var technologies = _db.Technologies
+                .Where(t => t.ProjectsTechnologies.Any(pt => pt.ProjectsId == id))
+                .ToList();
+
+            var team = _db.Users
+                .Where(t => t.ProjectsUser.Any(pt => pt.ProjectsId == id))
+                .ToList();
+
+            var projectViewModel = new ProjectViewModel { Project = project, Technologies = technologies, Team = team, CurrentUserId = uId};
+
+            return View(projectViewModel);
         }
 
         [HttpPost]

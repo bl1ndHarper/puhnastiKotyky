@@ -456,7 +456,11 @@
                                                 <h1>Request to be a part of <span id="modalLink" data-project-id="project-modal-@request.ProjectsId">@request.Projects.Name</span> team</h1>
                                             } else  // if not - show project's public page
                                             {
-                                                <h1>Request to be a part of <span id="pageLink" data-project-id="">@request.Projects.Name</span> team</h1>
+                                                <h1>
+                                                    Request to be a part of 
+                                                    <a href="@Url.Action("Index", "Public", new { area = "Projects", id = request.ProjectsId, uId = Model.User.Id})">@request.Projects.Name</a>
+                                                    team
+                                                </h1>
                                             }
                                             <button class="modal__close-button">
                                                 <div class="cross-line"></div>
