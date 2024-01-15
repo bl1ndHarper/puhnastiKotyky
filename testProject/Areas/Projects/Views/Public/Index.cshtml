@@ -52,7 +52,7 @@
                     <h3>Status: <span>@Model.Project.Status</span></h3>
                 </div>
                 <div class="project__actions-buttons">
-                    <button onclick="createNewRequest()">
+                    <button onclick="createNewRequest(@Model.Project.ProjectsId)">
                         <i class="fa fa-user-plus"></i>
                         <p>Join request!</p>
                     </button>
