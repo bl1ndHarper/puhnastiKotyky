@@ -193,6 +193,7 @@
         width: fit-content;
     }
 
+    .modal__header a,
     .modal__header span {
         background-color: transparent;
         color: #183d3d;
@@ -203,6 +204,7 @@
         transition: color .5s ease-in-out, background-color .5s ease-in-out;
     }
 
+        .modal__header a:hover,
         .modal__header span:hover {
             color: #def5e5;
             background-color: #183d3d;
@@ -336,12 +338,12 @@
     align-items: center;
     justify-content: flex-start;
 }
-
-    .modal__user-item img {
-        height: 100%;
-        border-radius: 50%;
-        border: 1px solid #183d3d;
-    }
+.project__team-dropdown-item img,
+.modal__user-item img {
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid #183d3d;
+}
 
     .modal__user-item p {
         font-size: 18px;

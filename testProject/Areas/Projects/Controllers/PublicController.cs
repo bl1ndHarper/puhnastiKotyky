@@ -4,13 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using testProject.Areas.Projects.Models;
 using testProject.Data;
 using testProject.Models;
 
 namespace testProject.Areas.Projects.Controllers
 {
     [Area("Projects")]
-    [Route("Projects/Public/[action]")]
+    [Route("Projects/Public/[action]/{id}")]
     [Authorize]
     public class PublicController : Controller
     {
@@ -20,10 +23,23 @@ namespace testProject.Areas.Projects.Controllers
         {
             _db = db;
         }
-
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
-            return View();
+            var project = _db.Projects.Where(p => p.ProjectsId == id)
+                .Include(p => p.Users)
+                .FirstOrDefault();
+
+            var technologies = _db.Technologies
+                .Where(t => t.ProjectsTechnologies.Any(pt => pt.ProjectsId == id))
+                .ToList();
+
+            var team = _db.Users
+                .Where(t => t.ProjectsUser.Any(pt => pt.ProjectsId == id))
+                .ToList();
+
+            var projectViewModel = new ProjectViewModel { Project = project, Technologies = technologies, Team = team};
+
+            return View(projectViewModel);
         }
 
         [HttpPost]
@@ -51,7 +67,7 @@ namespace testProject.Areas.Projects.Controllers
                 }
                 else if (checkRequest == null)  // if it doesn't exist create one
                 {
-                    Models.Request request = new Models.Request
+                    testProject.Models.Request request = new testProject.Models.Request
                     { 
                         UsersId = userId,
                         ProjectsId = Convert.ToUInt32(projectsId),

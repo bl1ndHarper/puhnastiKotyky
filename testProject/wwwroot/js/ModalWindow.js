@@ -18,7 +18,7 @@ document.querySelectorAll('.user-account-day__user-requests .modal__open-button'
         }
         const projectLink = currentModal.querySelector(".modal__header span");
         const id = projectLink.getAttribute("data-project-id");
-
+        
         projectLink.onclick = function () {
             if (projectLink.id == "modalLink") {
                 currentModal.click();
@@ -27,9 +27,6 @@ document.querySelectorAll('.user-account-day__user-requests .modal__open-button'
                         card.querySelector("#user-account-day__detailed-info-button").click();
                     }
                 });
-            } else if (projectLink.id == "pageLink") {
-                // redirrect to a project page (NOT modal)
-                console.log("Redirrecting to the project page...")
             }
         }
         

@@ -21,7 +21,7 @@
 function createNewRequest(projectId) {
     const toast = document.querySelector(".project__toast");
     $.ajax({
-        url: '/Projects/Public/CreateNewRequest',
+        url: '/Projects/Public/CreateNewRequest/' + projectId,
         type: 'POST',
         data: {
             projectsId: String(projectId)
