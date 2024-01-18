@@ -100,59 +100,60 @@ namespace testProject.Areas.UserAccount.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditProjectTechnologies(string projectId, string updatedProjectTechnologies)
+        public ActionResult AddProjectTechnology(string projectId, string technology)
         {
             try
             {
-                Console.WriteLine("---------------EditProjectTechnologies called");
-                Console.WriteLine($"---------------after editing:{updatedProjectTechnologies}");
-
-                _db = new AppDbContext();
-
-                var originalProjectTechs = _db.ProjectsTechnologies
-                    .Where(pt => pt.ProjectsId == Convert.ToUInt32(projectId))
-                    .Select(pt => pt.Technologies.Name).ToArray();
-
-                string[] updatedProjectTechs = updatedProjectTechnologies.Split(',');
-
-                var addedItems = updatedProjectTechs.Except(originalProjectTechs);
-                var deletedItems = originalProjectTechs.Except(updatedProjectTechs);
-
-                foreach (var item in addedItems)
-                {
-                    var techId = _db.Technologies
-                        .Where(e => e.Name == item)
+                _db = new AppDbContext();                
+                var techId = _db.Technologies
+                        .Where(e => e.Name == technology)
                         .Select(e => e.TechnologiesId)
                         .FirstOrDefault();
 
-                    ProjectsTechnology projTech = new ProjectsTechnology { ProjectsId = Convert.ToUInt32(projectId), TechnologiesId = techId };
-                    _db.ProjectsTechnologies.Add(projTech);
-                    _db.SaveChanges();
-                }
-
-                foreach (var item in deletedItems)
-                {
-                    var techId = _db.Technologies
-                        .Where(e => e.Name == item)
-                        .Select(e => e.TechnologiesId)
-                        .FirstOrDefault();
-
-                    var projTech = _db.ProjectsTechnologies
+                var projTech = _db.ProjectsTechnologies
                         .Where(pt => pt.ProjectsId == Convert.ToUInt32(projectId) && pt.TechnologiesId == techId)
                         .FirstOrDefault();
 
-                    if (projTech != null)
-                    {
-                        _db.ProjectsTechnologies.Remove(projTech);
-                    }
-                }
-                _db.SaveChanges();
+                if (projTech == null)
+                {
+                    projTech = new ProjectsTechnology { ProjectsId = Convert.ToUInt32(projectId), TechnologiesId = techId };
+                    _db.ProjectsTechnologies.Add(projTech);
+                    _db.SaveChanges();
+                }      
 
-                return Json(new { success = true, message = "Project " + projectId + " technologies list successfully changed to " + updatedProjectTechnologies });
+                return Json(new { success = true, message = technology + "was successfully added to the project's technologies list" });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "An error occurred while changing the project " + projectId + " technologies. Details: " + ex.Message });
+                return Json(new { success = false, message = "An error occurred while changing the project technologies. Details: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RemoveProjectTechnology(string projectId, string technology)
+        {
+            try
+            {
+                _db = new AppDbContext();
+                var techId = _db.Technologies
+                        .Where(e => e.Name == technology)
+                        .Select(e => e.TechnologiesId)
+                        .FirstOrDefault();
+
+                var projTech = _db.ProjectsTechnologies
+                        .Where(pt => pt.ProjectsId == Convert.ToUInt32(projectId) && pt.TechnologiesId == techId)
+                        .FirstOrDefault();
+
+                if (projTech != null)
+                {
+                    _db.ProjectsTechnologies.Remove(projTech);
+                    _db.SaveChanges();
+                }
+                return Json(new { success = true, message = technology + "was successfully removed from the project's technologies list" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while changing the project technologies. Details: " + ex.Message });
             }
         }
 
