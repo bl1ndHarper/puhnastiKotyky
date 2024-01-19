@@ -215,10 +215,6 @@
                                                 </div>
                                             }
                                         </div>
-
-                                        <div id="saveProjectsTechButton" class="hidden align-self-end" data-url="@Url.Action("EditProjectTechnologies", "Projects", new { area = "UserAccount" })">
-                                            <button class="button" type="button">Save changes</button>
-                                        </div>
                                     </div>
                                     <div class="modal__body-subject">
                                         <h3>Project description:</h3>
@@ -270,14 +266,14 @@
                                     @if (Model.User.Id == @projectsUser.Projects.Users.Id)
                                     {
                                         <div class="modal__body-subject">
-                                            @if (Model.Requests.Where(r => r.ProjectsId == @projectsUser.Projects.ProjectsId).Count() > 0)
+                                            @if (Model.Requests.Where(r => r.ProjectsId == @projectsUser.Projects.ProjectsId
+                                                                        && r.Status == "considering" && r.IsHidden == false).Count() > 0)
                                             {
                                                 <h3>Requests:</h3>
                                                 <div class="modal__request-container">
 
                                                     @foreach (var request in Model.Requests.Where(r => r.ProjectsId == @projectsUser.Projects.ProjectsId 
-                                                                                                    && r.Status != "accepted" && r.Status != "deleted" &&
-                                                                                                    r.IsHidden == false))                                            
+                                                                                                    && r.Status == "considering" && r.IsHidden == false))                                            
                                                     {
                                                         <div class="modal__request-item">
                                                             <button class="modal__request-hide-button" data-requestId="@request.RequestsId">
