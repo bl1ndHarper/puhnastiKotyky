@@ -39,7 +39,6 @@
     height: 92vh;
     position: fixed;
     left: 0;
-    top: 8vh;
     background: linear-gradient(180deg, #9ED5C5 10%, #9ED5C5 250px, #DEF5E5 400px, #DEF5E5 100%);
     overflow: hidden auto;
     display: flex;
