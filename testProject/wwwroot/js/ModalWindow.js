@@ -2,8 +2,7 @@
 const modal = document.querySelector(".modal__container");
 const modalBody = document.querySelector(".modal__body");
 const closeBtn = document.querySelector(".modal__close-button");
-var projectTechsArray = [];
-var initialProjectTechsArray = [];
+
 // request modal:
 document.querySelectorAll('.user-account-day__user-requests .modal__open-button').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -43,19 +42,10 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
 
         var isUserOwner = currentModal.querySelector("#isUserOwner").getAttribute("data-isOwner");
 
-        projectTechsArray = [];
-        const saveButton = currentModal.querySelector('.modal__body-subject > #saveProjectsTechButton');
         currentModal.onclick = function (e) {
             if (e.target.classList.contains("modal__container")) {
-                resetUnsavedTechsChanges();
                 expandOrCollapseDesc(descriptionParagraph, expandButton);
                 closeModal(e, true);
-            }
-        }
-
-        function fillProjectTechsArray(tech) {
-            if (!projectTechsArray.includes(tech)) {
-                projectTechsArray.push(tech);
             }
         }
 
@@ -115,59 +105,64 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
 
         }
 
-        // filling projectTechsArray with initial values
+        // filling techsItems with initial values
         var techsItems = currentModal.querySelector('.modal__body .modal__body-subject .modal__technologies-container');
         
-        if (saveButton.classList.contains("hidden")) {
             for (var i = 0; i < techsItems.querySelectorAll("#tech").length; i++) {
-                fillProjectTechsArray(techsItems.children[i].querySelector("p").textContent);
-                    initialProjectTechsArray.push(techsItems.children[i].querySelector("p").textContent);
                 // deleting initial (chosen) values from dropdown
                 techsItems.children[i].onclick = function () {
                     if (isUserOwner == "true") {
                         removeProjectTech(this, this.querySelector("p").textContent);
                     }
-                }
-            }
-        }
-
-        saveButton.onclick = function () {
-            saveTechnologies(initialProjectTechsArray, projectTechsArray);
-        }
-        function saveTechnologies(initialProjectTechsArray, projectTechsArray) {
-            const url = saveButton.getAttribute('data-url');
+                }   
+            }      
+        
+        function addProjectTechnology(technology) {
             const statusInput = currentModal.querySelector(".modal__project-status input");
             const projectId = statusInput.getAttribute('data-projectId');
 
             $.ajax({
-                url: url,
+                url: '/Account/Projects/AddProjectTechnology',
                 type: 'POST',
                 data: {
                     projectId: projectId.toString(),
-                    updatedProjectTechnologies: projectTechsArray.toString()
+                    technology: technology
                 },
                 success: function () {
-                    initialProjectTechsArray = projectTechsArray.slice();
-                    projectTechsArray = [];
-
-                    while (techsItems.children.length > 2) {
-                        techsItems.children[0].remove();
-                    }
-                    accountProjectCardTechs.replaceChildren();
-                    initialProjectTechsArray.forEach(function (initialTech) {
-                        chooseProjectTech(initialTech);
-                        const div = document.createElement("div");
-                        const p = document.createElement("p");
-                        p.textContent = initialTech;
-                        div.appendChild(p);
-                        div.id = "tech";
-                        accountProjectCardTechs.appendChild(div);
-                    });
-
-                    saveButton.classList.add("hidden");
+                    const div = document.createElement("div");
+                    const p = document.createElement("p");
+                    p.textContent = technology;
+                    div.appendChild(p);
+                    div.id = "tech";
+                    accountProjectCardTechs.appendChild(div);
                 }
             });
-        }
+        } 
+
+        function deleteProjectTechnology(technology) {
+            const statusInput = currentModal.querySelector(".modal__project-status input");
+            const projectId = statusInput.getAttribute('data-projectId');
+
+            $.ajax({
+                url: '/Account/Projects/RemoveProjectTechnology',
+                type: 'POST',
+                data: {
+                    projectId: projectId.toString(),
+                    technology: technology
+                },
+                success: function () {
+
+                    const divToRemove = Array.from(accountProjectCardTechs.children).find(div => {
+                        const p = div.querySelector('p');
+                        return p && p.textContent === technology;
+                    });
+
+                    if (divToRemove) {
+                        divToRemove.remove();
+                    }
+                }
+            });
+        } 
 
         const addTechsButton = currentModal.querySelector('#modalAddProjectTechnology');
         if (isUserOwner == "true") {
@@ -189,28 +184,32 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             }
 
             function fillProjectTechsDropdown() {
+                var choosenTechsItems = currentModal.querySelectorAll('.modal__body .modal__body-subject .modal__technologies-container #tech');
                 var container = techsDropdown.querySelector(".container");
                 container.replaceChildren();
+
+                // adding all technologies to the dropdown
                 for (var i = 0; i < modelTechsArray.length; i++) {
                     const p = document.createElement("p");
                     p.textContent = modelTechsArray[i];
                     p.onclick = function () { chooseProjectTech(p.textContent); };
                     container.appendChild(p);
                 }
-                for (var i = 0; i < projectTechsArray.length; i++) {
+
+                // deleting choosen technologies from the dropdown
+                Array.from(choosenTechsItems).forEach(function (chosenTech) {
                     for (var j = 0; j < container.childElementCount; j++) {
-                        if (projectTechsArray[i] == container.children[j].textContent) {
+                        if (chosenTech.innerText === container.children[j].innerText) {
                             container.children[j].remove();
                         }
                     }
-                }
+                });
             }
         }
 
         function removeProjectTech(element, techName) {
             if (techsItems.classList.contains("hover-active")) {    // checking if user must be able to delete a tech
-                var index = projectTechsArray.indexOf(techName);
-                if (projectTechsArray.length == 1) { // user is trying to delete the last element left
+                if (techsItems.querySelectorAll("#tech").length == 1) { // user is trying to delete the last element left
                     element.querySelector("span").textContent = "You cannot delete the last element here!";
                     element.querySelector("span").style.visibility = "visible";
                     setTimeout(function () {
@@ -219,12 +218,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     }, 5000)
                 } else {
                     element.remove();
-                    projectTechsArray.splice(index, 1);
-                    if (JSON.stringify(projectTechsArray) != JSON.stringify(initialProjectTechsArray)) {
-                        saveButton.classList.remove("hidden");
-                    } else {
-                        saveButton.classList.add("hidden");
-                    }
+                    deleteProjectTechnology(techName);
                 }
         
                 fillProjectTechsDropdown()
@@ -254,16 +248,10 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             }
         
             techsItems.insertBefore(divElement, addTechsButton);
-        
-            fillProjectTechsArray(techName);
-        
-            fillProjectTechsDropdown()
+    
+            fillProjectTechsDropdown();
 
-            if (JSON.stringify(projectTechsArray) != JSON.stringify(initialProjectTechsArray)) {
-                saveButton.classList.remove("hidden");
-            } else {
-                saveButton.classList.add("hidden");
-            }
+            addProjectTechnology(techName);
         }
 
         if (isUserOwner == "true") {
@@ -301,20 +289,6 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     }
                 });
             }
-        }
-
-        function resetUnsavedTechsChanges() {
-            if (!saveButton.classList.contains("hidden")) {
-                while (techsItems.children.length > 2) {
-                    techsItems.children[0].remove();
-                }
-                initialProjectTechsArray.forEach(function (initialTech) {
-                    chooseProjectTech(initialTech);
-                });
-                saveButton.classList.add("hidden");
-            }
-                projectTechsArray = [];
-                initialProjectTechsArray = [];
         }
 
         const deleteMemberButtons = currentModal.querySelectorAll(".modal__team-dropdown-items i");
@@ -422,7 +396,6 @@ document.querySelectorAll('.modal__close-button').forEach(function (btn) {
     btn.addEventListener('click', function () {
         var modal = this.closest('.modal__container');
         modal.classList.add('hidden');
-        location.reload();
     });
 });
 
@@ -435,7 +408,6 @@ function closeModal(e, clickedOutside) {
     if (modal) {
         if (clickedOutside || e.target.classList.contains("modal__close-button")) {
             modal.classList.add("hidden");
-            location.reload();
         }
     }
 }
