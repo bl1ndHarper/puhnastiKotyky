@@ -2,7 +2,6 @@
 const modal = document.querySelector(".modal__container");
 const modalBody = document.querySelector(".modal__body");
 const closeBtn = document.querySelector(".modal__close-button");
-var projectTechsArray = [];
 
 // request modal:
 document.querySelectorAll('.user-account-day__user-requests .modal__open-button').forEach(function (btn) {
@@ -43,17 +42,10 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
 
         var isUserOwner = currentModal.querySelector("#isUserOwner").getAttribute("data-isOwner");
 
-        projectTechsArray = [];
         currentModal.onclick = function (e) {
             if (e.target.classList.contains("modal__container")) {
                 expandOrCollapseDesc(descriptionParagraph, expandButton);
                 closeModal(e, true);
-            }
-        }
-
-        function fillProjectTechsArray(tech) {
-            if (!projectTechsArray.includes(tech)) {
-                projectTechsArray.push(tech);
             }
         }
 
@@ -113,17 +105,16 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
 
         }
 
-        // filling projectTechsArray with initial values
+        // filling techsItems with initial values
         var techsItems = currentModal.querySelector('.modal__body .modal__body-subject .modal__technologies-container');
         
             for (var i = 0; i < techsItems.querySelectorAll("#tech").length; i++) {
-                fillProjectTechsArray(techsItems.children[i].querySelector("p").textContent);
                 // deleting initial (chosen) values from dropdown
                 techsItems.children[i].onclick = function () {
                     if (isUserOwner == "true") {
                         removeProjectTech(this, this.querySelector("p").textContent);
                     }
-                }
+                }   
             }      
         
         function addProjectTechnology(technology) {
@@ -193,28 +184,32 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             }
 
             function fillProjectTechsDropdown() {
+                var choosenTechsItems = currentModal.querySelectorAll('.modal__body .modal__body-subject .modal__technologies-container #tech');
                 var container = techsDropdown.querySelector(".container");
                 container.replaceChildren();
+
+                // adding all technologies to the dropdown
                 for (var i = 0; i < modelTechsArray.length; i++) {
                     const p = document.createElement("p");
                     p.textContent = modelTechsArray[i];
                     p.onclick = function () { chooseProjectTech(p.textContent); };
                     container.appendChild(p);
                 }
-                for (var i = 0; i < projectTechsArray.length; i++) {
+
+                // deleting choosen technologies from the dropdown
+                Array.from(choosenTechsItems).forEach(function (chosenTech) {
                     for (var j = 0; j < container.childElementCount; j++) {
-                        if (projectTechsArray[i] == container.children[j].textContent) {
+                        if (chosenTech.innerText === container.children[j].innerText) {
                             container.children[j].remove();
                         }
                     }
-                }
+                });
             }
         }
 
         function removeProjectTech(element, techName) {
             if (techsItems.classList.contains("hover-active")) {    // checking if user must be able to delete a tech
-                var index = projectTechsArray.indexOf(techName);
-                if (projectTechsArray.length == 1) { // user is trying to delete the last element left
+                if (techsItems.querySelectorAll("#tech").length == 1) { // user is trying to delete the last element left
                     element.querySelector("span").textContent = "You cannot delete the last element here!";
                     element.querySelector("span").style.visibility = "visible";
                     setTimeout(function () {
@@ -223,7 +218,6 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     }, 5000)
                 } else {
                     element.remove();
-                    projectTechsArray.splice(index, 1);
                     deleteProjectTechnology(techName);
                 }
         
@@ -254,9 +248,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             }
         
             techsItems.insertBefore(divElement, addTechsButton);
-        
-            fillProjectTechsArray(techName);
-        
+    
             fillProjectTechsDropdown();
 
             addProjectTechnology(techName);
