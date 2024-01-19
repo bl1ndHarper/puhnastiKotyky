@@ -129,7 +129,7 @@
 
         function validatePassword() {
             var password = $('#Password').val();
-            var isValidLength = password.length >= 8 && password.length <= 32;
+            var isValidLength = password.length >= 6 && password.length <= 32;
             var hasSpecialSymbol = /[!@@#$%^&*(),.?":{}|<>]/.test(password);
             var hasDigit = /\d/.test(password);
             var hasUppercase = /[A-Z]/.test(password);

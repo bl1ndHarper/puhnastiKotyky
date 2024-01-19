@@ -2,16 +2,19 @@
 const modal = document.querySelector(".modal__container");
 const modalBody = document.querySelector(".modal__body");
 const closeBtn = document.querySelector(".modal__close-button");
+var navbar = document.querySelector(".navbar__container");
 
 // request modal:
 document.querySelectorAll('.user-account-day__user-requests .modal__open-button').forEach(function (btn) {
     btn.addEventListener('click', function () {
+        navbar.style.zIndex = "0";
 
         var modalId = this.getAttribute('data-modal-id');
         var currentModal = document.getElementById(modalId);
         currentModal.classList.remove("hidden");
         currentModal.onclick = function (e) {
             if (e.target.classList.contains("modal__container")) {
+                navbar.style.zIndex = "5";
                 closeModal(e, true);
             }
         }
@@ -34,6 +37,8 @@ document.querySelectorAll('.user-account-day__user-requests .modal__open-button'
 // project modal:
 document.querySelectorAll('.user-account-day__user-projects .modal__open-button').forEach(function (btn) {
     btn.addEventListener('click', function () {
+        navbar.style.zIndex = "0";
+
         var accountProjectCardTechs = btn.parentNode.parentNode.querySelector(".user-account-day__technologies");
         var accountProjectCardStatus = btn.parentNode.children[2].querySelector("p");
 
@@ -45,6 +50,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
         currentModal.onclick = function (e) {
             if (e.target.classList.contains("modal__container")) {
                 expandOrCollapseDesc(descriptionParagraph, expandButton);
+                navbar.style.zIndex = "5";
                 closeModal(e, true);
             }
         }
