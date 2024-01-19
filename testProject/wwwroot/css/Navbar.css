@@ -1,0 +1,182 @@
+﻿.navbar__container {
+    background: linear-gradient(180deg, transparent, #BCEAD5), linear-gradient(320deg, #BCEAD5 8.93%, #8EC3B0 35.57%, #9ED5C5 63.29%);
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 5;
+}
+
+    .navbar__container > .navbar__branding {
+        width: fit-content;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 12px;
+    }
+
+        .navbar__container > .navbar__branding > i {
+            display: flex;
+            width: 60px;
+            height: 42px;
+            flex-shrink: 0;
+            filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+            background-image: url('/images/logo-cloud.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        .navbar__container > .navbar__branding > p {
+            color: #183d3d;
+            font: 700 20px "Fira Sans";
+        }
+
+    .navbar__container > .navbar__tabs {
+        width: fit-content;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        color: #183d3d;
+        font: 700 20px "Fira Sans";
+        padding: 0;
+        margin: 0;
+    }
+
+        .navbar__container > .navbar__tabs > .navbar__tab-item {
+            height: 100%;
+            width: fit-content;
+            list-style-type: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+            padding: 0 12px;
+            gap: 4px;
+        }
+
+            .navbar__container > .navbar__tabs > .navbar__tab-item::after {
+                content: '';
+                position: relative;
+                right: 24px;
+                top: -16px;
+                width: 24px;
+                height: 0;
+                display: inline-block;
+                background: url(/images/logo-cloud.png) 0 0;
+                background-repeat: no-repeat;
+                background-size: contain;
+                filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+                margin-right: -24px;
+                transition: height ease-in-out .5s;
+                animation: float 1s ease-in-out infinite alternate;
+            }
+
+            .navbar__container > .navbar__tabs > .navbar__tab-item:hover::after {
+                height: 24px;
+                transform: rotate(10deg);
+            }
+
+            .navbar__container > .navbar__tabs > .navbar__tab-item > a {
+                height: fit-content;
+                color: #183d3d;
+                font: 600 20px "Fira Sans";
+                text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+            }
+
+                .navbar__container > .navbar__tabs > .navbar__tab-item > a::after {
+                    content: '';
+                    display: block;
+                    position: relative;
+                    width: calc(100% + 32px);
+                    border-radius: 4px;
+                    background: linear-gradient(90deg, #183D3D 0%, #8EC3B0 33.5%, #183D3D 69.5%, #8EC3B0 100%);
+                    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+                    transform: scaleX(0);
+                    height: 3px;
+                    bottom: -4px;
+                    left: -28px;
+                    transform-origin: bottom right;
+                    transition: transform 0.25s ease-out;
+                }
+
+                    .navbar__container > .navbar__tabs > .navbar__tab-item:hover > a::after {
+                        transform: scaleX(1);
+                        transform-origin: bottom left;
+                    }
+
+            .navbar__container > .navbar__tabs > .navbar__tab-item > i {
+                color: #183d3d;
+                font-size: 24px;
+                text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+            }
+
+    .navbar__container > .navbar__auth {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100%;
+        width: fit-content;
+        align-items: flex-end;
+    }
+
+        .navbar__container > .navbar__auth > .navbar__auth-authenticated,
+        .navbar__container > .navbar__auth > .navbar__auth-anonimous {
+            height: 100%;
+            width: fit-content;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+        }
+
+            .navbar__container > .navbar__auth > .navbar__auth-authenticated > p,
+            .navbar__container > .navbar__auth > .navbar__auth-anonimous > a,
+            .navbar__container > .navbar__auth > .navbar__auth-logout-button > button {
+                color: #183d3d;
+                font: 700 20px "Fira Sans";
+            }
+
+
+            .navbar__container > .navbar__auth > .navbar__auth-anonimous > a {
+                font: 600 18px "Fira Sans";
+            }
+
+        .navbar__container > .navbar__auth > .navbar__auth-anonimous > a,
+        .navbar__container > .navbar__auth > .navbar__auth-logout-button > button {
+            text-decoration: underline;
+        }
+
+            .navbar__container > .navbar__auth > .navbar__auth-logout-button > button {
+                display: block;
+                font: 500 16px "Fira Sans";
+                height: 100%;
+            }
+
+            .navbar__container > .navbar__auth > .navbar__auth-authenticated > img {
+                height: 85%;
+                border-radius: 50%;
+                border: 2px solid #183d3d;
+            }
+
+        .navbar__container > .navbar__auth > .navbar__auth-logout-button {
+            display: none;
+            height: fit-content;
+            width: fit-content;
+            padding: 20px 8px;
+            background: #8EC3B0;
+            text-align: center;
+            vertical-align: middle;
+            box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            z-index: 3;
+        }
+
+            .navbar__container > .navbar__auth > .navbar__auth-authenticated:hover + .navbar__auth-logout-button,
+            .navbar__container > .navbar__auth > .navbar__auth-logout-button:hover {
+                display: block;
+            }

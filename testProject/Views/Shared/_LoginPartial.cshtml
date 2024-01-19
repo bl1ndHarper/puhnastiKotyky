@@ -4,25 +4,24 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
-</ul>
+<div class="navbar__auth">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        User user = (User)await UserManager.GetUserAsync(User);
+        <div class="navbar__auth-authenticated">
+            <p>hello @user.FirstName!</p>
+            <img src="@user.Photo" />
+        </div>
+    }
+    else
+    {
+        <div class="navbar__auth-anonimous">
+            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </div>
+    }
+    <form id="logOutForm" class="navbar__auth-logout-button" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button onclick="showLoggedOutToast()" type="button">Logout</button>
+    </form>
+    <script src="@Url.Content("~/js/Navbar.js")"></script>
+</div>
