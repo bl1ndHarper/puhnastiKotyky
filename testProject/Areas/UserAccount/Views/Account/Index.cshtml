@@ -276,7 +276,9 @@
                                                                                                     && r.Status == "considering" && r.IsHidden == false))                                            
                                                     {
                                                         <div class="modal__request-item">
-                                                            <button class="modal__request-hide-button" data-requestId="@request.RequestsId">
+                                                            <button class="modal__request-hide-button" data-requestId="@request.RequestsId"
+                                                            data-userId="@request.UsersId" data-projectId="@request.ProjectsId"
+                                                            data-userPhoto="@request.Users.Photo">
                                                                 <div class="cross-line"></div>
                                                                 <div class="cross-line"></div>
                                                             </button>
@@ -294,7 +296,10 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal__request-button">
-                                                                <button class="button align-self-end modal__request-accept-button" data-requestId="@request.RequestsId">
+                                                                <button class="button align-self-end modal__request-accept-button" 
+                                                                data-requestId="@request.RequestsId"
+                                                                data-userId="@request.UsersId" data-projectId="@request.ProjectsId"
+                                                                data-userPhoto="@request.Users.Photo">
                                                                     Accept
                                                                 </button>
                                                             </div>

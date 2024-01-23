@@ -72,7 +72,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                 hideMembersButton.classList.add("hidden");
             }
         }
-        
+
 
         var clickCounter = 0;
         var leaveAndDeleteButton = currentModal.querySelector('#leaveAndDeleteButton');
@@ -87,36 +87,36 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     form.submit();
                 }
                 else
-                if (clickCounter == 1) {
-                    const tooltip = currentModal.querySelector('#leaveAndDeleteTooltip');
-                    tooltip.classList.remove("hidden");
+                    if (clickCounter == 1) {
+                        const tooltip = currentModal.querySelector('#leaveAndDeleteTooltip');
+                        tooltip.classList.remove("hidden");
 
-                    setTimeout(function () {
-                        tooltip.classList.add("hidden");
-                        clickCounter = 0;
-                    }, 20000)
-                }
-                else {
-                    setTimeout(function () {
-                        clickCounter = 0;
-                    }, 20000)
-                }
+                        setTimeout(function () {
+                            tooltip.classList.add("hidden");
+                            clickCounter = 0;
+                        }, 20000)
+                    }
+                    else {
+                        setTimeout(function () {
+                            clickCounter = 0;
+                        }, 20000)
+                    }
             }
 
         }
 
         // filling techsItems with initial values
         var techsItems = currentModal.querySelector('.modal__body .modal__body-subject .modal__technologies-container');
-        
-            for (var i = 0; i < techsItems.querySelectorAll("#tech").length; i++) {
-                // deleting initial (chosen) values from dropdown
-                techsItems.children[i].onclick = function () {
-                    if (isUserOwner == "true") {
-                        removeProjectTech(this, this.querySelector("p").textContent);
-                    }
-                }   
-            }      
-        
+
+        for (var i = 0; i < techsItems.querySelectorAll("#tech").length; i++) {
+            // deleting initial (chosen) values from dropdown
+            techsItems.children[i].onclick = function () {
+                if (isUserOwner == "true") {
+                    removeProjectTech(this, this.querySelector("p").textContent);
+                }
+            }
+        }
+
         function addProjectTechnology(technology) {
             const statusInput = currentModal.querySelector(".modal__project-status input");
             const projectId = statusInput.getAttribute('data-projectId');
@@ -137,7 +137,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     accountProjectCardTechs.appendChild(div);
                 }
             });
-        } 
+        }
 
         function deleteProjectTechnology(technology) {
             const statusInput = currentModal.querySelector(".modal__project-status input");
@@ -162,7 +162,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     }
                 }
             });
-        } 
+        }
 
         const addTechsButton = currentModal.querySelector('#modalAddProjectTechnology');
         if (isUserOwner == "true") {
@@ -170,12 +170,12 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             const techsDropdown = currentModal.querySelector('#modalProjectTechnologiesDropdown');
             const closeTechsDropdownButton = currentModal.querySelector('#modalProjectTechnologiesDropdown > .header > img');
             const techsDropdownSearchInput = currentModal.querySelector('#modalProjectTechnologiesDropdown > .header > input');
-            addTechsButton.onclick = function openModalTechsDropdown () {
+            addTechsButton.onclick = function openModalTechsDropdown() {
                 addTechsButton.classList.add("hidden");
                 techsDropdown.classList.remove("hidden");
                 fillProjectTechsDropdown();
             }
-            closeTechsDropdownButton.onclick = function closeModalTechsDropdown () {
+            closeTechsDropdownButton.onclick = function closeModalTechsDropdown() {
                 addTechsButton.classList.remove("hidden");
                 techsDropdown.classList.add("hidden");
             }
@@ -220,7 +220,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     element.remove();
                     deleteProjectTechnology(techName);
                 }
-        
+
                 fillProjectTechsDropdown()
             }
         }
@@ -235,20 +235,20 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             tooltip.classList.add("modal__tooltip");
             tooltip.textContent = "Click to delete";
             removeOverlay.classList.add("removeTechOverlay");
-        
+
             paragraph.append(techName);
             divElement.append(tooltip);
             divElement.append(removeOverlay);
             divElement.append(paragraph);
-        
+
             if (isUserOwner == "true") {
                 divElement.onclick = function () {
                     removeProjectTech(divElement, techName)
                 }
             }
-        
+
             techsItems.insertBefore(divElement, addTechsButton);
-    
+
             fillProjectTechsDropdown();
 
             addProjectTechnology(techName);
@@ -292,18 +292,25 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
         }
 
         const deleteMemberButtons = currentModal.querySelectorAll(".modal__team-dropdown-items i");
-        deleteMemberButtons.forEach(function (button) {
-            const currentMember = button.parentNode;
+        const showTeamMembersElement = document.getElementById("showTeamMembers");
+        deleteMemberButtons.forEach(deleteParticipant);
+
+        function deleteParticipant(deleteButton) {
+            const currentMember = deleteButton.parentNode;
             const deleteMemberTooltip = document.createElement("div");
             const h3 = document.createElement("h3");
             const p = document.createElement("p");
+
             h3.appendChild(document.createTextNode("Click again to confirm deleting a user"));
             p.appendChild(document.createTextNode("Better think twice before doing it! This user will not be a member of your project's team anymore. They will be notified about your decision."));
+
             deleteMemberTooltip.classList.add("modal__info-tooltip", "hidden");
             deleteMemberTooltip.appendChild(h3);
             deleteMemberTooltip.appendChild(p);
+
             currentMember.after(deleteMemberTooltip);
-            button.onclick = function () {
+
+            deleteButton.onclick = function () {
                 if (deleteMemberTooltip.classList.contains("hidden")) {
                     deleteMemberTooltip.classList.remove("hidden");
                     setTimeout(function () {
@@ -323,12 +330,21 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                         success: function (data) {
                             deleteMemberTooltip.remove();
                             currentMember.remove();
+
+                            const showTeamMembersElement = document.getElementById("showTeamMembers");
+                            const currentCount = parseInt(showTeamMembersElement.innerText.match(/\d+/)[0]);
+                            const newCount = currentCount - 1;
+
+                            if (newCount > 0) {
+                                showTeamMembersElement.innerText = `and ${newCount} more...`;
+                            } else {
+                                /*TODO: hide the "and n more" text and the arrow if the dropdown is empty */
+                            }
                         }
                     });
                 }
-            }
-        });
-
+            };
+        }
 
         var acceptRequestButtons = currentModal.querySelectorAll('.modal__request-accept-button');
 
@@ -349,14 +365,51 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                 },
                 success: function () {
                     const requestItem = clickedButton.closest('.modal__request-item');
+                    const userId = clickedButton.getAttribute('data-userId');
+                    const projectId = clickedButton.getAttribute('data-projectId');
+                    const userPhoto = clickedButton.getAttribute('data-userPhoto');
+                    const userName = requestItem.querySelector('h3 span').textContent.trim();
 
+                    // remove the request
                     if (requestItem) {
                         requestItem.remove();
                     }
-                }
-            });
-        }
 
+                    // create a new participant and append it to the dropdown
+                    const teamDropdown = document.getElementById('teamMembersDropdown');
+
+                    const newUserElement = document.createElement('div');
+                    newUserElement.classList.add('modal__user-item');
+                    newUserElement.setAttribute('data-userId', userId);
+                    newUserElement.setAttribute('data-url', '@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })'); 
+                    newUserElement.setAttribute('data-projectId', projectId); 
+
+                    const userPhotoElement = document.createElement('img'); 
+                    userPhotoElement.src = userPhoto;
+                    newUserElement.appendChild(userPhotoElement);
+
+                    const userFullName = document.createElement('p');
+                    userFullName.textContent = userName;
+                    newUserElement.appendChild(userFullName);
+
+                    const deleteIcon = document.createElement('i');
+                    deleteIcon.classList.add('fa', 'fa-user-times');
+                    deleteIcon.setAttribute('aria-hidden', 'true');
+                    newUserElement.appendChild(deleteIcon);
+
+                    /*TODO:  correct the deleteParticipant function to work for the newly created delete icon*/
+                    deleteParticipant(deleteIcon);
+                
+                    teamDropdown.appendChild(newUserElement);
+
+                    // increase number of participants by 1
+                    const showTeamMembersElement = document.getElementById("showTeamMembers");
+                    const currentCount = parseInt(showTeamMembersElement.innerText.match(/\d+/)[0]);
+                    const newCount = currentCount + 1;
+                    showTeamMembersElement.innerText = `and ${newCount} more...`;
+        }
+    });
+}
         var hideRequestButtons = currentModal.querySelectorAll('.modal__request-hide-button');
 
         hideRequestButtons.forEach(function (button) {
