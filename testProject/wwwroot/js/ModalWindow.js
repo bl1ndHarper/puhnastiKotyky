@@ -57,10 +57,15 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             expandOrCollapseDesc(descriptionParagraph, expandButton);
         };
 
-        var teamMembersDropdown = currentModal.querySelector('.modal__team-dropdown');
-        var showMembersButton = currentModal.querySelector('#showTeamMembers');
-        var hideMembersButton = currentModal.querySelector('.arrow.up');
-        if (showMembersButton != null) {
+        var showMembersButton = currentModal.querySelector('#showTeamMembers').querySelector('p');
+        if (showMembersButton) {
+            setShowMembersButton()
+        }
+
+        function setShowMembersButton() {
+            var teamMembersDropdown = currentModal.querySelector('.modal__team-dropdown');
+            var showMembersButton = currentModal.querySelector('#showTeamMembers').querySelector('p');
+            var hideMembersButton = currentModal.querySelector('.arrow.up');
             showMembersButton.onclick = function () {
                 showMembersButton.classList.add("hidden");
                 teamMembersDropdown.classList.remove("hidden");
@@ -72,7 +77,6 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                 hideMembersButton.classList.add("hidden");
             }
         }
-
 
         var clickCounter = 0;
         var leaveAndDeleteButton = currentModal.querySelector('#leaveAndDeleteButton');
@@ -292,11 +296,11 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
         }
 
         const deleteMemberButtons = currentModal.querySelectorAll(".modal__team-dropdown-items i");
-        const showTeamMembersElement = document.getElementById("showTeamMembers");
-        deleteMemberButtons.forEach(deleteParticipant);
+        deleteMemberButtons.forEach(function (button) {
+            deleteParticipant(button);
+        });
 
-        function deleteParticipant(deleteButton) {
-            const currentMember = deleteButton.parentNode;
+        function createTooltip() {
             const deleteMemberTooltip = document.createElement("div");
             const h3 = document.createElement("h3");
             const p = document.createElement("p");
@@ -308,8 +312,16 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             deleteMemberTooltip.appendChild(h3);
             deleteMemberTooltip.appendChild(p);
 
-            currentMember.after(deleteMemberTooltip);
+            return deleteMemberTooltip;
+        }
 
+        function deleteParticipant(deleteButton, deleteMemberTooltip) {
+            const currentMember = deleteButton.parentNode;
+            if (deleteMemberTooltip == null) {
+                const tooltip = createTooltip();
+                deleteMemberTooltip = tooltip;
+                currentMember.after(tooltip);
+            }
             deleteButton.onclick = function () {
                 if (deleteMemberTooltip.classList.contains("hidden")) {
                     deleteMemberTooltip.classList.remove("hidden");
@@ -328,17 +340,21 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                             deleteUserProjectInput: projectId
                         },
                         success: function (data) {
+                            const showTeamMembersElement = document.getElementById("showTeamMembers");
+                            const currentCount = parseInt(showTeamMembersElement.querySelector("p").textContent.match(/\d+/)[0]);
+                            const newCount = currentCount - 1;
+                            const teamDropdown = document.getElementById('teamMembersDropdown').parentElement;
+
                             deleteMemberTooltip.remove();
                             currentMember.remove();
 
-                            const showTeamMembersElement = document.getElementById("showTeamMembers");
-                            const currentCount = parseInt(showTeamMembersElement.innerText.match(/\d+/)[0]);
-                            const newCount = currentCount - 1;
-
                             if (newCount > 0) {
-                                showTeamMembersElement.innerText = `and ${newCount} more...`;
+                                showTeamMembersElement.querySelector("p").textContent = `and ${newCount} more...`;
                             } else {
-                                /*TODO: hide the "and n more" text and the arrow if the dropdown is empty */
+                                showTeamMembersElement.querySelector("p").remove();
+                                showTeamMembersElement.querySelector("i").remove();
+                                showTeamMembersElement.classList.add('hidden');
+                                teamDropdown.classList.add('hidden');
                             }
                         }
                     });
@@ -349,9 +365,9 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
         var acceptRequestButtons = currentModal.querySelectorAll('.modal__request-accept-button');
 
         acceptRequestButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
+            button.onclick = function () {
                 acceptRequest(button);
-            });
+            }
         });
 
         function acceptRequest(clickedButton) {
@@ -373,6 +389,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     // remove the request
                     if (requestItem) {
                         requestItem.remove();
+                        showNoRequests()
                     }
 
                     // create a new participant and append it to the dropdown
@@ -381,7 +398,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     const newUserElement = document.createElement('div');
                     newUserElement.classList.add('modal__user-item');
                     newUserElement.setAttribute('data-userId', userId);
-                    newUserElement.setAttribute('data-url', '@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })'); 
+                    newUserElement.setAttribute('data-url', '/Account/Projects/DeleteUserFormProject');
                     newUserElement.setAttribute('data-projectId', projectId); 
 
                     const userPhotoElement = document.createElement('img'); 
@@ -396,17 +413,31 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     deleteIcon.classList.add('fa', 'fa-user-times');
                     deleteIcon.setAttribute('aria-hidden', 'true');
                     newUserElement.appendChild(deleteIcon);
+                    teamDropdown.appendChild(newUserElement);
+
+                    // create a tooltip after the element
+                    const deleteMemberTooltip = createTooltip();
+                    newUserElement.after(deleteMemberTooltip);
 
                     /*TODO:  correct the deleteParticipant function to work for the newly created delete icon*/
-                    deleteParticipant(deleteIcon);
-                
-                    teamDropdown.appendChild(newUserElement);
+                    deleteParticipant(deleteIcon, deleteMemberTooltip);
 
                     // increase number of participants by 1
                     const showTeamMembersElement = document.getElementById("showTeamMembers");
-                    const currentCount = parseInt(showTeamMembersElement.innerText.match(/\d+/)[0]);
-                    const newCount = currentCount + 1;
-                    showTeamMembersElement.innerText = `and ${newCount} more...`;
+                    if (showTeamMembersElement.querySelector('p')) {
+                        const currentCount = parseInt(showTeamMembersElement.querySelector('p').textContent.match(/\d+/)[0]);
+                        const newCount = currentCount + 1;
+                        showTeamMembersElement.querySelector('p').textContent = `and ${newCount} more...`;
+                    } else {
+                        const p = document.createElement('p');
+                        const i = document.createElement('i');
+                        p.textContent = `and 1 more...`;
+                        i.classList.add('arrow', 'up', 'hidden');
+                        showTeamMembersElement.appendChild(p);
+                        showTeamMembersElement.appendChild(i);
+                        showTeamMembersElement.classList.remove('hidden');
+                        setShowMembersButton();
+                    }
         }
     });
 }
@@ -432,11 +463,24 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
 
                     if (requestItem) {
                         requestItem.remove();
+                        showNoRequests()
                     }
                 }
             });
         }
 
+        function showNoRequests() {
+            const requestsContainer = currentModal.firstElementChild.lastElementChild;
+            console.log(requestsContainer);
+            if (requestsContainer) {
+                if (!requestsContainer.classList.contains('danger') && requestsContainer.lastElementChild.childElementCount == 0) {
+                    const h3 = document.createElement('h3');
+                    h3.textContent = "No requests have been sent yet";
+                    requestsContainer.replaceChildren();
+                    requestsContainer.appendChild(h3);
+                }
+            }
+        }
     });
 });
 
