@@ -21,4 +21,6 @@ public partial class User : IdentityUser<uint>
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
     public virtual ICollection<UsersTechnology> UsersTechnologies { get; set; } = new List<UsersTechnology>();
+
+    public virtual ICollection<Notification> Notification { get; set; } = new List<Notification>();
 }
