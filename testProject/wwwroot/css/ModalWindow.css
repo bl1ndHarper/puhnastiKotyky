@@ -323,7 +323,7 @@
 .modal__flex-row-item {
     flex: 1;
     min-width: fit-content;
-    min-height: 150px;
+    min-height: 110px;
     box-sizing: border-box;
 }
 
