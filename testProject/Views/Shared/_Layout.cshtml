@@ -35,8 +35,10 @@
                     <a asp-area="UserAccount" asp-controller="Account" asp-action="Index">Account</a>
                 </li>
                 <li class="navbar__tab-item">
-                    <i class="fa fa-bell"></i>
-                    <a asp-area="" asp-controller="Notifications" asp-action="Index">Notifications</a>
+                    <i class="fa fa-bell">
+                        <div class="notification-circle hidden" id="notificationCircle"></div>
+                    </i>
+                    <a asp-area="Notifications" asp-controller="Notifications" asp-action="Index">Notifications</a>
                 </li>
                 <li class="navbar__tab-item">
                     <i class="fa fa-question-circle"></i>
@@ -54,6 +56,64 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@7.0.14/dist/browser/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/NotificationsHub")
+            .build();
+
+        connection.on("ReceiveNotification", function (message) {
+
+            console.log('Navbar ReceiveNotification');
+            console.log(message);
+            showNotificationCircle();
+        });
+
+        connection.start()
+            .then(function () {
+                console.log("Connection to SignalR hub established");
+            })
+            .catch(function (err) {
+                console.error(err.toString());
+            });
+
+        function showNotificationCircle() {
+            const notificationCircle = $('#notificationCircle');
+            notificationCircle.removeClass('hidden');
+            let currentCount = parseInt(notificationCircle.text()) || 0;
+            currentCount += 1;
+            notificationCircle.text(currentCount.toString());
+            console.log('currentCount: ' + currentCount);
+        }
+
+
+        function updateNotificationCircle() {
+            $.ajax({
+                url: '@Url.Action("CheckUnreadNotifications", "Notifications", new { area = "Notifications" })',
+                method: 'GET',
+                success: function (data) {
+                    console.log('unread notifications: ' + data.unreadNotificationsCount);
+                    const notificationCircle = $('#notificationCircle');
+
+                    if (data.unreadNotificationsCount > 0) {
+                        notificationCircle.removeClass('hidden');
+                        notificationCircle.text(data.unreadNotificationsCount);
+                    } else {
+                        notificationCircle.addClass('hidden');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error checking unread notifications:', error);
+                }
+            });
+        }
+
+        // Call the function on page load
+        $(document).ready(function () {
+            updateNotificationCircle();
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

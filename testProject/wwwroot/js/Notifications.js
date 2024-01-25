@@ -1,4 +1,23 @@
-﻿const container = document.querySelector(".notifications__notification-items-container");
+﻿const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/NotificationsHub") 
+    .build();
+
+connection.on("ReceiveNotification", function (title, message) {
+
+    console.log(message);
+    createNotification(title = title,
+        text = message, buttonText = "To the request", isNew = true);
+});
+
+connection.start()
+    .then(function () {
+        console.log("Connection to SignalR hub established");
+    })
+    .catch(function (err) {
+        console.error(err.toString());
+    });
+
+const container = document.querySelector(".notifications__notification-items-container");
 // when user open the page they see all the new notifications so they are not new anymore
 Array.from(container.children).forEach(notifItem => {
     notifItem.classList.remove("notifications__notification-item-new");
@@ -109,7 +128,7 @@ newCounter.parentElement.onclick = function () {
     createNotification(title = "test", text = "test notification body text.", buttonText = "", isNew = true);
 }
 
-createNotification(title = "Plan your team work",
+/* createNotification(title = "Plan your team work",
     text = "You’ve just changed your first project’s status to “in development” and we have something to show you. Try out our team plan so you can use kanban board and other agile features to optimize the work processes in your team.",
     buttonText = "Learn more", isNew = false);
 
@@ -119,4 +138,4 @@ createNotification(title = "You have new requests",
 
 createNotification(title = "Your request has been accepted!",
     text = "Congratulations! The owner of project ProjectName has accepted your request. Now you are a part of the project’s team! You have the access to all functions that the team can use. Contact the owner and start working!",
-    buttonText = "To the request", isNew = true);
+    buttonText = "To the request", isNew = true); */

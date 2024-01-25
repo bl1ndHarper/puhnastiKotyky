@@ -137,30 +137,36 @@ namespace testProject.Migrations
                 {
                     b.Property<uint>("NotificationsId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("notifications_id");
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("text")
+                        .HasColumnName("content");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("title");
 
                     b.Property<uint>("UsersId")
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("users_id");
 
                     b.Property<bool>("isRead")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_read");
 
                     b.HasKey("NotificationsId");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex(new[] { "UsersId" }, "IX_Notifications_UsersId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("notifications", (string)null);
                 });
 
             modelBuilder.Entity("testProject.Models.Project", b =>

@@ -7,6 +7,7 @@ using testProject.Helpers;
 using testProject.Services;
 using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
+using testProject.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -28,6 +29,9 @@ builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfi
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<CloudinaryService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+// builder.Services.AddSingleton<Microsoft.AspNetCore.SignalR.IUserIdProvider, CustomUserIdProvider>();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -63,6 +67,8 @@ app.UseEndpoints(endpoints => {
     endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapHub<NotificationsHub>("/NotificationsHub");
 });
 
 app.Run();
