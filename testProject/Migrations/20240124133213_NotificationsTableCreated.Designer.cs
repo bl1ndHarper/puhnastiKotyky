@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using testProject.Data;
 
@@ -10,9 +11,11 @@ using testProject.Data;
 namespace testProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240124133213_NotificationsTableCreated")]
+    partial class NotificationsTableCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,36 +140,30 @@ namespace testProject.Migrations
                 {
                     b.Property<uint>("NotificationsId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("notifications_id");
+                        .HasColumnType("int unsigned");
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("content");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime")
-                        .HasColumnName("created_at");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("title");
+                        .HasColumnType("longtext");
 
                     b.Property<uint>("UsersId")
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("users_id");
+                        .HasColumnType("int unsigned");
 
                     b.Property<bool>("isRead")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("is_read");
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("NotificationsId");
 
-                    b.HasIndex(new[] { "UsersId" }, "IX_Notifications_UsersId");
+                    b.HasIndex("UsersId");
 
-                    b.ToTable("notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("testProject.Models.Project", b =>
