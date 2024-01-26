@@ -23,7 +23,7 @@ namespace testProject.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     content = table.Column<string>(type: "text(300)", nullable: false, collation: "utf8mb4_0900_ai_ci")
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    created_at = table.Column<DateTime>(type: "datetime", nullable: false),
                     is_read = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>

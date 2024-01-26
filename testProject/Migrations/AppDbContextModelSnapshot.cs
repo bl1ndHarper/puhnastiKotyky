@@ -146,7 +146,7 @@ namespace testProject.Migrations
                         .HasColumnName("content");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("datetime")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Title")

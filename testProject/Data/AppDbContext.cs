@@ -94,7 +94,7 @@ public partial class AppDbContext : IdentityDbContext<User, IdentityRole<uint>, 
 
             entity.Property(e => e.NotificationsId).HasColumnName("notifications_id");
             entity.Property(e => e.Content).IsRequired().HasColumnType("text").HasColumnName("content");
-            entity.Property(e => e.CreatedAt).HasColumnType("datetime(6)").HasColumnName("created_at");
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime").HasColumnName("created_at");
             entity.Property(e => e.Title).IsRequired().HasColumnType("varchar(255)").HasColumnName("title");
             entity.Property(e => e.UsersId).HasColumnType("int unsigned").HasColumnName("users_id");
             entity.Property(e => e.isRead).HasColumnType("tinyint(1)").HasColumnName("is_read");

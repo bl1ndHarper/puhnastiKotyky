@@ -66,18 +66,30 @@ namespace testProject.Areas.UserAccount.Controllers
                 request.Status = "accepted";
                 _db.Requests.Update(request);
                 _db.SaveChanges();
+
+                var notification = new Notification { UsersId =  request.UsersId, Title = "Your request has been accepted", 
+                Content = $"Congratulations! The owner of project {projectName} has accepted your request. " +
+                    $"Now you are a part of the project’s team! Once the team is fully assembled, " +
+                    $"you'll be all set to kick off your work. Stay tuned for further updates, " +
+                    $"and get ready to dive into exciting projects with your team.", CreatedAt = DateTime.Now, isRead = false
+                };
+
+                _db.Notifications.Add(notification);
+                _db.SaveChanges();
+
                 SendNotificationToUser(userName, "Your request has been accepted", 
                     $"Congratulations! The owner of project {projectName} has accepted your request. " +
-                    $"Now you are a part of the project’s team! You have the access to all functions that the team can use. Contact the owner and start working!");
+                    $"Now you are a part of the project’s team! You have the access to all functions that the team can use. Contact the owner and start working!",
+                    notification.NotificationsId, notification.CreatedAt);
+
                 AddNewParticipant(request.UsersId, request.ProjectsId);   
             }
             return Json(new { success = true, message = "Participation request was successfully accepted" });
         }
 
-        private async void SendNotificationToUser(string user, string title, string message)
+        private async void SendNotificationToUser(string user, string title, string message, uint notificationId, DateTime sentAt)
         {
-            Console.WriteLine("================ SendNotificationToUser() is called");
-            await _hubContext.Clients.Group(user).SendAsync("ReceiveNotification", title, message);
+            await _hubContext.Clients.Group(user).SendAsync("ReceiveNotification", title, message, notificationId, sentAt);
         }
 
         private ActionResult AddNewParticipant(uint userId, uint projectId)
