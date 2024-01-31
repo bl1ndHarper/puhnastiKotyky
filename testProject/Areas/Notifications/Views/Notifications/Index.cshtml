@@ -22,7 +22,10 @@
             <h1>Your notifications</h1>
         </div>
         <div class="notifications__notification-items-container">
-            <h1 class="hidden">You don’t have any notifications yet</h1>
+            @if (Model.Count == 0)
+            {
+                <h1 id="notifications__no-notifications-message">You don’t have any notifications yet</h1>
+            }
             @{
                 var orderedNotifications = Model.OrderByDescending(notification => notification.CreatedAt).ToList();
             }

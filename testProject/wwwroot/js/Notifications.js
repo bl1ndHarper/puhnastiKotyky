@@ -1,6 +1,7 @@
 ﻿const connection = new signalR.HubConnectionBuilder()
     .withUrl("/NotificationsHub") 
     .build();
+const container = document.querySelector(".notifications__notification-items-container");
 
 connection.on("ReceiveNotification", function (title, message, id, sentAt) {
 
@@ -8,6 +9,8 @@ connection.on("ReceiveNotification", function (title, message, id, sentAt) {
     createNotification(title = title, text = message,
         buttonText = "To the project", id = id, date = sentAt, isNew = true);
     markAllNotificationsAsRead();
+    var noItemsText = document.getElementById("notifications__no - notifications - message");
+    noItemsText.classList.add(".hidden");
 });
 
 connection.start()
@@ -54,17 +57,10 @@ $(document).ready(function () {
     markAllNotificationsAsRead();
 });
 
-const container = document.querySelector(".notifications__notification-items-container");
 // when user open the page they see all the new notifications so they are not new anymore
 /* Array.from(container.children).forEach(notifItem => {
     notifItem.classList.remove("notifications__notification-item-new");
 }); */
-
-// show "no notifications" header-message if there are no any
-const noItemsText = container.querySelector("h1");
-if (container.children.length == 0) {
-    noItemsText.classList.remove("hidden");
-}
 
 // use this to show new notifications count
 const newCounter = document.querySelector(".notifications__header div p");
