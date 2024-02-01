@@ -499,6 +499,7 @@ document.querySelectorAll('.modal__close-button').forEach(function (btn) {
     btn.addEventListener('click', function () {
         var modal = this.closest('.modal__container');
         modal.classList.add('hidden');
+        navbar.style.zIndex = "5";
     });
 });
 
@@ -518,3 +519,4 @@ function closeModal(e, clickedOutside) {
 modal.addEventListener("click", (e) => closeModal(e, !modal.contains(e.target)));
 openBtn.addEventListener("click", openModal);
 closeBtn.addEventListener("click", closeModal);
+closeBtn.addEventListener("click", (e) => closeModal(e, false));
