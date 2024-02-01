@@ -1,4 +1,5 @@
 ﻿@model testProject.Areas.Projects.Models.ProjectViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Index";
 }
@@ -56,7 +57,7 @@
                         <i class="fa fa-user-plus"></i>
                         <p>Join request!</p>
                     </button>
-                    <button class="light" onclick="window.location.href='/Home/Index'">
+                    <button class="light" onclick="window.location.href='/'">
                         <i class="fa fa-search"></i>
                         <p>Other projects</p>
                     </button>
@@ -80,13 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="project__alt">
-            <p>Can’t find a project interesting enough? Create a new one based on your own idea!</p>
-            <div onclick="window.location.href='@Url.Action("Index", "Account", new { area = "UserAccount" })'">
-                <i class="fa fa-pencil"></i>
-                <a>Create a project</a>
-            </div>
-        </div>
+        <partial name="_ToProjectCreationPartial" />
         <svg class="user-account-day__color-mode-switch"
              width="112"
              height="112"

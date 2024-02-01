@@ -23,17 +23,17 @@ customNum.forEach(num => {
         const numInputMin = parseInt(numInput.min);
 
         if (numInputValue === numInputMax) {
-            num.style.width = "7em";
+            num.style.width = "6em";
             arrUp.style.display = "none";
 
             arrDown.style.display = "block";
         } else if (numInputValue === numInputMin) {
-            num.style.width = "7em";
+            num.style.width = "6em";
             arrDown.style.display = "none";
 
             arrUp.style.display = "block";
         } else {
-            num.style.width = "9em";
+            num.style.width = "7em";
             arrUp.style.display = "block";
             arrDown.style.display = "block";
         }
