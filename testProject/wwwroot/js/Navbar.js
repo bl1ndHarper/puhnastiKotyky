@@ -20,3 +20,42 @@ function showLoggedOutToast() {
         document.querySelector("#logOutForm").submit();
     }, 1500)
 }
+
+
+const collapsibleButton = document.querySelector(".navbar__branding").querySelector("span");
+const tabsContainer = document.querySelector(".navbar__tabs");
+const navbar = document.querySelector(".navbar__container");
+
+window.addEventListener('load', checkFlexGap);
+window.addEventListener('resize', checkFlexGap);
+function checkFlexGap() {
+    var containerWidth = navbar.offsetWidth;
+    var childrenWidth = 0;
+    Array.from(navbar.children).forEach(function (child) {
+        childrenWidth += child.offsetWidth;
+    });
+
+    var gap = containerWidth - childrenWidth;
+
+    if (collapsibleButton.classList.contains('hidden')) {
+        if (gap == 0) {
+            tabsContainer.classList.add('collapsed');
+            tabsContainer.classList.add('hidden');
+            collapsibleButton.classList.remove('hidden');
+        }
+    } else {
+        if (gap >= childrenWidth) {
+            tabsContainer.classList.remove('collapsed');
+            tabsContainer.classList.remove('hidden');
+            collapsibleButton.classList.add('hidden');
+        }
+    }
+}
+
+collapsibleButton.addEventListener('click', function () {
+    collapsibleSwitch();
+});
+function collapsibleSwitch() {
+    tabsContainer.classList.toggle('hidden');
+    collapsibleButton.classList.toggle('fa-caret-up');
+}
