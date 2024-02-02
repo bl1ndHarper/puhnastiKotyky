@@ -1,0 +1,13 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="project__alt">
+    <p>Can’t find a project interesting enough? Create a new one based on your own idea!</p>
+    <div onclick="window.location.href='@Url.Action("Index", "Account", new { area = "UserAccount" })'">
+        <i class="fa fa-pencil"></i>
+        <a>Create a project</a>
+    </div>
+</div>

@@ -1,0 +1,150 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="home">
+        <div class="home__banner">
+            <h1>Find the team to make your professional dream come true</h1>
+            <h2>Share your ideas with other creators or find a project you want to be a part of</h2>
+        </div>
+        <div class="home__catalog">
+            <div class="home__catalog-header">
+                <h2>Explore existing community projects</h2>
+                <div class="home__catalog-filters">
+                    <div class="home__catalog-filters-header">
+                        <h3>Filter projects list</h3>
+                        <i class="arrow down"></i>
+                    </div>
+                    <input class="hidden" id="complexity" />
+                    <div class="home__catalog-filter complexity hidden">
+                        <p>by complexity</p>
+                        <p>hard</p>
+                        <p>medium</p>
+                        <p>easy</p>
+                    </div>
+                    <input class="hidden" id="duration" />
+                    <div class="home__catalog-filter duration hidden">
+                        <p>by duration</p>
+                        <div class="customNumberInput">
+                            <i class="arrow left"></i>
+                            <input type="number" name="projectDuration" min="1" max="100" value="1" />
+                            <i class="arrow right"></i>
+                        </div>
+                        <div class="customNumberInput">
+                            <i class="arrow left"></i>
+                            <input type="number" name="projectDuration" min="1" max="100" value="100" />
+                            <i class="arrow right"></i>
+                        </div>
+                    </div>
+                    <div class="home__catalog-filters-buttons hidden">
+                        <button class="button">Clear filters</button>
+                        <button class="button">Show filtered</button>
+                    </div>
+                </div>
+            </div>
+            <div class="home__catalog-container">
+                <div class="home__catalog-cards">
+                    @for (int i = 0; i < 6; i++)
+                    {
+                        <div class="home__card">
+                            <div><h3>Project Name</h3></div>
+                            <div>
+                                <h4>Technologies:</h4>
+                                <div class="home__technologies">
+                                    <p>ASP.NET</p>
+                                    <p>C#</p>
+                                    <p>SQL</p>
+                                    <p>JavaScript</p>
+                                    <p>and 1 more</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Complexity:</h4>
+                                <p>hard</p>
+                            </div>
+                            <div>
+                                <h4>Time:</h4>
+                                <p>15 weeks</p>
+                            </div>
+                            <div>
+                                <h4>Created:</h4>
+                                <p>20.01.2024</p>
+                            </div>
+                            <div class="description">
+                                <h4>Description:</h4>
+                                <p>The complete tea app for android phones which is both a store and a manual for tea lovers and those who want to be closer to Chinese tea culture. There must be a user authentication, categorized catalog with filtering search, everything that an e-store needs and a separate page with manuals and tea brewing timer for different types of Chinese tea. The main idea on interface is a cute, rounded and minimalistic green-colored look and as least page redirections as possible to create a feeling of confidence and stillness.</p>
+                            </div>
+                            <div>
+                                <button class="button">Open</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <ul class="home__catalog-pagination">
+                    <li class="arrow left"></li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li class="dots">...</li>
+                    <li>9</li>
+                    <li class="arrow right"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="home__recommendations">
+            <h2>Projects for you (based on your skills)</h2>
+            <div class="home__recommendations-cards">
+                @for(int i = 0; i < 6; i++)
+                {
+                    <div class="home__card">
+                        <div><h3>Project Name</h3></div>
+                        <div>
+                            <h4>Technologies:</h4>
+                            <div class="home__technologies">
+                                <p>ASP.NET</p>
+                                <p>C#</p>
+                                <p>SQL</p>
+                                <p>JavaScript</p>
+                                <p>and 1 more</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4>Complexity:</h4>
+                            <p>hard</p>
+                        </div>
+                        <div>
+                            <h4>Time:</h4>
+                            <p>15 weeks</p>
+                        </div>
+                        <div>
+                            <h4>Created:</h4>
+                            <p>20.01.2024</p>
+                        </div>
+                        <div class="description">
+                            <h4>Description:</h4>
+                            <p>The complete tea app for android phones which is both a store and a manual for tea lovers and those who want to be closer to Chinese tea culture. There must be a user authentication, categorized catalog with filtering search, everything that an e-store needs and a separate page with manuals and tea brewing timer for different types of Chinese tea. The main idea on interface is a cute, rounded and minimalistic green-colored look and as least page redirections as possible to create a feeling of confidence and stillness.</p>
+                        </div>
+                        <div>
+                            <button class="button">Open</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <partial name="_ToProjectCreationPartial" />
+        <script src="@Url.Content("~/js/HomePage.js")"></script>
+        <script src="@Url.Content("~/js/NumberInput.js")"></script>
+    </div>
+</body>
+</html>

@@ -769,6 +769,12 @@ user-account-day * {
     -webkit-transform: rotate(135deg);
 }
 
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    cursor: pointer;
+}
+
 .up {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
@@ -793,12 +799,12 @@ user-account-day * {
     }
 }
 
-.user-account-day__new-project-duration .customNumberInput {
+.customNumberInput {
     padding: 1rem;
     color: #def5e5;
     background: #def5e5;
     display: flex;
-    width: 9rem;
+    width: 7rem;
     height: 3rem;
     border: 2px #def5e5 solid;
     border-radius: 3em;
@@ -808,7 +814,7 @@ user-account-day * {
     transition: .3s;
 }
 
-    .user-account-day__new-project-duration .customNumberInput input {
+    .customNumberInput input {
         font-family: "Fira Sans", sans-serif;
         font-size: 18px;
         font-weight: 500;
@@ -820,17 +826,17 @@ user-account-day * {
         margin: 0;
     }
 
-        .user-account-day__new-project-duration .customNumberInput input::-webkit-outer-spin-button,
-        .user-account-day__new-project-duration .customNumberInput input::-webkit-inner-spin-button {
+        .customNumberInput input::-webkit-outer-spin-button,
+        .customNumberInput input::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-    .user-account-day__new-project-duration .customNumberInput i {
+    .customNumberInput i {
         cursor: pointer;
     }
 
-        .user-account-day__new-project-duration .customNumberInput i:hover {
+        .customNumberInput i:hover {
             border-width: 0 7px 7px 0;
             border-radius: 3px;
             transition: ease-in .1s;
