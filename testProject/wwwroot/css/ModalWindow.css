@@ -11,6 +11,8 @@
     padding: 4px 8px;
     margin: 4px;
     cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
 
     .button > * {
@@ -19,6 +21,8 @@
 
     .button:hover {
         background: #9ED5C5;
+        text-decoration: none;
+        color: black;
     }
 
 .align-self-end {

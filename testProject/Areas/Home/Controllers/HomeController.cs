@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Security.Claims;
+using testProject.Areas.Home.Models;
+using testProject.Data;
 using testProject.Models;
 
 namespace testProject.Areas.Home.Controllers
@@ -10,6 +14,7 @@ namespace testProject.Areas.Home.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private AppDbContext _db;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -19,7 +24,56 @@ namespace testProject.Areas.Home.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            return View();
+            _db = new AppDbContext();
+
+            var availableProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
+                                                .ThenInclude(pt => pt.Technologies)
+                                                .Where(p => p.Status == "searching for participants" || 
+                                                       p.Status == "in development");
+
+            var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
+                                                .ThenInclude(pt => pt.Technologies)
+                                                .Where(p => p.Status == "searching for participants" ||
+                                                       p.Status == "in development")
+                                                .OrderByDescending(p => p.CreationDate);
+
+            var userId = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            
+            var userTechnologies = _db.UsersTechnologies.Where(u => u.UsersId == userId)
+                                    .Select(u => u.TechnologiesId).ToList();
+
+            var recommendedProjects = _db.Projects
+                                    .Include(p => p.ProjectsTechnologies)
+                                    .ThenInclude(pt => pt.Technologies)
+                                    .Include(p => p.ProjectsUsers)
+                                    .ThenInclude(pu => pu.Users)
+            .Where(p => (p.Status == "searching for participants" || p.Status == "in development") &&
+            p.ProjectsTechnologies.Any(t => userTechnologies.Contains(t.TechnologiesId)) &&
+            !p.ProjectsUsers.Any(pu => userTechnologies.Contains(pu.Users.Id)))
+            .OrderByDescending(p => p.ProjectsTechnologies.Count(t => userTechnologies.Contains(t.TechnologiesId)))
+            .ToList();
+
+            HomeViewModel homeViewModel = new HomeViewModel { AvailableProjects = availableProjects, 
+            LatestProjects = latestProjects, RecommendedProjects = recommendedProjects };
+
+            Console.Write("======== User's technologies: ");
+
+            foreach(var i in userTechnologies)
+            {
+                Console.Write(i + " ");
+            }
+
+            foreach(var p in recommendedProjects)
+            {
+                Console.Write("\n\n\t" + p.Name + ". Number of matches in technologies: " + p.ProjectsTechnologies.Count(u => userTechnologies.Contains(u.TechnologiesId)) + "  ( ");
+                foreach(var t in p.ProjectsTechnologies)
+                {
+                    Console.Write(t.TechnologiesId + " ");
+                }
+                Console.Write(")");
+            }
+
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()
