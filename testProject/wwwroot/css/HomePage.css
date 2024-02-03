@@ -228,17 +228,19 @@
     gap: 8px;
 }
 
-    .home__technologies p {
-        font-weight: 500;
-        font-size: 14px;
-    }
+.home__technologies_technology_name {
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 12px;
+    border: 2px solid #BCEAD5;
+    background: #DEF5E5;
+    padding: 4px 8px;
+}    
 
-    .home__technologies p:not(:last-child) {
-        border-radius: 12px;
-        border: 2px solid #BCEAD5;
-        background: #DEF5E5;
-        padding: 4px 8px;
-    }
+.home__technologies_and_more {
+    font-weight: 500;
+    font-size: 14px;
+}
 
 .home__catalog-filters-buttons {
     margin-top: 12px;

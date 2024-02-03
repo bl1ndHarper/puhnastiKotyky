@@ -37,7 +37,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Home\Data\" />
-    <Folder Include="Areas\Home\Models\" />
     <Folder Include="Areas\Notifications\Data\" />
     <Folder Include="Areas\Notifications\Models\" />
     <Folder Include="Areas\Projects\Data\" />

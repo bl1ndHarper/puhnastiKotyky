@@ -1,4 +1,5 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@model testProject.Areas.Home.Models.HomeViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Index";
 }
@@ -13,7 +14,7 @@
 <body>
     <div class="home">
         <div class="home__banner">
-            <h1>Find the team to make your professional dream come true</h1>
+            <h1>Find the team to bring exciting IT projects to life</h1>
             <h2>Share your ideas with other creators or find a project you want to be a part of</h2>
         </div>
         <div class="home__catalog">
@@ -103,44 +104,66 @@
             </div>
         </div>
         <div class="home__recommendations">
-            <h2>Projects for you (based on your skills)</h2>
-            <div class="home__recommendations-cards">
-                @for(int i = 0; i < 6; i++)
-                {
-                    <div class="home__card">
-                        <div><h3>Project Name</h3></div>
+            @{
+                var projects = Model.RecommendedProjects;
+            }
+            @if (Model.RecommendedProjects.Count() < 3)
+            {
+                <h2>Check out the latest projects</h2>
+                projects = Model.LatestProjects;
+            }
+            else
+            {
+                <h2>Projects for you (based on your skills)</h2>
+            }
+                <div class="home__recommendations-cards">
+                    @{
+                    var projectsCount = projects.Count() < 10 ? projects.Count() : 10;
+                    }
+                    @for (int i = 0; i < projectsCount; i++)
+                    {
+                        <div class="home__card">
+                        <div><h3>@projects.ElementAt(i).Name</h3></div>
                         <div>
                             <h4>Technologies:</h4>
                             <div class="home__technologies">
-                                <p>ASP.NET</p>
-                                <p>C#</p>
-                                <p>SQL</p>
-                                <p>JavaScript</p>
-                                <p>and 1 more</p>
-                            </div>
+                                @{
+                                    var technologiesCount = projects.ElementAt(i).ProjectsTechnologies.Count() < 5 ? projects.ElementAt(i).ProjectsTechnologies.Count() : 5;
+                                }
+
+                                @for (var j = 0; j < technologiesCount; j++)
+                                {
+                                    <p class="home__technologies_technology_name">@projects.ElementAt(i).ProjectsTechnologies.ElementAt(j).Technologies.Name</p>
+                                }
+                                @if ((@projects.ElementAt(i).ProjectsTechnologies.Count() - 5) > 0)
+                                    {
+                                    <p class="home__technologies_and_more">and @(projects.ElementAt(i).ProjectsTechnologies.Count() - 5) more</p>
+                                    }
+                                </div>
                         </div>
                         <div>
                             <h4>Complexity:</h4>
-                            <p>hard</p>
+                            <p>@projects.ElementAt(i).Level</p>
                         </div>
                         <div>
                             <h4>Time:</h4>
-                            <p>15 weeks</p>
+                            <p>@projects.ElementAt(i).Duration weeks</p>
                         </div>
                         <div>
                             <h4>Created:</h4>
-                            <p>20.01.2024</p>
+                            <p>@projects.ElementAt(i).CreationDate.ToString("dd.MM.yyyy")</p>
                         </div>
                         <div class="description">
                             <h4>Description:</h4>
-                            <p>The complete tea app for android phones which is both a store and a manual for tea lovers and those who want to be closer to Chinese tea culture. There must be a user authentication, categorized catalog with filtering search, everything that an e-store needs and a separate page with manuals and tea brewing timer for different types of Chinese tea. The main idea on interface is a cute, rounded and minimalistic green-colored look and as least page redirections as possible to create a feeling of confidence and stillness.</p>
+                            <p>@projects.ElementAt(i).Description</p>
                         </div>
                         <div>
-                            <button class="button">Open</button>
+                            <a href="@Url.Action("Index", "Public", new {area = "Projects", id=@projects.ElementAt(i).ProjectsId })"
+                              class="button">Open</a>
                         </div>
                     </div>
                 }
-            </div>
+            </div>      
         </div>
         <partial name="_ToProjectCreationPartial" />
         <script src="@Url.Content("~/js/HomePage.js")"></script>

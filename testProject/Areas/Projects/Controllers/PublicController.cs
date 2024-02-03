@@ -61,6 +61,9 @@ namespace testProject.Areas.Projects.Controllers
                 var checkParticipant = _db.ProjectsUsers.Where(p => p.UsersId == userId
                 && p.ProjectsId == Convert.ToUInt32(projectsId)).FirstOrDefault();
 
+                var checkProjectStatus = _db.Projects.Where(p => p.ProjectsId == Convert.ToUInt32(projectsId))
+                    .Select(p => p.Status).FirstOrDefault();
+
                 if (checkRequest != null && checkRequest.Status == "considering")       // if it exists user cannot create its copy
                 {
                     return Json(new { success = false, message = "You've already submitted a request for this project. Delete it to resubmit or contact the project owner." });
@@ -68,6 +71,10 @@ namespace testProject.Areas.Projects.Controllers
                 else if ((checkRequest != null && checkRequest.Status == "accepted") || checkParticipant != null)     // if user is in the team they also can't submit a request
                 {
                     return Json(new { success = false, message = "You're already a part of this project's team. " });
+                }
+                else if (checkProjectStatus == "draft" || checkProjectStatus == "completed")     // user can submit a request only for projects with statuses "searching for participants" or "in development"
+                {
+                    return Json(new { success = false, message = $"You can't submit a request because the project's status is {checkProjectStatus}. " });
                 }
                 else if (checkRequest == null)  // if it doesn't exist create one
                 {
