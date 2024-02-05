@@ -32,13 +32,14 @@ function checkFlexGap() {
     var containerWidth = navbarContainer.offsetWidth;
     var childrenWidth = 0;
     Array.from(navbarContainer.children).forEach(function (child) {
-        childrenWidth += child.offsetWidth;
+        var childRect = child.getBoundingClientRect();
+        childrenWidth += childRect.width;
     });
 
     var gap = containerWidth - childrenWidth;
 
     if (collapsibleButton.classList.contains('hidden')) {
-        if (gap == 0) {
+        if (gap < 0) {
             tabsContainer.classList.add('collapsed');
             tabsContainer.classList.add('hidden');
             collapsibleButton.classList.remove('hidden');

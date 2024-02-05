@@ -65,8 +65,6 @@
             .build();
 
         connection.on("ReceiveNotification", function (message) {
-
-            console.log('Navbar ReceiveNotification');
             console.log(message);
             showNotificationCircle();
         });
@@ -85,9 +83,7 @@
             let currentCount = parseInt(notificationCircle.text()) || 0;
             currentCount += 1;
             notificationCircle.text(currentCount.toString());
-            console.log('currentCount: ' + currentCount);
         }
-
 
         function updateNotificationCircle() {
             $.ajax({
@@ -112,7 +108,9 @@
 
         // Call the function on page load
         $(document).ready(function () {
-            updateNotificationCircle();
+            if(@User.Identity.IsAuthenticated.ToString().ToLower()){
+                updateNotificationCircle();
+            }  
         });
     </script>
 
