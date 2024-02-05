@@ -53,7 +53,30 @@ namespace testProject.Areas.Home.Controllers
             .OrderByDescending(p => p.ProjectsTechnologies.Count(t => userTechnologies.Contains(t.TechnologiesId)))
             .ToList();
 
-            HomeViewModel homeViewModel = new HomeViewModel { AvailableProjects = availableProjects, 
+            // populating pages with projects
+            int projectsPerPage = 6;    // customizable variable
+            int pagesCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(latestProjects.Count()) / Convert.ToDouble(projectsPerPage)));
+            var pages = new List<Page>();
+            for ( int i = 0; i < pagesCount; i++ )
+            {
+                int pageFirstProjectIndex = i * projectsPerPage;
+                int pageLastProjectIndex = pageFirstProjectIndex + projectsPerPage;
+                var currentPageProjects = new List<Project>();
+                if (i == pagesCount - 1)    // the last page can have less than maximum (projectsPerPage) projects
+                {
+                    pageLastProjectIndex = latestProjects.Count();
+                    currentPageProjects = latestProjects.ToList().GetRange(pageFirstProjectIndex, pageLastProjectIndex - pageFirstProjectIndex);
+                }
+                else
+                {
+                    currentPageProjects = latestProjects.ToList().GetRange(pageFirstProjectIndex, pageLastProjectIndex);
+                }
+                // creating a page object
+                Page page = new Page {  PageIndex = i, CurrentPageProjects = currentPageProjects };
+                pages.Add(page);    // adding it to the array to then put array into the model
+            }
+
+            HomeViewModel homeViewModel = new HomeViewModel { Pages = pages, AvailableProjects = availableProjects, 
             LatestProjects = latestProjects, RecommendedProjects = recommendedProjects };
 
             Console.Write("======== User's technologies: ");
