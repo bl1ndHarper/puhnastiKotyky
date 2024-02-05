@@ -27,7 +27,7 @@
         font-size: 56px;
         width: 70%;
         position: relative;
-        top: 15%;
+        top: 5%;
         left: 5%;
         text-align: start;
         margin-bottom: 20%;
@@ -38,7 +38,7 @@
         font-size: 42px;
         width: 50%;
         position: relative;
-        bottom: 15%;
+        bottom: 5%;
         right: 5%;
         text-align: end;
         align-self: end;
