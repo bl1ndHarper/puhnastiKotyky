@@ -52,54 +52,12 @@
                     </div>
                 </div>
             </div>
-            <div class="home__catalog-container">
-                <div class="home__catalog-cards">
-                    @for (int i = 0; i < 6; i++)
-                    {
-                        <div class="home__card">
-                            <div><h3>Project Name</h3></div>
-                            <div>
-                                <h4>Technologies:</h4>
-                                <div class="home__technologies">
-                                    <p>ASP.NET</p>
-                                    <p>C#</p>
-                                    <p>SQL</p>
-                                    <p>JavaScript</p>
-                                    <p>and 1 more</p>
-                                </div>
-                            </div>
-                            <div>
-                                <h4>Complexity:</h4>
-                                <p>hard</p>
-                            </div>
-                            <div>
-                                <h4>Time:</h4>
-                                <p>15 weeks</p>
-                            </div>
-                            <div>
-                                <h4>Created:</h4>
-                                <p>20.01.2024</p>
-                            </div>
-                            <div class="description">
-                                <h4>Description:</h4>
-                                <p>The complete tea app for android phones which is both a store and a manual for tea lovers and those who want to be closer to Chinese tea culture. There must be a user authentication, categorized catalog with filtering search, everything that an e-store needs and a separate page with manuals and tea brewing timer for different types of Chinese tea. The main idea on interface is a cute, rounded and minimalistic green-colored look and as least page redirections as possible to create a feeling of confidence and stillness.</p>
-                            </div>
-                            <div>
-                                <button class="button">Open</button>
-                            </div>
-                        </div>
-                    }
+            <div class="home__catalog-container" data-pagesCount="@Model.AvailableProjects.Count()">
+                <div id="projectContainer" class="home__catalog-cards"> 
+                    <!-- here will be loaded _ProjectList partial view -->
                 </div>
-                <ul class="home__catalog-pagination">
-                    <li class="arrow left"></li>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li class="dots">...</li>
-                    <li>9</li>
-                    <li class="arrow right"></li>
+                <ul id="pagination" class="home__catalog-pagination">
+                    <!-- here will be loaded page numbers -->
                 </ul>
             </div>
         </div>
@@ -122,7 +80,7 @@
                     }
                     @for (int i = 0; i < projectsCount; i++)
                     {
-                        <div class="home__card">
+                    <div class="home__card">
                         <div><h3>@projects.ElementAt(i).Name</h3></div>
                         <div>
                             <h4>Technologies:</h4>
@@ -166,8 +124,10 @@
             </div>      
         </div>
         <partial name="_ToProjectCreationPartial" />
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="@Url.Content("~/js/HomePage.js")"></script>
         <script src="@Url.Content("~/js/NumberInput.js")"></script>
+        <script src="@Url.Content("~/js/ProjectsPagination.js")"></script>
     </div>
 </body>
 </html>

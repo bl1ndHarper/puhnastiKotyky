@@ -289,9 +289,13 @@
         padding: 4px 12px;
     }
 
-    .home__catalog-pagination > li:not(.arrow):not(.dots):hover {
-        background: #BCEAD5;
-    }
+        .home__catalog-pagination > li:not(.arrow):not(.dots):hover {
+            background: #BCEAD5;
+        }
+
+    .home__catalog-pagination .home__catalog-pagination-chosen-page {
+        background-color: #BCEAD5 !important;
+    }   
 
 .home__recommendations {
     width: 100%;

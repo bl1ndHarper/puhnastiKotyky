@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
 using System.Security.Claims;
 using testProject.Areas.Home.Models;
 using testProject.Data;
@@ -53,8 +54,7 @@ namespace testProject.Areas.Home.Controllers
             .OrderByDescending(p => p.ProjectsTechnologies.Count(t => userTechnologies.Contains(t.TechnologiesId)))
             .ToList();
 
-            HomeViewModel homeViewModel = new HomeViewModel { AvailableProjects = availableProjects, 
-            LatestProjects = latestProjects, RecommendedProjects = recommendedProjects };
+            HomeViewModel homeViewModel = new HomeViewModel { AvailableProjects = availableProjects, LatestProjects = latestProjects, RecommendedProjects = recommendedProjects };
 
             Console.Write("======== User's technologies: ");
 
@@ -74,6 +74,48 @@ namespace testProject.Areas.Home.Controllers
             }
 
             return View(homeViewModel);
+        }
+
+        [HttpGet]
+        public IActionResult LoadProjects(int page)
+        {
+            _db = new AppDbContext();
+            var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
+                                                .ThenInclude(pt => pt.Technologies)
+                                                .Where(p => p.Status == "searching for participants" ||
+                                                       p.Status == "in development")
+                                                .OrderByDescending(p => p.CreationDate).ToList();
+
+            // Retrieve projects for the specified page
+            int projectsPerPage = 6;
+            var currentPageProjects = latestProjects.Skip((page - 1) * projectsPerPage).Take(projectsPerPage).ToList();
+
+            return PartialView("_ProjectList", currentPageProjects);
+        }
+
+        [HttpGet]
+        public IActionResult CountPages()
+        {
+            _db = new AppDbContext();
+            var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
+                                                .ThenInclude(pt => pt.Technologies)
+                                                .Where(p => p.Status == "searching for participants" ||
+                                                       p.Status == "in development")
+                                                .OrderByDescending(p => p.CreationDate).ToList();
+
+            int projectsPerPage = 6;
+            int pagesCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(latestProjects.Count()) / Convert.ToDouble(projectsPerPage)));
+
+            for (int i = 0; i < latestProjects.Count(); i++)
+            {
+                if(i % 6 == 0)
+                {
+                    Console.WriteLine("========== " + "Page " + (i/6 + 1));
+                }
+                Console.WriteLine(latestProjects.ElementAt(i).Name);
+            }
+
+            return Json(pagesCount);
         }
 
         public IActionResult Privacy()
