@@ -53,63 +53,11 @@
                 </div>
             </div>
             <div class="home__catalog-container" data-pagesCount="@Model.AvailableProjects.Count()">
-                <div class="home__catalog-cards">
-                    @foreach (var project in Model.Pages.ElementAt(1).CurrentPageProjects)
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("++++++++++++++++++++" + project.Name);
-                        <div class="home__card">
-                            <div><h3>@project.Name</h3></div>
-                            <div>
-                                <h4>Technologies:</h4>
-                                <div class="home__technologies">
-                                    @{
-                                        var technologiesCount = project.ProjectsTechnologies.Count() < 5 ? project.ProjectsTechnologies.Count() : 5;
-                                    }
-
-                                    @for (var j = 0; j < technologiesCount; j++)
-                                    {
-                                        <p class="home__technologies_technology_name">@project.ProjectsTechnologies.ElementAt(j).Technologies.Name</p>
-                                    }
-                                    @if ((@project.ProjectsTechnologies.Count() - 5) > 0)
-                                    {
-                                        <p class="home__technologies_and_more">and @(project.ProjectsTechnologies.Count() - 5) more</p>
-                                    }
-                                </div>
-                            </div>
-                            <div>
-                                <h4>Complexity:</h4>
-                                <p>@project.Level</p>
-                            </div>
-                            <div>
-                                <h4>Time:</h4>
-                                <p>@project.Duration weeks</p>
-                            </div>
-                            <div>
-                                <h4>Created:</h4>
-                                <p>@project.CreationDate.ToString("dd.MM.yyyy")</p>
-                            </div>
-                            <div class="description">
-                                <h4>Description:</h4>
-                                <p>@project.Description</p>
-                            </div>
-                            <div>
-                                <a href="@Url.Action("Index", "Public", new {area = "Projects", id=@project.ProjectsId })"
-                                   class="button">Open</a>
-                            </div>
-                        </div>
-                    }
+                <div id="projectContainer" class="home__catalog-cards"> 
+                    <!-- here will be loaded _ProjectList partial view -->
                 </div>
-                <ul class="home__catalog-pagination">
-                    <li class="arrow left"></li>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li class="dots">...</li>
-                    <li>9</li>
-                    <li class="arrow right"></li>
+                <ul id="pagination" class="home__catalog-pagination">
+                    <!-- here will be loaded page numbers -->
                 </ul>
             </div>
         </div>
@@ -176,8 +124,10 @@
             </div>      
         </div>
         <partial name="_ToProjectCreationPartial" />
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="@Url.Content("~/js/HomePage.js")"></script>
         <script src="@Url.Content("~/js/NumberInput.js")"></script>
+        <script src="@Url.Content("~/js/ProjectsPagination.js")"></script>
     </div>
 </body>
 </html>

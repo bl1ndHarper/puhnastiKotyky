@@ -10,6 +10,11 @@
   <ItemGroup>
     <Content Remove="wwwroot\images\default-profile-icon.png" />
     <Content Remove="wwwroot\images\user-profile-image.png" />
+    <Content Remove="wwwroot\js\ProjectsPagination.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\ProjectsPagination.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +25,7 @@
     <None Include="wwwroot\images\first-name-icon0.png" />
     <None Include="wwwroot\images\password-icon0.png" />
     <None Include="wwwroot\images\second-name-image0.png" />
+    <None Include="wwwroot\js\ProjectsPagination.js" />
     <PackageReference Include="CloudinaryDotNet" Version="1.23.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />

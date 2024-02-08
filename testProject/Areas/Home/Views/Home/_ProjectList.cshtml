@@ -1,0 +1,45 @@
+﻿@model IEnumerable<testProject.Models.Project>
+
+@foreach (var project in Model)
+{
+    <div class="home__card">
+        <div><h3>@project.Name</h3></div>
+        <div>
+            <h4>Technologies:</h4>
+            <div class="home__technologies">
+                @{
+                    var technologiesCount = project.ProjectsTechnologies.Count() < 5 ? project.ProjectsTechnologies.Count() : 5;
+                }
+
+                @for (var j = 0; j < technologiesCount; j++)
+                {
+                    <p class="home__technologies_technology_name">@project.ProjectsTechnologies.ElementAt(j).Technologies.Name</p>
+                }
+                @if ((@project.ProjectsTechnologies.Count() - 5) > 0)
+                {
+                    <p class="home__technologies_and_more">and @(project.ProjectsTechnologies.Count() - 5) more</p>
+                }
+            </div>
+        </div>
+        <div>
+            <h4>Complexity:</h4>
+            <p>@project.Level</p>
+        </div>
+        <div>
+            <h4>Time:</h4>
+            <p>@project.Duration weeks</p>
+        </div>
+        <div>
+            <h4>Created:</h4>
+            <p>@project.CreationDate.ToString("dd.MM.yyyy")</p>
+        </div>
+        <div class="description">
+            <h4>Description:</h4>
+            <p>@project.Description</p>
+        </div>
+        <div>
+            <a href="@Url.Action("Index", "Public", new {area = "Projects", id=@project.ProjectsId })"
+               class="button">Open</a>
+        </div>
+    </div>
+}
