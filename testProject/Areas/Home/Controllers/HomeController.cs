@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Claims;
 using testProject.Areas.Home.Models;
 using testProject.Data;
@@ -11,7 +12,6 @@ using testProject.Models;
 namespace testProject.Areas.Home.Controllers
 {
     [Area("Home")]
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -25,6 +25,11 @@ namespace testProject.Areas.Home.Controllers
         [Route("")]
         public IActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "WelcomePage", new { area = "Home" });
+            }
+
             _db = new AppDbContext();
 
             var availableProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
