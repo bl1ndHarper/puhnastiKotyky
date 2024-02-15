@@ -1,0 +1,96 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="welcome-page">
+        <partial name="_HomeBannerPartial" />
+        <partial name="_SeparatorCloudsWide" />
+        <div class="welcome-page__feature-segment">
+            <h2>Search for existing community projects and join their teams</h2>
+            <div>
+                <a href="@Url.Action("Register", "Account", new { area = "Identity" })">To registration page</a>
+                <i class="fa fa-arrow-right"></i>
+            </div>
+        </div>
+        <div class="hr-holder">
+            <hr />
+        </div>
+        <div class="welcome-page__feature-segment">
+            <div>
+                <i class="fa fa-question"></i>
+                @*TODO: make sure href is correct*@
+                <a href="@Url.Action("Index", "Help", new { area = "Help" })">Learn more</a>
+            </div>
+            <h2 style="text-align: right;">Share your own idea and make a team to implement the project</h2>
+        </div>
+        <div class="hr-holder">
+            <hr />
+        </div>
+        <div class="welcome-page__feature-segment">
+            <h2>Organize the work of your team and control development processes</h2>
+            <div>
+                @*TODO: make sure href is correct*@
+                <a href="@Url.Action("Index", "Help", new { area = "Help" })">Learn more</a>
+                <i class="fa fa-question"></i>
+            </div>
+        </div>
+        <partial name="_SeparatorCloudsWide" />
+        <div class="welcome-page__card-example-segment">
+            <h1>Social net for people who create</h1>
+            <div class="welcome-page__card-example-content">
+                <div class="welcome-page__card-example-desc">
+                    <p>The main content of our website is community ideas converted into the projects. Cooperate with other IT creators and organize your work together.</p>
+                    <p>Each project has its name, description, technologies stuck which it is based on, development complexity level, duration (or time to deadlines), creation date and the team working on it.</p>
+                </div>
+                <div class="home__card">
+                    <div><h3>Project name</h3></div>
+                    <div>
+                        <h4>Technologies:</h4>
+                        <div class="home__technologies">
+                            <p class="home__technologies_technology_name">tech1</p>
+                            <p class="home__technologies_technology_name">tech2</p>
+                            <p class="home__technologies_technology_name">tech3</p>
+                            <p class="home__technologies_technology_name">tech4</p>
+                            <p class="home__technologies_and_more">and 5 more</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>Complexity:</h4>
+                        <p>hard</p>
+                    </div>
+                    <div>
+                        <h4>Time:</h4>
+                        <p>15 weeks</p>
+                    </div>
+                    <div>
+                        <h4>Created:</h4>
+                        <p>@DateTime.Now.ToString("dd.MM.yyyy")</p>
+                    </div>
+                    <div class="description">
+                        <h4>Description:</h4>
+                        <p>This is an example of a project card. Here you can see the main information about a project to understand if it is interesting for you. There is a button on this card which opens a full project page with all the information about it.</p>
+                    </div>
+                    <div>
+                        <button type="button" class="button">Open</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <partial name="_SeparatorCloudsWide" />
+        <div class="welcome-page__register-link-segment">
+            <h1>What's next?</h1>
+            <p>When you sign up this home page will be filled with exciting projects created by our community. IT enthusiasts from all over the world share their ideas and join in teams to work together.</p>
+            <button onclick="location.href='@Url.Action("Register", "Account", new { area = "Identity" })'" class="button">To registration page</button>
+        </div>
+    </div>
+</body>
+</html>

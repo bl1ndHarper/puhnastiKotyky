@@ -57,6 +57,7 @@ p,
     position: absolute;
     left: calc(50% - 15vw);
     top: 15vh;
+    text-align: center;
 }
 
     .auth-pages-day__headers h1 {
