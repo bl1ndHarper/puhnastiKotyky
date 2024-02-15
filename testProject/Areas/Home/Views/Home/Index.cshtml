@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="home__catalog-container" data-pagesCount="@Model.AvailableProjects.Count()">
-                <div id="projectContainer" class="home__catalog-cards"> 
+                <div id="projectContainer"> 
                     <!-- here will be loaded _ProjectList partial view -->
                 </div>
                 <ul id="pagination" class="home__catalog-pagination">
@@ -124,7 +124,6 @@
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="@Url.Content("~/js/HomePage.js")"></script>
         <script src="@Url.Content("~/js/NumberInput.js")"></script>
-        <script src="@Url.Content("~/js/ProjectsPagination.js")"></script>
     </div>
 </body>
 </html>
