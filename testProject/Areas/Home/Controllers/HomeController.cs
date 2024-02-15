@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
@@ -77,7 +78,7 @@ namespace testProject.Areas.Home.Controllers
         }
 
         [HttpGet]
-        public IActionResult LoadProjects(int page)
+        public IActionResult LoadProjects(int page, string level = "", int minDuration = 1, int maxDuration = 100)
         {
             _db = new AppDbContext();
             var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
@@ -85,6 +86,12 @@ namespace testProject.Areas.Home.Controllers
                                                 .Where(p => p.Status == "searching for participants" ||
                                                        p.Status == "in development")
                                                 .OrderByDescending(p => p.CreationDate).ToList();
+            if (!level.IsNullOrEmpty())
+            {
+                latestProjects = latestProjects.Where(p => p.Level == level).ToList();
+            }
+
+            latestProjects = latestProjects.Where(p => p.Duration >= minDuration && p.Duration <= maxDuration).ToList();
 
             // Retrieve projects for the specified page
             int projectsPerPage = 6;
@@ -94,7 +101,7 @@ namespace testProject.Areas.Home.Controllers
         }
 
         [HttpGet]
-        public IActionResult CountPages()
+        public IActionResult CountPages(string level = "", int minDuration = 1, int maxDuration = 100)
         {
             _db = new AppDbContext();
             var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
@@ -102,6 +109,12 @@ namespace testProject.Areas.Home.Controllers
                                                 .Where(p => p.Status == "searching for participants" ||
                                                        p.Status == "in development")
                                                 .OrderByDescending(p => p.CreationDate).ToList();
+            if (!level.IsNullOrEmpty())
+            {
+                latestProjects = latestProjects.Where(p => p.Level == level).ToList();
+            }
+
+            latestProjects = latestProjects.Where(p => p.Duration >= minDuration && p.Duration <= maxDuration).ToList();
 
             int projectsPerPage = 6;
             int pagesCount = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(latestProjects.Count()) / Convert.ToDouble(projectsPerPage)));

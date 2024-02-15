@@ -318,3 +318,13 @@
         height: 320px;
         overflow: auto hidden;
     }
+
+.home__no-projects-found {
+    text-align: center;
+    font-family: 'Fira Sans';
+    color: #183d3d;
+    width: 100%;
+    margin: 65px auto;
+    font-size: 18px;
+    line-height: 1.5;
+}
