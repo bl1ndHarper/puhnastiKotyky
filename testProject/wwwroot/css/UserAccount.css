@@ -154,22 +154,37 @@ user-account-day * {
     position: relative;
 }
 
-.user-account-day__project {
-    background: #bcead5;
-    border-radius: 16px;
-    border-style: solid;
-    border-color: #183d3d;
-    border-width: 2px;
-    padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex: 1;
-    min-width: 350px;
+.user-profile-day__projects-container {
     position: relative;
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%/2, max(450px, 500px)), 1fr));
+    grid-gap: 20px;
+    justify-items: center;
 }
+
+    .user-profile-day__projects-container .user-account-day__project{
+        min-width: 450px;
+        max-width: 500px;
+    }
+
+    .user-account-day__project {
+        background: #bcead5;
+        border-radius: 16px;
+        border-style: solid;
+        border-color: #183d3d;
+        border-width: 2px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex: 1;
+        min-width: 350px;
+        position: relative;
+    }
 
     .user-account-day__project h2 {
         color: #183d3d;
@@ -369,16 +384,20 @@ user-account-day * {
                     background-size: 100% 100%;
                 }
 
-.user-account-day__project-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: flex-start;
-    justify-content: flex-start;
-    align-self: stretch;
-    flex-shrink: 0;
-    position: relative;
-}
+    .user-account-day__technologies .user-account-day__technologies_and_more {
+        background: #bcead5;
+    }
+
+    .user-account-day__project-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        align-self: stretch;
+        flex-shrink: 0;
+        position: relative;
+    }
 
     .user-account-day__project-info div {
         padding: 0px 56px 0px 0px;

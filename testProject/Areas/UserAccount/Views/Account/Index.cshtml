@@ -224,8 +224,20 @@
                                     <div class="modal__body-subject modal__flex-row-item">
                                         <h3>Team:</h3>
                                         <div class="modal__user-item">
-                                            <img src="@projectsUser.Projects.Users.Photo" />
-                                            <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName (Owner)</p>
+                                            @if (projectsUser.Projects.Users.Id == Model.User.Id)
+                                            {
+                                                <a href="@Url.Action("Index", "Account", new {area = "UserAccount"})">
+                                                    <img src="@projectsUser.Projects.Users.Photo" />
+                                                    <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName (Owner)</p>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=projectsUser.Projects.Users.Id})">
+                                                    <img src="@projectsUser.Projects.Users.Photo" />
+                                                    <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName (Owner)</p>
+                                                </a>
+                                            }           
                                         </div>
 
                                         <div class="modal__team-dropdown-header" id="showTeamMembers">
@@ -239,18 +251,32 @@
                                             <div class="modal__team-dropdown-items" id="teamMembersDropdown">
                                                 @foreach (var member in Model.ProjectParticipants[@projectsUser.Projects.ProjectsId])
                                                 {
-                                                  @if (@projectsUser.Projects.UsersId != member.Id)
+                                                    @if (@projectsUser.Projects.UsersId != member.Id)
                                                     {
                                                         <div class="modal__user-item" data-userId="@member.Id"
-                                                      data-url="@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })"
-                                                      data-projectId="@projectsUser.Projects.ProjectsId">
-                                                      <img src="@member.Photo" />
-                                                      <p onclick="">@member.FirstName @member.LastName</p>
-                                                      @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
-                                                      {
-                                                        <i class="fa fa-user-times" aria-hidden="true"></i>
-                                                      }
-                                                  </div>
+                                                        data-url="@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })"
+                                                        data-projectId="@projectsUser.Projects.ProjectsId">
+                                                            @if (member.Id == Model.User.Id)
+                                                            {
+                                                                <a href="@Url.Action("Index", "Account", new {area = "UserAccount"})">
+                                                                    <img src="@member.Photo" />
+                                                                    <p>@member.FirstName @member.LastName</p>
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=@member.Id})">
+                                                                    <img src="@member.Photo" />
+                                                                    <p>@member.FirstName @member.LastName</p>
+                                                                </a>
+                                                            }
+
+                                                            
+                                                            @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
+                                                            {
+                                                                <i class="fa fa-user-times" aria-hidden="true"></i>
+                                                            }
+                                                        </div>
                                                     } 
                                                 }
                                             </div>
@@ -283,7 +309,11 @@
                                                                 <div class="cross-line"></div>
                                                             </button>
                                                             <div class="modal__request-body">
-                                                                <h3>Request by <span>@request.Users.FirstName @request.Users.LastName</span></h3>
+                                                                <h3>
+                                                                    Request by <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=@request.Users.Id})">
+                                                                        <span>@request.Users.FirstName @request.Users.LastName</span>
+                                                                    </a>
+                                                                </h3>
                                                                 <div class="modal__request-details">
                                                                     <div>
                                                                         <h4>Created: </h4>
@@ -514,7 +544,11 @@
                                             </button>
                                         </div>
                                         <div class="modal__project-status">
-                                            <p>by <span>@request.Projects.Users.FirstName @request.Projects.Users.LastName</span></p>
+                                            <p>by
+                                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=request.Projects.Users.Id})">
+                                                    <span>@request.Projects.Users.FirstName @request.Projects.Users.LastName</span>
+                                                </a>   
+                                            </p>
                                         </div>
                                         <div class="modal__request-info">
                                             <div>

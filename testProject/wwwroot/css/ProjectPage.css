@@ -273,6 +273,16 @@
         width: 100%;
     }
 
+.project__team-dropdown-item a {
+    padding: 4px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    align-items: center;
+    width: 100%;
+    color: #183d3d;
+}
+
     .project__team .project__team-dropdown .project__team-dropdown-item img {
         width: 28px;
     }
