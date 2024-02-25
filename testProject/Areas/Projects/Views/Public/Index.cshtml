@@ -1,5 +1,6 @@
 ﻿@model testProject.Areas.Projects.Models.ProjectViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Security.Claims;
 @{
     ViewData["Title"] = "Index";
 }
@@ -29,7 +30,7 @@
                 </div>
                 <div>
                     <i class="fa fa-calendar"></i>
-                    <p>Creation date: @Model.Project.CreationDate</p>     
+                    <p>Creation date: @Model.Project.CreationDate.ToString("dd.MM.yyyy")</p>     
                 </div>
             </div>
         </div>
@@ -69,9 +70,20 @@
                     @foreach (var member in Model.Team)
                     {
                         <div class="project__team-dropdown-item">
-                            
-                            <img src="@member.Photo" />
-                            <p>@member.FirstName @member.LastName</p>
+                            @if (member.Id == Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                            {
+                                <a href="@Url.Action("Index", "Account", new {area = "UserAccount"})">
+                                    <img src="@member.Photo" />
+                                    <p>@member.FirstName @member.LastName</p>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=@member.Id})">
+                                    <img src="@member.Photo" />
+                                    <p>@member.FirstName @member.LastName</p>
+                                </a>
+                            }                            
                             @if (member.Id == Model.Project.UsersId)
                             {
                                 <p>(Owner)</p>
