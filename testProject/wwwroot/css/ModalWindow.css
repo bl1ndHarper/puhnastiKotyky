@@ -111,12 +111,16 @@
                 flex-direction: column;
                 gap: 8px;
                 position: absolute;
-                transform: translateX(-8px) translateY(24px);
-                padding: 8px;
+                transform: translateX(-8px) translateY(22px);
+                padding: 8px 4px;
                 background: #def5e5;
                 border-radius: 8px;
                 z-index: 2;
                 box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
+            }
+
+            .modal__body .modal__project-status div .modal__project-status-select-items:hover {
+                display: flex;
             }
 
                 .modal__body .modal__project-status div .modal__project-status-select-items p {
@@ -131,10 +135,9 @@
                         transition: ease-in .3s;
                     }
 
-.modal__body .modal__project-status div:hover .modal__project-status-select-items {
-    display: flex;
-    transition: ease-in 1s;
-}
+            .modal__body .modal__project-status div span:hover ~ .modal__project-status-select-items {
+                display: flex;
+            }
 
 .modal__close-button {
     display: flex;

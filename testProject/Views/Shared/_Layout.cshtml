@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/HomePage.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/HelpPage.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/AuthPages.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/testProject.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/UserAccount.css" asp-append-version="true" />
@@ -44,7 +45,7 @@
                 </li>
                 <li class="navbar__tab-item">
                     <i class="fa fa-question-circle"></i>
-                    <a asp-area="" asp-controller="" asp-action="">Help</a>
+                    <a asp-area="Help" asp-controller="Help" asp-action="Index">Help</a>
                 </li>
             </ul>
             <partial name="_LoginPartial" for="@Model" />

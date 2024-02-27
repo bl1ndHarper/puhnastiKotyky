@@ -7,6 +7,9 @@ if (currentPage.search("Account") != -1) {
 else if (currentPage.search("Notifications") != -1) {
     Array.from(tabs).at(2).style.background = "#8EC3B0";
 }
+else if (currentPage.search("Help") != -1) {
+    Array.from(tabs).at(3).style.background = "#8EC3B0";
+}
 else if (currentPage == "/" || currentPage.search("Welcome") != -1) {
     Array.from(tabs).at(0).style.background = "#8EC3B0";
 }

@@ -50,6 +50,11 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints => {
     endpoints.MapControllerRoute(
+          name: "Help",
+          pattern: "{area:exists}/{controller=Help}/{action=Index}/{id?}"
+        );
+
+    endpoints.MapControllerRoute(
       name: "Notifications",
       pattern: "{area:exists}/{controller=Notifications}/{action=Index}/{id?}"
     );

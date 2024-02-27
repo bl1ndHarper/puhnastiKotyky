@@ -31,11 +31,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.12" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Help\Data\" />
+    <Folder Include="Areas\Help\Models\" />
     <Folder Include="Areas\Home\Data\" />
     <Folder Include="Areas\Notifications\Data\" />
     <Folder Include="Areas\Notifications\Models\" />
