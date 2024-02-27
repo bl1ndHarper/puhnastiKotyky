@@ -72,10 +72,23 @@ namespace testProject.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+                var config = builder.Build();
+                var smtpSettings = config.GetSection("Smtp");
+
+                var emailService = new EmailService(
+                    smtpSettings["Host"],
+                    int.Parse(config["Smtp:Port"]),
+                    smtpSettings["Username"],
+                    smtpSettings["Password"]
+                    );
+
+                var emailTemplate = System.IO.File.ReadAllText("Views/EmailTemplates/PasswordRecovery.html");
+                emailTemplate = emailTemplate.Replace("{passwordResetLink}", callbackUrl);
+                emailTemplate = emailTemplate.Replace("{userName}", user.FirstName);
+                var emailBody = emailTemplate;
+
+                emailService.SendConfirmationEmail(user.Email, "Password Recovery", emailBody);
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
