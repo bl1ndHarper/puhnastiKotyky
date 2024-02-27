@@ -332,6 +332,7 @@
 
 /* welcome page style */
 
+.help-page hr,
 .welcome-page hr {
     color: #183d3d;
     transform: translateX(50%);
@@ -344,6 +345,7 @@
     background: transparent;
 }
 
+.help-page > .hr-holder,
 .welcome-page > .hr-holder {
     position: relative;
 }

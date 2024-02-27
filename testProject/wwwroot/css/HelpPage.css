@@ -1,0 +1,457 @@
+﻿.help-page {
+    width: 100%;
+    height: calc(100% - 70px);
+    position: fixed;
+    left: 0;
+    background: #def5e5;
+    overflow: hidden auto;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Fira Sans';
+    color: #183d3d;
+}
+
+    .help-page h1 {
+        font-size: 52px;
+        font-weight: 700;
+    }
+
+    .help-page h2 {
+        font-size: 36px;
+        font-weight: 700;
+        width: fit-content;
+    }
+
+    .help-page h3 {
+        font-size: 28px;
+        font-weight: 500;
+        width: fit-content;
+    }
+
+.help-page__header {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(270deg, #def5e5 1px, #ffffff00 10px), linear-gradient(180deg, #BCEAD5 1%, rgba(255, 255, 255, 0.00) 13%, rgba(255, 255, 255, 0.00) 88%, #DEF5E5 100%), linear-gradient(0deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.20) 100%), url('/images/home-page-banner.png');
+    background-size: cover;
+    gap: 32px;
+    padding: 80px 0;
+}
+
+    .help-page__header > h1 {
+        position: relative;
+        width: fit-content;
+    }
+
+    .help-page__header > .help-page__search {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: fit-content;
+        background: white;
+        border-radius: 16px;
+        border: 3px solid #8ec3b0;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .help-page__header > .help-page__search > .button {
+        color: #183d3d;
+        position: relative;
+        padding: 2px 8px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+        .help-page__header > .help-page__search > input {
+            position: relative;
+            width: 400px;
+            font-size: 20px;
+            margin-left: 12px;
+            color: #8ec3b0;
+        }
+
+.help-page__questions-by-topics {
+    width: 100%;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+.help-page__topics-container {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100% - 40px, max(200px, (100% - 40px) / 3)), 420px));
+    grid-gap: 20px 60px;
+    justify-items: center;
+    justify-content: center;
+}
+
+.help-page__topic {
+    width: 420px;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 32px;
+    gap: 20px;
+    position: relative;
+    background: #bcead5;
+    border-radius: 20px;
+    border: 2px solid #183d3d;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: ease-in-out .3s;
+}
+
+.help-page__topic:hover {
+    background: #8ec3b0;
+}
+
+    .help-page__topic > i {
+        font-size: 56px;
+    }
+
+    .help-page__topic > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .help-page__topic > div > h4 {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: left;
+            width: 100%;
+        }
+
+        .help-page__topic > div > p {
+            font-size: 14px;
+            font-weight: 400;
+            text-align: left;
+            width: 100%;
+        }
+
+.help-page__open-topic {
+    width: 70%;
+    max-width: 1000px;
+    min-width: 600px;
+    height: fit-content;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    background: #bcead5;
+    border-radius: 20px;
+    border: 2px solid #183d3d;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+    .help-page__open-topic > .help-page__open-topic-header {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+        .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-back-button {
+            width: fit-content;
+            margin: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+            .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-back-button:hover {
+                text-decoration: underline;
+            }
+
+        .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-h {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+            margin: 0 16px;
+        }
+
+            .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-h > i {
+                font-size: 40px;
+            }
+
+            .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-h > h3 {
+                font-size: 28px;
+                font-weight: 700;
+            }
+
+    .help-page__open-topic > .help-page__open-topic-points {
+        align-self: flex-start;
+    }
+
+    .help-page__open-topic > .help-page__open-topic-points > li {
+        margin: 8px 48px 8px 32px;
+    }
+
+        .help-page__open-topic > .help-page__open-topic-points > li > h4 {
+            font-size: 20px;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+            .help-page__open-topic > .help-page__open-topic-points > li > h4:hover {
+                text-decoration: underline;
+            }
+
+        .help-page__open-topic > .help-page__open-topic-points > li > p {
+            font-size: 14px;
+            font-weight: 400;
+            margin: 8px 0;
+        }
+
+    .help-page__open-topic > .help-page__open-topic-points > .selected > h4 {
+        text-decoration: underline;
+    }
+
+.help-page__help-form-wrapper {
+    padding-bottom: 32px;
+}
+
+.help-page__help-form-wrapper,
+.help-page__help-form-header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.help-page__help-form-header {
+    margin: 32px;
+}
+
+.help-page__help-form {
+    width: 60%;
+    background: #BCEAD5;
+    border-radius: 24px;
+    border: 2px solid #8ec3b0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+    .help-page__help-form h3 {
+        align-self: center;
+    }
+
+    .help-page__help-form h4 {
+        height: fit-content;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+.help-page__help-form-topic {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+}
+
+    .help-page__help-form-topic > .help-page__help-form-topic-selector {
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        margin: 0 8px;
+    }
+
+        .help-page__help-form-topic-selector > span {
+            font-size: 18px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .help-page__help-form-topic-selector > .help-page__help-form-topic-select-items {
+            display: none;
+            font-size: 18px;
+            position: absolute;
+            transform: translateX(-8px) translateY(24px);
+            z-index: 2;
+            background: #def5e5;
+            padding: 4px;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
+        }
+
+            .help-page__help-form-topic-selector > .help-page__help-form-topic-select-items > p {
+                border-radius: 8px;
+                padding: 0 4px;
+            }
+
+                .help-page__help-form-topic-selector > .help-page__help-form-topic-select-items > p:hover {
+                    background: #bcead5;
+                    transition: ease-in .3s;
+                }
+
+        .help-page__help-form-topic-selector > .help-page__help-form-topic-select-items:hover {
+            display: block;
+        }
+
+            .help-page__help-form-topic-select-items > p {
+                height: fit-content;
+                cursor: pointer;
+            }
+
+            .help-page__help-form-topic-selector > span:hover ~ .help-page__help-form-topic-select-items {
+                display: block;
+            }
+
+.help-page__help-form-description-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.help-page__help-form-description {
+    background: #def5e5;
+    border-radius: 12px;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: 1px;
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    flex-shrink: 0;
+    position: relative;
+    padding: 4px 8px;
+}
+
+    .help-page__help-form-description > textarea {
+        width: 100%;
+        resize: none;
+        outline: #183d3d;
+        color: #183d3d;
+        font-family: "Fira Sans", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+.help-page__help-form-screenshot-wrapper,
+.help-page__help-form-screenshot {
+    display: flex;
+    flex-direction: column;
+}
+
+    .help-page__help-form-screenshot > input {
+        font-size: 16px;
+        display: none;
+    }
+
+    .help-page__help-form-screenshot > label {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .help-page__help-form-screenshot > .help-page__screenshots-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+        .help-page__help-form-screenshot > .help-page__screenshots-container > div {
+            width: fit-content;
+            height: fit-content;
+            position: relative;
+            margin: 8px;
+            border-radius: 8px;
+            transition: ease-in-out .3s;
+        }
+
+        .help-page__help-form-screenshot > .help-page__screenshots-container > div > img {
+            width: fit-content;
+            height: fit-content;
+            max-width: 200px;
+            max-height: 200px;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
+        }
+
+            .help-page__help-form-screenshot > .help-page__screenshots-container > div:hover {
+                transform: translateY(-8px);
+                cursor: pointer;
+            }
+
+                .help-page__help-form-screenshot > .help-page__screenshots-container > div:hover > .help-page__screenshot-overlay {
+                    background: tomato;
+                }
+
+            .help-page__help-form-screenshot > .help-page__screenshots-container > div > .help-page__screenshot-overlay {
+                position: absolute;
+                display: block;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: transparent;
+                border-radius: 8px;
+                opacity: .4;
+                transition: ease-in-out .3s;
+                pointer-events: none;
+            }
+
+.help-page__help-form-comment {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+    .help-page__help-form-comment > p {
+        width: 280px;
+        text-align: end;
+    }
+
+.help-page__help-page-buttons {
+    width: 100%;
+    text-align: center;
+}
+
+.help-page__contacts-wrapper {
+    width: 100%;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.help-page__contacts {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+    .help-page__contacts > div {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-around;
+        gap: 8px;
+    }
+
+        .help-page__contacts > div > h4 {
+            font-size: 20px;
+        }
+
+        .help-page__contacts > div > p > a,
+        .help-page__contacts > div > p {
+            font-size: 16px;
+            color: #183d3d;
+        }

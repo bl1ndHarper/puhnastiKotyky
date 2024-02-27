@@ -1,0 +1,155 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="help-page">
+        <div class="help-page__header">
+            <h1>How can we help you?</h1>
+            <div class="help-page__search">
+                <input placeholder="Type some keywords of your question" autocomplete="off" type="text" />
+                <button class="button">Search</button>
+            </div>
+        </div>
+        <partial name="_SeparatorCloudsWide" />
+        <div class="help-page__questions-by-topics">
+            <h2>Common questions by topics</h2>
+            <div class="help-page__topics-container">
+                <div class="help-page__topic">
+                    <i class="fa fa-user"></i>
+                    <div>
+                        <h4>Account and personal information</h4>
+                        <p>User account details editing; Personal information publicity and security</p>
+                    </div>
+                </div>
+                <div class="help-page__topic">
+                    <i class="fa fa-pencil"></i>
+                    <div>
+                        <h4>Projects creation</h4>
+                        <p>About the rules and opportunities project owner has</p>
+                    </div>
+                </div>
+                <div class="help-page__topic">
+                    <i class="fa fa-comment"></i>
+                    <div>
+                        <h4>Requests, teams and communication</h4>
+                        <p>How the project team formes and how do they get in touch</p>
+                    </div>
+                </div>
+                <div class="help-page__topic">
+                    <i class="fa fa-ban"></i>
+                    <div>
+                        <h4>Bans and projects deletion</h4>
+                        <p>Common ban reasons; Why did my project get deleted and what can I do to recover</p>
+                    </div>
+                </div>
+            </div>
+            <div class="help-page__open-topic hidden">
+                <div class="help-page__open-topic-header">
+                    <div class="help-page__open-topic-header-back-button">
+                        <i class="fa fa-arrow-left"></i>
+                        <a>back to topics</a>
+                    </div>
+                    <div class="help-page__open-topic-header-h">
+                        <h3>Account and personal informations</h3>
+                        <i class="fa fa-user"></i>
+                    </div>
+                </div>
+                <ul class="help-page__open-topic-points">
+                    <!--Here will be the points (questions) on chosen topic-->
+                </ul>
+            </div>
+        </div>
+        <div class="hr-holder">
+            <hr />
+        </div>
+        <div class="help-page__help-form-wrapper">
+            <div class="help-page__help-form-header">
+                <h2>Still need the help?</h2>
+                <h3>Submit a bug report or ask your question here</h3>
+            </div>
+            <form class="help-page__help-form" method="post" enctype="multipart/form-data" action="@Url.Action("Action", "Help")">
+                <h3 id="newAppNameDetailed">Describe your problem</h3>
+                <div class="help-page__help-form-topic">
+                    <h4>Select the topic: </h4>
+                    <div class="help-page__help-form-topic-selector">
+                        <span>Account and personal information</span>
+                        <input class="hidden" name="helpFormTopic" />
+                        <div class="help-page__help-form-topic-select-items">
+                            <p>Account and personal information</p>
+                            <p>Projects creation</p>
+                            <p>Requests, teams and communication</p>
+                            <p>Bans and projects deletion</p>
+                            <p>Bugs or inconveniences</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="help-page__help-form-description-wrapper">
+                    <h4>Tell us more about the issue:</h4>
+                    <div class="help-page__help-form-description">
+                        <textarea name="helFormDescription"
+                                  minlength="12"
+                                  maxlength="1024"
+                                  placeholder="Issue description (up to 1024 characters)"
+                                  spellcheck="false"
+                                  type="text"
+                                  oninput="auto_height(this)"
+                                  onmousemove="auto_height(this)"
+                                  onresize="auto_height(this)"></textarea>
+                        <span class="help-page__tooltip hidden">Write a valid description!</span>
+                    </div>
+                </div>
+                <div class="help-page__help-form-screenshot-wrapper">
+                    <h4>Attach some screenshots if needed:</h4>
+                    <div class="help-page__help-form-screenshot">
+                        <label for="helpScreenshotInput">Browse file(s).</label>
+                        <input id="helpScreenshotInput" name="helpScreenshotInput" type="file" multiple="multiple" />
+                        <p>Up to 4 images with maximum size of 7MB per image.</p>
+                        <div class="help-page__screenshots-container">
+                            <!--There will be uploaded images-->
+                        </div>
+                    </div>
+                </div>
+                <div class="help-page__help-form-comment">
+                    <p>The answer from our support team will be sent to your email.</p>
+                </div>
+                <div class="help-page__help-page-buttons">
+                    <button type="reset"
+                            class="button">
+                        <p>Clear</p>
+                    </button>
+                    <button type="button"
+                            class="button">
+                        <p>Send the report!</p>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="hr-holder">
+            <hr />
+        </div>
+        <div class="help-page__contacts-wrapper">
+            <h3>Contact us if you need</h3>
+            <div class="help-page__contacts">
+                <div>
+                    <h4>For collaboration offers or any other issues:</h4>
+                    <p>puhnastikotyky@gmail.com</p>
+                </div>
+                <div>
+                    <h4>or on github:</h4>
+                    <p><a href="https://github.com/bl1ndHarper">bl1ndHarper</a>  <a href="https://github.com/AnnMyroshnichenko">AnnMyroshnichenko</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="@Url.Content("~/js/HelpPage.js")"></script>
+</body>
+</html>
