@@ -124,24 +124,40 @@ namespace testProject.Areas.Identity.Pages.Account
             {
                 return RedirectToPage("./Lockout");
             }
-            
-                var userEmail = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value.ToString();
-                var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
-                var firstName = name.Length > 0 ? name[0] : string.Empty;
-                var lastName = name.Length > 1 ? name[1] : string.Empty;
 
-                var user = new User { UserName = userEmail, Email = userEmail, EmailConfirmed = true, FirstName = firstName, LastName = lastName};
-                var resultCreateUser = await _userManager.CreateAsync(user);
-                if (resultCreateUser.Succeeded)
+            var userEmail = info.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
+            if (string.IsNullOrWhiteSpace(userEmail))
+            {
+                ErrorMessage = $"Error getting user's email. Please, make sure you have defined a public email on {info.LoginProvider}.";
+                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+            }
+
+            var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
+            var firstName = name.Length > 0 ? name[0] : string.Empty;
+            var lastName = name.Length > 1 ? name[1] : string.Empty;
+            var photo = "https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png";
+
+            var user = new User { UserName = userEmail, Email = userEmail, EmailConfirmed = true, FirstName = firstName, LastName = lastName, Photo = photo };
+            var resultCreateUser = await _userManager.CreateAsync(user);
+            if (resultCreateUser.Succeeded)
+            {
+                var resultAddLogin = await _userManager.AddLoginAsync(user, info);
+                if (resultAddLogin.Succeeded)
                 {
-                    var resultAddLogin = await _userManager.AddLoginAsync(user, info);
-                    if (resultAddLogin.Succeeded)
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
-                        return LocalRedirect(returnUrl);
-                    }
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                    return LocalRedirect(returnUrl);
                 }
+            }
+            else
+            {
+                ErrorMessage = $"Something went wrong. Please make sure your {info.LoginProvider} account email hasn't been registered on our site yet.";
+                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
+            }
+
+            //TODO: redirect to the error page
+            // that says something went wrong and user should check if his email isn't registered yet
 
             return LocalRedirect(returnUrl);
             /* else {
