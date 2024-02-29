@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using testProject.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace testProject.Areas.Identity.Pages.Account
 {
@@ -133,7 +134,13 @@ namespace testProject.Areas.Identity.Pages.Account
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
 
-            var name = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ');
+            var name = info.Principal.FindFirstValue(ClaimTypes.Name)?.Split(' ');
+
+            if (name.IsNullOrEmpty())
+            {
+                name = new string[] { userEmail.Substring(0, userEmail.IndexOf('@')) };
+            }
+
             var firstName = name.Length > 0 ? name[0] : string.Empty;
             var lastName = name.Length > 1 ? name[1] : string.Empty;
             var photo = "https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png";
@@ -155,9 +162,6 @@ namespace testProject.Areas.Identity.Pages.Account
                 ErrorMessage = $"Something went wrong. Please make sure your {info.LoginProvider} account email hasn't been registered on our site yet.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
-
-            //TODO: redirect to the error page
-            // that says something went wrong and user should check if his email isn't registered yet
 
             return LocalRedirect(returnUrl);
             /* else {
