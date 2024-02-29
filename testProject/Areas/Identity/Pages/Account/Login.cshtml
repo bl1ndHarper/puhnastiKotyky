@@ -37,9 +37,18 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins!)
                                 {
-                                    <button type="submit" class="auth-pages-day__button" name="provider" value="@provider.Name" title="Log in using your @provider.Name account">
-                                        <p>Continue with @provider.Name</p>
-                                    </button>
+                                    if (provider.DisplayName == "OAuth")
+                                    {
+                                        <button type="submit" class="auth-pages-day__button" name="provider" value="@provider.Name" title="Log in using your @provider.Name account">
+                                            <p>Continue with @provider.Name</p>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="auth-pages-day__button" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                            <p>Continue with @provider.DisplayName</p>
+                                        </button>
+                                    }
                                 }
                             </p>
                         </div>

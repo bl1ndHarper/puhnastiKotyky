@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.ComponentModel;
+using System.Configuration;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
