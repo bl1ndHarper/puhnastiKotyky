@@ -4,23 +4,36 @@
 }
 
 var input = document.querySelector('.help-page__help-form-screenshot > input');
+var chosenFiles = [];
 input.addEventListener("change", function () {
     limitScreenshotsCount();
 });
 function displayScreenshots() {
     var container = document.querySelector('.help-page__help-form-screenshot > div');
     Array.from(input.files).forEach((file) => {
-        var wrapper = document.createElement('div');
-        var overlay = document.createElement('div');
-        overlay.classList.add('help-page__screenshot-overlay');
-        var canvas = document.createElement('img');
-        canvas.src = URL.createObjectURL(file);
-        wrapper.appendChild(canvas);
-        wrapper.appendChild(overlay);
-        container.appendChild(wrapper);
-        wrapper.addEventListener("click", function () {
-            wrapper.remove();
-        });
+        var fileSize = file.size;
+        var fileMb = fileSize / 1024 / 1024;
+        if (fileMb >= 7) {
+            alert("Maximum file size is 7 MB");
+        } else {
+            chosenFiles.push(file);
+
+            var wrapper = document.createElement('div');
+            var overlay = document.createElement('div');
+            overlay.classList.add('help-page__screenshot-overlay');
+            var canvas = document.createElement('img');
+            canvas.src = URL.createObjectURL(file);
+            wrapper.appendChild(canvas);
+            wrapper.appendChild(overlay);
+            container.appendChild(wrapper);
+            wrapper.addEventListener("click", function () {
+                var index = chosenFiles.indexOf(file);
+                if (index !== -1) { 
+                    chosenFiles.splice(index, 1); 
+                }
+                wrapper.remove();
+            });
+        }   
     });
 }
 
@@ -53,6 +66,84 @@ function selectHelpFormTopic(topic) {
 
     selectedSpan.textContent = topic;
     selectedinput.textContent = topic;
+}
+
+// Assign the chosen topic as the value of the hidden input
+document.addEventListener("DOMContentLoaded", function () {
+    var topicItems = document.querySelectorAll('.help-page__help-form-topic-select-items p');
+    var hiddenInput = document.querySelector('.help-page__help-form-topic-selector input[name="helpFormTopic"]');
+
+    // Set default value
+    hiddenInput.value = topicItems[0].textContent;
+
+    topicItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+            var selectedTopic = this.textContent;
+            hiddenInput.value = selectedTopic;
+        });
+    });
+});
+
+function submitForm() {
+    const toast = document.querySelector(".help-page__toast");
+    const topic = document.getElementById("helpFormTopic").value;
+    const description = document.getElementById("helFormDescription").value;
+
+    if (description.length < 12) {
+        const tooltip = document.querySelector(".help-page__tooltip");
+        tooltip.style.border = "3px dashed tomato";
+        tooltip.style.visibility = "visible";
+        setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000)
+    } else {
+        const formData = new FormData();
+
+        if (chosenFiles.length > 0) {
+            for (let i = 0; i < chosenFiles.length; i++) {
+                formData.append("screenshots", chosenFiles[i]);
+            }
+        }
+
+        formData.append("topic", topic);
+        formData.append("description", description);
+
+        $.ajax({
+            url: '/Help/Help/SubmitForm/',
+            type: 'POST',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (data) {
+                if (data.success == true) {
+                    toast.querySelector("p").textContent = data.message;
+                    toast.classList.remove("toast-error");
+                } else {
+                    toast.querySelector("p").textContent = data.message;
+                    toast.classList.add("toast-error");
+                }
+                toast.classList.remove("hidden");
+                setTimeout(function () {
+                    toast.classList.add("hidden");
+                }, 7000);
+                clearForm();
+            }
+        });
+    }   
+}
+
+function clearForm() {
+    var topicItems = document.querySelectorAll('.help-page__help-form-topic-select-items p');
+    var hiddenInput = document.querySelector('.help-page__help-form-topic-selector input[name="helpFormTopic"]');
+
+    hiddenInput.value = topicItems[0].textContent;
+    selectHelpFormTopic(topicItems[0].textContent);
+
+    var description = document.getElementById('helFormDescription');
+    description.value = '';
+
+    var container = document.querySelector('.help-page__help-form-screenshot > div');
+    container.innerHTML = '';
+    chosenFiles = [];
 }
 
 

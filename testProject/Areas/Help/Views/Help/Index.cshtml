@@ -8,10 +8,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
     <div class="help-page">
+        <div class="help-page__toast hidden">
+            <p></p>
+        </div>
         <div class="help-page__header">
             <h1>How can we help you?</h1>
             <div class="help-page__search">
@@ -76,13 +79,13 @@
                 <h2>Still need the help?</h2>
                 <h3>Submit a bug report or ask your question here</h3>
             </div>
-            <form class="help-page__help-form" method="post" enctype="multipart/form-data" action="@Url.Action("Action", "Help")">
+            <form class="help-page__help-form" method="post" enctype="multipart/form-data">
                 <h3 id="newAppNameDetailed">Describe your problem</h3>
                 <div class="help-page__help-form-topic">
                     <h4>Select the topic: </h4>
                     <div class="help-page__help-form-topic-selector">
                         <span>Account and personal information</span>
-                        <input class="hidden" name="helpFormTopic" />
+                        <input class="hidden" id="helpFormTopic" name="helpFormTopic" />
                         <div class="help-page__help-form-topic-select-items">
                             <p>Account and personal information</p>
                             <p>Projects creation</p>
@@ -96,6 +99,7 @@
                     <h4>Tell us more about the issue:</h4>
                     <div class="help-page__help-form-description">
                         <textarea name="helFormDescription"
+                                  id="helFormDescription"
                                   minlength="12"
                                   maxlength="1024"
                                   placeholder="Issue description (up to 1024 characters)"
@@ -104,14 +108,14 @@
                                   oninput="auto_height(this)"
                                   onmousemove="auto_height(this)"
                                   onresize="auto_height(this)"></textarea>
-                        <span class="help-page__tooltip hidden">Write a valid description!</span>
+                        <span class="help-page__tooltip">Write a valid description!</span>
                     </div>
                 </div>
                 <div class="help-page__help-form-screenshot-wrapper">
                     <h4>Attach some screenshots if needed:</h4>
                     <div class="help-page__help-form-screenshot">
                         <label for="helpScreenshotInput">Browse file(s).</label>
-                        <input id="helpScreenshotInput" name="helpScreenshotInput" type="file" multiple="multiple" />
+                        <input id="helpScreenshotInput" name="helpScreenshotInput" type="file" accept="image/jpeg, image/jpg, image/png" multiple="multiple" />
                         <p>Up to 4 images with maximum size of 7MB per image.</p>
                         <div class="help-page__screenshots-container">
                             <!--There will be uploaded images-->
@@ -122,12 +126,12 @@
                     <p>The answer from our support team will be sent to your email.</p>
                 </div>
                 <div class="help-page__help-page-buttons">
-                    <button type="reset"
-                            class="button">
+                    <button type="button"
+                            class="button" onclick="clearForm()">
                         <p>Clear</p>
                     </button>
                     <button type="button"
-                            class="button">
+                            class="button" onclick="submitForm()">
                         <p>Send the report!</p>
                     </button>
                 </div>
