@@ -67,7 +67,7 @@ namespace testProject.Areas.Help.Controllers
             
             if (file != null)
             {
-                string imageUrl = cloudinaryService.UploadImage(file, "PuhnastiKotyky/UsersProfileImages", fileName);
+                string imageUrl = cloudinaryService.UploadImage(file, "PuhnastiKotyky/HelpFormAttachments", fileName);
                 Attachment attachment = new Attachment { IssuesId = issueId, Path = imageUrl };
                 _db.Attachments.Add(attachment);
                 _db.SaveChanges();
