@@ -28,6 +28,66 @@
         width: fit-content;
     }
 
+.help-page__toast {
+    width: fit-content;
+    max-width: 300px;
+    background: #BCEAD5;
+    border-radius: 8px;
+    border: 1px solid #183d3d;
+    padding: 8px;
+    position: fixed;
+    top: 76px;
+    right: 8px;
+    z-index: 3;
+    animation: toastAppear .3s ease 1 normal;
+}
+
+    .help-page__toast p {
+        font: 400 16px "Fira Sans";
+        color: #183d3d;
+    }
+
+.toast-error {
+    background-color: #f1c0c0;
+    border: 2px solid tomato;
+}
+
+@keyframes toastAppear {
+    from {
+        right: -300px;
+    }
+
+    to {
+        right: 8px;
+    }
+}
+
+.help-page__tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #183d3dc6;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 4px 8px;
+    position: absolute;
+    z-index: 2;
+    top: 120%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+    .help-page__tooltip::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent #183d3dc6 transparent;
+    }
+
 .help-page__header {
     width: 100%;
     height: fit-content;

@@ -23,4 +23,6 @@ public partial class User : IdentityUser<uint>
     public virtual ICollection<UsersTechnology> UsersTechnologies { get; set; } = new List<UsersTechnology>();
 
     public virtual ICollection<Notification> Notification { get; set; } = new List<Notification>();
+
+    public virtual ICollection<Issue> Issues { get; set; } = new List<Issue>();
 }

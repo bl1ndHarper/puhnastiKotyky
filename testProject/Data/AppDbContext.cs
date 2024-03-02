@@ -34,6 +34,10 @@ public partial class AppDbContext : IdentityDbContext<User, IdentityRole<uint>, 
 
     public virtual DbSet<Notification> Notifications { get; set; }
 
+    public virtual DbSet<Issue> Issues { get; set; }
+
+    public virtual DbSet<Attachment> Attachments { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseMySql("server=localhost;port=3306;database=DB;user=newuser;password=Password123", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
 
