@@ -19,7 +19,6 @@ using Microsoft.CodeAnalysis;
 namespace testProject.Areas.UserAccount.Controllers
 {
     [Area("UserAccount")]
-    [Route("Account/[controller]/[action]")]
     [Authorize]
     public class AccountController : Controller
     {
@@ -32,6 +31,7 @@ namespace testProject.Areas.UserAccount.Controllers
             _db = db;
         }
 
+        [Route("[controller]")]
         public IActionResult Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -53,7 +53,6 @@ namespace testProject.Areas.UserAccount.Controllers
             var tech = _db.Technologies.ToList();
 
             var requests = _db.Requests
-                .Where(r => r.UsersId.ToString() == userId)
                 .Include(r => r.Users)
                 .Include(r => r.Projects)
                 .Include(r => r.Projects.Users)
@@ -76,6 +75,7 @@ namespace testProject.Areas.UserAccount.Controllers
             return View(accountViewModel);
         }
 
+        [Route("[controller]/[action]")]
         [HttpPost]
         public ActionResult SaveUserChanges(IFormFile file, [FromServices] CloudinaryService cloudinaryService, string updatedDescription, string userTechsArray, string updatedUserTechsArray)
         {
@@ -86,6 +86,7 @@ namespace testProject.Areas.UserAccount.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("[controller]/[action]")]
         public ActionResult UpdateProfileDescription(string updatedDescription)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -100,6 +101,7 @@ namespace testProject.Areas.UserAccount.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("[controller]/[action]")]
         public ActionResult UpdateUserTechnologies(string userTechsArray, string updatedUserTechsArray)
         {
             if (updatedUserTechsArray == "none") // user deleteв everything
@@ -158,6 +160,7 @@ namespace testProject.Areas.UserAccount.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("[controller]/[action]")]
         private ActionResult UpdateProfilePhoto(IFormFile file, [FromServices] CloudinaryService cloudinaryService)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -176,6 +179,7 @@ namespace testProject.Areas.UserAccount.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("[controller]/[action]")]
         [HttpPost]
         public ActionResult DeleteProfilePhoto(IFormFile file, [FromServices] CloudinaryService cloudinaryService)
         {

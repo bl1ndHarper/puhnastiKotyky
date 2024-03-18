@@ -8,7 +8,7 @@ using testProject.Hubs;
 namespace testProject.Areas.Notifications.Controllers
 {
     [Area("Notifications")]
-    [Route("Notifications/[controller]/[action]")]
+    [Route("[controller]")]
     [Authorize]
     public class NotificationsController : Controller
     {
@@ -28,6 +28,7 @@ namespace testProject.Areas.Notifications.Controllers
             return View(notifications);
         }
 
+        [Route("[action]")]
         [HttpPost]
         public IActionResult MarkAllAsRead(string notificationIds)
         {
@@ -54,6 +55,7 @@ namespace testProject.Areas.Notifications.Controllers
             return Json(new { success = true });
         }
 
+        [Route("[action]")]
         [HttpGet]
         public IActionResult CheckUnreadNotifications()
         {

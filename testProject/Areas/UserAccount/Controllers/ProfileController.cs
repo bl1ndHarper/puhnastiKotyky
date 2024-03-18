@@ -10,7 +10,7 @@ using testProject.Models;
 namespace testProject.Areas.UserAccount.Controllers
 {
     [Area("UserAccount")]
-    [Route("Account/[controller]/[action]")]
+    [Route("[controller]")]
     [Authorize]
     public class ProfileController : Controller
     {

@@ -37,7 +37,7 @@ function markAllNotificationsAsRead() {
     }
 
     $.ajax({
-        url: '/Notifications/Notifications/MarkAllAsRead',
+        url: '/Notifications/MarkAllAsRead',
         type: 'POST',
         data: { notificationIds: ids },
         success: function (data) {

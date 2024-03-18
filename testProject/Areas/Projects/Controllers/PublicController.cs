@@ -13,7 +13,6 @@ using testProject.Models;
 namespace testProject.Areas.Projects.Controllers
 {
     [Area("Projects")]
-    [Route("Projects/Public/[action]/{id}")]
     [Authorize]
     public class PublicController : Controller
     {
@@ -23,6 +22,7 @@ namespace testProject.Areas.Projects.Controllers
         {
             _db = db;
         }
+        [Route("Projects/Public/{id}")]
         public IActionResult Index(int id)
         {
             var project = _db.Projects.Where(p => p.ProjectsId == id)
@@ -42,6 +42,7 @@ namespace testProject.Areas.Projects.Controllers
             return View(projectViewModel);
         }
 
+        [Route("Projects/Public/[action]/{id}")]
         [HttpPost]
         public ActionResult CreateNewRequest(string projectsId)
         {
