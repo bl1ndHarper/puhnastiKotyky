@@ -162,8 +162,6 @@ namespace testProject.Areas.UserAccount.Controllers
         {
             try
             {
-                Console.WriteLine("---------------EditProjectStatus called");
-                Console.WriteLine($"---------------{projectId}/{projectStatus}");
                 _db = new AppDbContext();
                 
                 var project = _db.Projects
