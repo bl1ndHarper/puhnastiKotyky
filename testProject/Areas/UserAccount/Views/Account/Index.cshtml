@@ -289,16 +289,16 @@
                                         <p>Expected duration: @projectsUser.Projects.Duration weeks</p>
                                     </div>
 
-                                    @if (Model.User.Id == @projectsUser.Projects.Users.Id)
+                                    @if (Model.User.Id == projectsUser.Projects.Users.Id)
                                     {
                                         <div class="modal__body-subject">
-                                            @if (Model.Requests.Where(r => r.ProjectsId == @projectsUser.Projects.ProjectsId
+                                            @if (Model.Requests.Where(r => r.ProjectsId == projectsUser.Projects.ProjectsId
                                                                         && r.Status == "considering" && r.IsHidden == false).Count() > 0)
                                             {
                                                 <h3>Requests:</h3>
                                                 <div class="modal__request-container">
 
-                                                    @foreach (var request in Model.Requests.Where(r => r.ProjectsId == @projectsUser.Projects.ProjectsId 
+                                                    @foreach (var request in Model.Requests.Where(r => r.ProjectsId == projectsUser.Projects.ProjectsId 
                                                                                                     && r.Status == "considering" && r.IsHidden == false))                                            
                                                     {
                                                         <div class="modal__request-item">
@@ -545,7 +545,7 @@
                                         </div>
                                         <div class="modal__project-status">
                                             <p>by
-                                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=request.Projects.Users.Id})">
+                                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=request.Projects.UsersId})">
                                                     <span>@request.Projects.Users.FirstName @request.Projects.Users.LastName</span>
                                                 </a>   
                                             </p>

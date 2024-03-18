@@ -26,7 +26,6 @@ namespace testProject.Areas.UserAccount.Controllers
         [HttpPost]
         public ActionResult WithdrawRequest(string requestId)
         {
-            Console.WriteLine("-----------Deleting the request #" + requestId);
             _db = new AppDbContext();
             var request = _db.Requests
                         .Where(r => r.RequestsId == Convert.ToUInt32(requestId))
