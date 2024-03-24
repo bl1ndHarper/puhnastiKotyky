@@ -7,5 +7,6 @@ namespace testProject.Areas.Home.Models
         public IEnumerable<Project> AvailableProjects { get; set;}
         public IEnumerable<Project> RecommendedProjects { get; set;}
         public IEnumerable<Project> LatestProjects { get; set;} 
+        public IEnumerable<String> Technologies { get; set;} 
     }
 }

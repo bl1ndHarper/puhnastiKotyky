@@ -109,7 +109,8 @@ p,
         position: relative;
     }
 
-    .auth-pages-day__input-fields p, input {
+    .auth-pages-day__input-fields p,
+    .auth-pages-day__input-fields input {
         color: #8ec3b0;
         text-align: left;
         font: 500 2.5vmin "Fira Sans", sans-serif;

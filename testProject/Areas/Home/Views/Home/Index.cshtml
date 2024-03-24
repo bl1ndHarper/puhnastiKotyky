@@ -43,6 +43,20 @@
                             <i class="arrow right"></i>
                         </div>
                     </div>
+                    @{
+                        var techsArray = String.Join(",", Model.Technologies);
+                    }
+                    <input id="availableTechs" class="hidden" value="@techsArray" />
+                    <div class="home__catalog-filter technologies-search hidden">
+                        <p>by techs</p>
+                        <div class="home__catalog-filter-search">
+                            <input placeholder="Start typing a technology" autocomplete="off" type="text" />
+                            <button class="button">Add</button>
+                        </div>
+                    </div>
+                    <div class="technologies hidden">
+                        <!-- here will be added selected technologies -->
+                    </div>
                     <div class="home__catalog-filters-buttons hidden">
                         <button class="button">Clear filters</button>
                         <button class="button">Show filtered</button>

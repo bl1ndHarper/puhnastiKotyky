@@ -33,6 +33,8 @@ namespace testProject.Areas.Home.Controllers
 
             _db = new AppDbContext();
 
+            var availableTechnologies = _db.Technologies.Select(t => t.Name).ToList();
+
             var availableProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
                                                 .ThenInclude(pt => pt.Technologies)
                                                 .Where(p => p.Status == "searching for participants" || 
@@ -60,7 +62,7 @@ namespace testProject.Areas.Home.Controllers
             .OrderByDescending(p => p.ProjectsTechnologies.Count(t => userTechnologies.Contains(t.TechnologiesId)))
             .ToList();
 
-            HomeViewModel homeViewModel = new HomeViewModel { AvailableProjects = availableProjects, LatestProjects = latestProjects, RecommendedProjects = recommendedProjects };
+            HomeViewModel homeViewModel = new HomeViewModel { AvailableProjects = availableProjects, LatestProjects = latestProjects, RecommendedProjects = recommendedProjects, Technologies = availableTechnologies };
 
             Console.Write("======== User's technologies: ");
 
@@ -83,9 +85,17 @@ namespace testProject.Areas.Home.Controllers
         }
 
         [HttpGet]
-        public IActionResult LoadProjects(int page, string level = "", int minDuration = 1, int maxDuration = 100)
+        public IActionResult LoadProjects(int page, string level = "", int minDuration = 1, int maxDuration = 100, string techsArray = "")
         {
             _db = new AppDbContext();
+
+            if (techsArray.IsNullOrEmpty())
+            {
+                techsArray = _db.Technologies.Select(t => t.Name).ToList().ToString();
+            }
+            Console.WriteLine("\n-------------------------------------");
+            Console.WriteLine("Selected techologies filter list: " + techsArray);
+
             var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
                                                 .ThenInclude(pt => pt.Technologies)
                                                 .Where(p => p.Status == "searching for participants" ||
@@ -106,9 +116,13 @@ namespace testProject.Areas.Home.Controllers
         }
 
         [HttpGet]
-        public IActionResult CountPages(string level = "", int minDuration = 1, int maxDuration = 100)
+        public IActionResult CountPages(string level = "", int minDuration = 1, int maxDuration = 100, string techsArray = "")
         {
             _db = new AppDbContext();
+            if (techsArray.IsNullOrEmpty())
+            {
+                techsArray = _db.Technologies.Select(t => t.Name).ToList().ToString();
+            }
             var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
                                                 .ThenInclude(pt => pt.Technologies)
                                                 .Where(p => p.Status == "searching for participants" ||
