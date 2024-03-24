@@ -88,6 +88,28 @@
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     }
 
+        .home__catalog-header .home__catalog-filters .technologies {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+            .home__catalog-header .home__catalog-filters .technologies p {
+                font-size: 14px;
+                background: #BCEAD5;
+                padding: 4px 8px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: ease-in-out .3s;
+            }
+
+            .home__catalog-header .home__catalog-filters .technologies p:hover {
+                background-color: tomato;
+                transform: translateY(-2px)
+            }
+
     .home__catalog-header .home__catalog-filters-header {
         display: flex;
         flex-direction: row;
@@ -127,6 +149,42 @@
                 margin: 0;
                 border: 0;
             }
+
+            .home__catalog-filter .home__catalog-filter-search {
+                display: flex;
+                flex-direction: row;
+                position: relative;
+            }
+
+                .home__catalog-filter .home__catalog-filter-search input {
+                    display: block;
+                    height: fit-content;
+                    color: #183d3d;
+                    outline: none;
+                }
+
+                .home__catalog-filter .home__catalog-filter-search .button {
+                    font-size: 12px;
+                    margin: 0;
+                    padding: 0 12px;
+                    color: #183d3d;
+                    background-color: lightgrey;
+                }
+
+                .home__catalog-filter .home__catalog-filter-search .autocomplete-item {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 60px;
+                    border: none;
+                    font-size: 16px;
+                    border-radius: 0 0 8px 8px;
+                    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+                }
+
+                    .home__catalog-filter .home__catalog-filter-search .autocomplete-item:hover {
+                        background-color: #9ED5C5;
+                    }
 
         .home__catalog-header .home__catalog-filter p,
         .home__catalog-header .home__catalog-filter div {

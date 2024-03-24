@@ -3,8 +3,12 @@ const filtersOpenIcon = filtersHeader.querySelector('i');
 var level = '';
 var minDuration = 1;
 var maxDuration = 100;
+var selectedTechnologies = [];
+var availableTechs = document.querySelector("#availableTechs").value.split(',');
 
-function loadProjects(page, level, minDuration, maxDuration) {
+    // ATTENTION! availableTechs is all technologies from db needed at the start
+
+function loadProjects(page, level, minDuration, maxDuration, techsArray) {
     $.ajax({
         url: '/Home/Home/LoadProjects',
         type: 'GET',
@@ -12,7 +16,8 @@ function loadProjects(page, level, minDuration, maxDuration) {
             page: page,
             level: level,
             minDuration: parseInt(minDuration),
-            maxDuration: parseInt(maxDuration)
+            maxDuration: parseInt(maxDuration),
+            techsArray: techsArray.toString()
         },
         success: function (data) {
             // Update project container with new projects
@@ -24,14 +29,15 @@ function loadProjects(page, level, minDuration, maxDuration) {
     });
 }
 
-function showPageNumbers(currentPage, level, minDuration, maxDuration) {
+function showPageNumbers(currentPage, level, minDuration, maxDuration, techsArray) {
     $.ajax({
         url: '/Home/Home/CountPages',
         type: 'GET',
         data: {
             level: level,
             minDuration: parseInt(minDuration),
-            maxDuration: parseInt(maxDuration)
+            maxDuration: parseInt(maxDuration),
+            techsArray: techsArray.toString()
         },
         success: function (data) {
             var rangeWithDots = pagination(currentPage, data);
@@ -93,8 +99,8 @@ function pagination(currentPage, total) {
 }
 
 $(document).ready(function () {
-    loadProjects(1, '', 1, 100); // Load projects for the first page
-    showPageNumbers(1, '', 1, 100); // Display page numbers for the first page
+    loadProjects(1, '', 1, 100, availableTechs); // Load projects for the first page
+    showPageNumbers(1, '', 1, 100, availableTechs); // Display page numbers for the first page
   
 });
 
@@ -121,8 +127,8 @@ $('#pagination').on('click', 'li.right', function () {
         nextPage.addClass('home__catalog-pagination-chosen-page');
 
         var page = nextPage.text();
-        loadProjects(page, level, minDuration, maxDuration);
-        showPageNumbers(page, level, minDuration, maxDuration);
+        loadProjects(page, level, minDuration, maxDuration, availableTechs);
+        showPageNumbers(page, level, minDuration, maxDuration, availableTechs);
 
         // Scroll to the top of the home__catalog container
         var container = document.querySelector('.home__catalog');
@@ -140,8 +146,8 @@ $('#pagination').on('click', 'li.left', function () {
         prevPage.addClass('home__catalog-pagination-chosen-page');
 
         var page = prevPage.text();
-        loadProjects(page, level, minDuration, maxDuration);
-        showPageNumbers(page, level, minDuration, maxDuration);
+        loadProjects(page, level, minDuration, maxDuration, availableTechs);
+        showPageNumbers(page, level, minDuration, maxDuration, availableTechs);
 
         // Scroll to the top of the home__catalog container
         var container = document.querySelector('.home__catalog');
@@ -165,6 +171,101 @@ filtersHeader.onclick = function () {
 }
 
 const filters = filtersHeader.parentElement;
+
+// technologies selector
+const searchTechnologiesInput = filters.querySelector(".technologies-search input");
+const addButton = filters.querySelector(".home__catalog-filter-search .button");
+// suggest the nearest autocomplete option
+autocomplete(searchTechnologiesInput, availableTechs);
+function autocomplete(inp, arr) {
+    var suggested = "";
+    // when user starts typing
+    inp.addEventListener("input", function () {
+        suggested = "";
+        // find nearest value from techs
+        for (let i = 0; i < arr.length; i++) {
+            if (inp.value != "" && arr[i].toLowerCase().includes(inp.value.toLowerCase())) {
+                suggested = arr[i];
+                break;
+            }
+            else {
+                closeAllLists(document);
+            }
+        }
+        // suggest the nearest value
+        if (suggested != null && suggested != "") {
+            closeAllLists(document);
+            const p = document.createElement("p");
+            p.classList.add("autocomplete-item");
+            p.textContent = suggested;
+            p.addEventListener('click', function () {
+                applyAutocompleteItem(p)
+            });
+            inp.after(p)
+        }
+        // color button if user typed an available tech
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] == inp.value) {
+                addButton.style.backgroundColor = '#bcead5';
+                break;
+            } else {
+                addButton.style.backgroundColor = 'lightgrey';
+            }
+        }
+    });
+    // add a tech when clicked on button
+    addButton.addEventListener('click', function (btn) {
+        availableTechs.forEach(function (tech) {
+            if (tech == searchTechnologiesInput.value) {
+                addTech(tech);
+                searchTechnologiesInput.value = "";
+            }
+        });
+    });
+    function applyAutocompleteItem(item) {
+        searchTechnologiesInput.value = item.textContent;
+        closeAllLists(document);
+        addButton.style.backgroundColor = '#bcead5';
+    }
+    function addTech(tech) {
+        const container = filters.querySelector(".technologies");
+        p = document.createElement("p");
+        p.textContent = tech;
+        container.append(p);
+        p.addEventListener('click', function () {
+            removeTech(this);
+        });
+        availableTechs.splice(availableTechs.findIndex(x => x === tech), 1);
+        selectedTechnologies.push(tech);
+        addButton.style.backgroundColor = 'lightgrey';
+    }
+    function removeTech(element) {
+        availableTechs.push(element.textContent);
+        element.remove();
+        selectedTechnologies.splice(selectedTechnologies.findIndex(x => x === element), 1);
+    }
+    function closeAllLists(elmnt) {
+        var x = document.getElementsByClassName("autocomplete-item");
+        for (var i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i]);
+            }
+        }
+    }
+    // close autocomplete suggestion when clicked outside
+    document.addEventListener("click", function (e) {
+        closeAllLists(e.target);
+    });
+}
+function clearSelecetedTechs() {
+    selectedTechnologies.forEach(function (tech) {
+        availableTechs.push(tech);
+    });
+    selectedTechnologies = [];
+    searchTechnologiesInput.value = "";
+    filters.querySelector(".technologies").replaceChildren();
+    addButton.style.backgroundColor = 'lightgrey';
+}
 
 // complexity selector
 Array.from(filters.querySelector('.complexity').querySelectorAll(':not(:first-child)')).forEach(function (levelButton) {
@@ -198,13 +299,14 @@ const clearFiltersButton = filters.querySelector('.home__catalog-filters-buttons
 clearFiltersButton.onclick = function () {
     clearFilterLevel();
     clearFilterDuration();
+    clearSelecetedTechs();
 
     var level = '';
     var minDuration = 1;
     var maxDuration = 100;
 
-    loadProjects(1, level, minDuration, maxDuration);
-    showPageNumbers(1, level, minDuration, maxDuration);
+    loadProjects(1, level, minDuration, maxDuration, availableTechs);
+    showPageNumbers(1, level, minDuration, maxDuration, availableTechs);
 }
 
 // apply filters button
@@ -213,8 +315,8 @@ applyFiltersButton.onclick = function () {
     level = document.querySelector("#complexity").value;
     minDuration = filters.querySelector(".duration").children.item(1).querySelector('input').value;
     maxDuration = filters.querySelector(".duration").children.item(2).querySelector('input').value;
-    console.log("level = " + level + "; from = " + minDuration + "; to = " + maxDuration)
+    console.log("level = " + level + "; from = " + minDuration + "; to = " + maxDuration + "; selected techs: " + selectedTechnologies)
 
-    loadProjects(1, level, minDuration, maxDuration);
-    showPageNumbers(1, level, minDuration, maxDuration);
+    loadProjects(1, level, minDuration, maxDuration, selectedTechnologies);
+    showPageNumbers(1, level, minDuration, maxDuration, selectedTechnologies);
 }
