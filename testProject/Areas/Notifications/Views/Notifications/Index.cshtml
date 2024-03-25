@@ -41,7 +41,7 @@
                             <i class="cross-line"></i>
                            </button> *@
                     </div>
-                    <p>@notification.Content</p>
+                    <p>@Html.Raw(@notification.Content)</p>
                     @* <button class="button"></button> *@
                     <p>@notification.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p> 
                 </div>

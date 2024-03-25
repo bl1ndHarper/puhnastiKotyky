@@ -346,10 +346,10 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                             deleteUserProjectInput: projectId
                         },
                         success: function (data) {
-                            const showTeamMembersElement = document.getElementById("showTeamMembers");
+                            const showTeamMembersElement = currentModal.querySelector("#showTeamMembers");
                             const currentCount = parseInt(showTeamMembersElement.querySelector("p").textContent.match(/\d+/)[0]);
                             const newCount = currentCount - 1;
-                            const teamDropdown = document.getElementById('teamMembersDropdown').parentElement;
+                            const teamDropdown = currentModal.querySelector("#teamMembersDropdown").parentElement;
 
                             deleteMemberTooltip.remove();
                             currentMember.remove();
@@ -399,7 +399,7 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     }
 
                     // create a new participant and append it to the dropdown
-                    const teamDropdown = document.getElementById('teamMembersDropdown');
+                    const teamDropdown = currentModal.querySelector('#teamMembersDropdown');
 
                     const newUserElement = document.createElement('div');
                     newUserElement.classList.add('modal__user-item');
@@ -425,11 +425,10 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
                     const deleteMemberTooltip = createTooltip();
                     newUserElement.after(deleteMemberTooltip);
 
-                    /*TODO:  correct the deleteParticipant function to work for the newly created delete icon*/
                     deleteParticipant(deleteIcon, deleteMemberTooltip);
 
                     // increase number of participants by 1
-                    const showTeamMembersElement = document.getElementById("showTeamMembers");
+                    const showTeamMembersElement = currentModal.querySelector("#showTeamMembers");
                     if (showTeamMembersElement.querySelector('p')) {
                         const currentCount = parseInt(showTeamMembersElement.querySelector('p').textContent.match(/\d+/)[0]);
                         const newCount = currentCount + 1;
