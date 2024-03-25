@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.ComponentModel;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -22,6 +23,13 @@ builder.Services.AddAuthentication()
         googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
         googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
         googleOptions.AuthorizationEndpoint = string.Concat(googleOptions.AuthorizationEndpoint, "?prompt=select_account");
+
+        googleOptions.Events.OnRemoteFailure = (context) =>
+        {
+            context.Response.Redirect("/Identity/Account/Register");
+            context.HandleResponse();
+            return Task.CompletedTask;
+        };
     })
     .AddOAuth("GitHub", options =>
     {
@@ -55,6 +63,13 @@ builder.Services.AddAuthentication()
 
                 context.RunClaimActions(user);
             }
+        };
+
+        options.Events.OnRemoteFailure = (context) =>
+        {
+            context.Response.Redirect("/Identity/Account/Register");
+            context.HandleResponse();
+            return Task.CompletedTask;
         };
     });
 

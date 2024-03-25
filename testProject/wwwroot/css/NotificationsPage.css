@@ -66,6 +66,12 @@
         text-align: justify;
     }
 
+    .notifications__notification-item a {
+        font: 400 16px "Fira Sans";
+        color: #183d3d;
+        font-style: italic;
+    }
+
     .notifications__notification-item button {
         font: 400 16px "Fira Sans";
         padding: 4px 8px;

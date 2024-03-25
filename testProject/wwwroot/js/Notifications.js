@@ -2,15 +2,12 @@
     .withUrl("/NotificationsHub") 
     .build();
 const container = document.querySelector(".notifications__notification-items-container");
+const noItemsText = document.getElementById("notifications__no-notifications-message");
 
 connection.on("ReceiveNotification", function (title, message, id, sentAt) {
 
-    console.log(message);
-    createNotification(title = title, text = message,
-        buttonText = "To the project", id = id, date = sentAt, isNew = true);
+    createNotification(title = title, text = message, id = id, date = sentAt, isNew = true);
     markAllNotificationsAsRead();
-    var noItemsText = document.getElementById("notifications__no - notifications - message");
-    noItemsText.classList.add(".hidden");
 });
 
 connection.start()
@@ -57,11 +54,6 @@ $(document).ready(function () {
     markAllNotificationsAsRead();
 });
 
-// when user open the page they see all the new notifications so they are not new anymore
-/* Array.from(container.children).forEach(notifItem => {
-    notifItem.classList.remove("notifications__notification-item-new");
-}); */
-
 // use this to show new notifications count
 const newCounter = document.querySelector(".notifications__header div p");
 var countNewNotifications = document.querySelectorAll('.notifications__notification-item-new').length;
@@ -95,13 +87,14 @@ function incrementNewCounter(increment) {
 }
 
 // use this to create and show notifications
-function createNotification(title, text, buttonText, id, date, isNew) {
+function createNotification(title, text, id, date, isNew) {
     var notificationItem = document.createElement('div');
     notificationItem.classList.add('notifications__notification-item');
     notificationItem.setAttribute('data-notification-id', id);
 
     if (isNew) {
         notificationItem.classList.add('notifications__notification-item-new');
+        incrementNewCounter();
     }
 
     var header = document.createElement('div');
@@ -135,7 +128,7 @@ function createNotification(title, text, buttonText, id, date, isNew) {
     // header.appendChild(closeButton);
 
     var textParagraph = document.createElement('p');
-    textParagraph.textContent = text;
+    textParagraph.innerHTML = text;
 
     /* var button;
     if (buttonText) {
@@ -143,9 +136,6 @@ function createNotification(title, text, buttonText, id, date, isNew) {
         button.classList.add('button');
         button.textContent = buttonText;
     } */
-
-    notificationItem.appendChild(header);
-    notificationItem.appendChild(textParagraph);
 
     var formattedDate = new Date(date).toLocaleString('en-GB', {
         day: '2-digit',
@@ -169,12 +159,8 @@ function createNotification(title, text, buttonText, id, date, isNew) {
     }*/
 
     container.insertBefore(notificationItem, container.firstChild);
-    if (!noItemsText.classList.contains("hidden")) {
+    if (noItemsText && !noItemsText.classList.contains("hidden")) {
         noItemsText.classList.add("hidden");
-    }
-
-    if (isNew == true) {
-        incrementNewCounter()
     }
 }
 

@@ -47,18 +47,10 @@ namespace testProject.Areas.UserAccount.Controllers
             Console.WriteLine();
             _db = new AppDbContext();
             var request = _db.Requests
-                        .Where(r => r.RequestsId == Convert.ToUInt32(requestId))
+                        .Where(r => r.RequestsId.ToString().Equals(requestId))
+                        .Include(r => r.Users)
+                        .Include(r => r.Projects)
                         .FirstOrDefault();
-
-            var userName = _db.Requests
-                         .Where(r => r.RequestsId == Convert.ToUInt32(requestId))
-                         .Select(r => r.Users.UserName)
-                         .FirstOrDefault();
-
-            var projectName = _db.Requests
-                         .Where(r => r.RequestsId == Convert.ToUInt32(requestId))
-                         .Select(r => r.Projects.Name)
-                         .FirstOrDefault();
 
             if (request != null)
             {
@@ -67,7 +59,7 @@ namespace testProject.Areas.UserAccount.Controllers
                 _db.SaveChanges();
 
                 var notification = new Notification { UsersId =  request.UsersId, Title = "Your request has been accepted", 
-                Content = $"Congratulations! The owner of project {projectName} has accepted your request. " +
+                Content = $"Congratulations! The owner of project {request.Projects.Name} has accepted your request. " +
                     $"Now you are a part of the project’s team! Once the team is fully assembled, " +
                     $"you'll be all set to kick off your work. Stay tuned for further updates, " +
                     $"and get ready to dive into exciting projects with your team.", CreatedAt = DateTime.Now, isRead = false
@@ -76,12 +68,37 @@ namespace testProject.Areas.UserAccount.Controllers
                 _db.Notifications.Add(notification);
                 _db.SaveChanges();
 
-                SendNotificationToUser(userName, "Your request has been accepted", 
-                    $"Congratulations! The owner of project {projectName} has accepted your request. " +
-                    $"Now you are a part of the project’s team! You have the access to all functions that the team can use. Contact the owner and start working!",
+                SendNotificationToUser(request.Users.UserName, notification.Title, notification.Content,
                     notification.NotificationsId, notification.CreatedAt);
 
-                AddNewParticipant(request.UsersId, request.ProjectsId);   
+                AddNewParticipant(request.UsersId, request.ProjectsId);
+
+                var team = _db.ProjectsUsers
+                    .Include(p => p.Users)
+                    .Where(p => p.ProjectsId == request.Projects.ProjectsId).ToList();
+
+                foreach(var teamMember in team)
+                {
+                    // send notification to all team members except the owner and
+                    // the user whose request has just been accepted 
+                    if(teamMember.UsersId != request.Projects.UsersId && teamMember.UsersId != request.UsersId) { 
+                    Notification notificationForTeam = new Notification
+                    {
+                        UsersId = teamMember.UsersId,
+                        Title = "New team member joined",
+                        Content = $"<a href=\"\\Profile?id={request.UsersId}\">" +
+                        $"{request.Users.FirstName} {request.Users.LastName}</a> has joined the {request.Projects.Name} team.",
+                        CreatedAt = DateTime.Now,
+                        isRead = false
+                    };
+
+                    _db.Notifications.Add(notificationForTeam);
+                    _db.SaveChanges();
+
+                    SendNotificationToUser(teamMember.Users.UserName, notificationForTeam.Title, notificationForTeam.Content,
+                        notificationForTeam.NotificationsId, notificationForTeam.CreatedAt);
+                    }
+                }
             }
             return Json(new { success = true, message = "Participation request was successfully accepted" });
         }
