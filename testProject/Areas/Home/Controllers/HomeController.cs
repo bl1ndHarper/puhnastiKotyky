@@ -91,16 +91,19 @@ namespace testProject.Areas.Home.Controllers
 
             if (techsArray.IsNullOrEmpty())
             {
-                techsArray = _db.Technologies.Select(t => t.Name).ToList().ToString();
+                techsArray = string.Join(',', _db.Technologies.Select(t => t.Name));
             }
             Console.WriteLine("\n-------------------------------------");
             Console.WriteLine("Selected techologies filter list: " + techsArray);
+            string[] techs = techsArray.Split(',');
 
             var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
                                                 .ThenInclude(pt => pt.Technologies)
-                                                .Where(p => p.Status == "searching for participants" ||
-                                                       p.Status == "in development")
+                                                .Where(p => (p.Status == "searching for participants" ||
+                                                       p.Status == "in development") &&
+                                                       p.ProjectsTechnologies.Any(pt => techs.Contains(pt.Technologies.Name)))
                                                 .OrderByDescending(p => p.CreationDate).ToList();
+
             if (!level.IsNullOrEmpty())
             {
                 latestProjects = latestProjects.Where(p => p.Level == level).ToList();
@@ -121,13 +124,17 @@ namespace testProject.Areas.Home.Controllers
             _db = new AppDbContext();
             if (techsArray.IsNullOrEmpty())
             {
-                techsArray = _db.Technologies.Select(t => t.Name).ToList().ToString();
+                techsArray = string.Join(',', _db.Technologies.Select(t => t.Name));
             }
+
+            string[] techs = techsArray.Split(',');
             var latestProjects = _db.Projects.Include(p => p.ProjectsTechnologies)
                                                 .ThenInclude(pt => pt.Technologies)
-                                                .Where(p => p.Status == "searching for participants" ||
-                                                       p.Status == "in development")
+                                                .Where(p => (p.Status == "searching for participants" ||
+                                                       p.Status == "in development") &&
+                                                       p.ProjectsTechnologies.Any(pt => techs.Contains(pt.Technologies.Name)))
                                                 .OrderByDescending(p => p.CreationDate).ToList();
+
             if (!level.IsNullOrEmpty())
             {
                 latestProjects = latestProjects.Where(p => p.Level == level).ToList();
