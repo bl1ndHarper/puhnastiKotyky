@@ -17,7 +17,7 @@ function loadProjects(page, level, minDuration, maxDuration, techsArray) {
             level: level,
             minDuration: parseInt(minDuration),
             maxDuration: parseInt(maxDuration),
-            techsArray: techsArray.toString()
+            techsArray: techsArray === undefined ? techsArray : techsArray.toString()
         },
         success: function (data) {
             // Update project container with new projects
@@ -109,8 +109,8 @@ $('#pagination').on('click', 'li:not(.right, .left, .dots)', function () {
     $(this).addClass('home__catalog-pagination-chosen-page'); // Highlight the chosen page
 
     var page = $(this).text();
-    loadProjects(page, level, minDuration, maxDuration);
-    showPageNumbers(page, level, minDuration, maxDuration);
+    loadProjects(page, level, minDuration, maxDuration, selectedTechnologies);
+    showPageNumbers(page, level, minDuration, maxDuration, selectedTechnologies);
 
     // Scroll to the top of the home__catalog container
     var container = document.querySelector('.home__catalog');
@@ -127,8 +127,8 @@ $('#pagination').on('click', 'li.right', function () {
         nextPage.addClass('home__catalog-pagination-chosen-page');
 
         var page = nextPage.text();
-        loadProjects(page, level, minDuration, maxDuration, availableTechs);
-        showPageNumbers(page, level, minDuration, maxDuration, availableTechs);
+        loadProjects(page, level, minDuration, maxDuration, selectedTechnologies);
+        showPageNumbers(page, level, minDuration, maxDuration, selectedTechnologies);
 
         // Scroll to the top of the home__catalog container
         var container = document.querySelector('.home__catalog');
@@ -146,8 +146,8 @@ $('#pagination').on('click', 'li.left', function () {
         prevPage.addClass('home__catalog-pagination-chosen-page');
 
         var page = prevPage.text();
-        loadProjects(page, level, minDuration, maxDuration, availableTechs);
-        showPageNumbers(page, level, minDuration, maxDuration, availableTechs);
+        loadProjects(page, level, minDuration, maxDuration, selectedTechnologies);
+        showPageNumbers(page, level, minDuration, maxDuration, selectedTechnologies);
 
         // Scroll to the top of the home__catalog container
         var container = document.querySelector('.home__catalog');
