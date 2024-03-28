@@ -123,6 +123,7 @@
         padding: 2px 8px;
         font-size: 14px;
         font-weight: 500;
+        background-color: lightgrey;
     }
 
         .help-page__header > .help-page__search > input {
@@ -249,6 +250,7 @@
             .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-h > h3 {
                 font-size: 28px;
                 font-weight: 700;
+                text-align: end;
             }
 
     .help-page__open-topic > .help-page__open-topic-points {

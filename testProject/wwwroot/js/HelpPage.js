@@ -156,6 +156,7 @@ Array.from(topicsCards.children).forEach((topicCard) => {
 
 const openTopicCard = document.querySelector('.help-page__open-topic');
 const openTopicPointsContainer = openTopicCard.querySelector('.help-page__open-topic-points');
+var questionsArray = [];
 function openTopic(topicCard) {
     var topicName = topicCard.querySelector('div > h4').textContent;
     var topicIcon = topicCard.querySelector('i');
@@ -166,7 +167,7 @@ function openTopic(topicCard) {
     openTopicCardIcon.classList.add(topicIcon.classList[1]);
     openTopicCard.classList.remove('hidden');
     topicsCards.classList.add('hidden');
-    showQuestions(topicName);
+    showQuestions(questionsArray, topicName);
 }
 
 const backToTopicsButton = document.querySelector('.help-page__open-topic-header-back-button');
@@ -192,159 +193,90 @@ function showAnswer(selectedPointName) {
     });
 }
 
-// don't be so scared
-// here we are generating points for every topic and append them to the open topic card layout
-// this all can be in db
-function showQuestions(topicName) {
-    if (topicName == "Account and personal information") {
-        var point1 = document.createElement('li');
-        var h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("How to change or delete my account information?"));
-        var p = document.createElement('p')
-        p.appendChild(document.createTextNode("You can change or delete your account information in the Account tab. You must be authenticated for this. Click the 'Edit Profile' button and then you will be able change your skills stack, profile icon and description. Don't forget to save your changes."));
-        p.classList.add('hidden');
-        point1.appendChild(h4);
-        point1.appendChild(p);
+fillQuestionsArray(questionsArray);
+function fillQuestionsArray(array) {
+    array.push(
+        { topic: "Account and personal information", question: "How to change or delete my account information?", answear: "You can change or delete your account information in the Account tab. You must be authenticated for this. Click the 'Edit Profile' button and then you will be able change your skills stack, profile icon and description. Don't forget to save your changes." },
+        { topic: "Account and personal information", question: "Can I change my username and email?", answear: "Unfortunately, it is now impossible to change your email, name or surname associated with you from your Account Page, but you still can ask developers for this via reporting form below." },
+        { topic: "Account and personal information", question: "Which information is public and can be seen by other users?", answear: "Every registered user can see the projects you are a part of and all the public account information which are: your profile image, name, surname, email, skills and description." }
+    );
+    array.push(
+        { topic: "Projects creation", question: "How do I create a project?", answear: "To create a project you must be a registered user. Then on the Account page you can find an area which says 'Here you can create your new project!'. Now name your idea, then give all the other information about your project and click the 'Create the project!' button." },
+        { topic: "Projects creation", question: "How many technologies can I choose?", answear: "You can select as many technologies as you need as long as it will be the truth about your project. If you have too many unrelated technologies chosen, other developers will not want to join your team so please be serious about it. You also will be able to change the technologies stack later." },
+        { topic: "Projects creation", question: "Can I change the information about my project?", answear: "All the projects you've created or are a part of are listed on your Account page. If you are the owner of a project, you can open it later and change its status, technologies, description, delete team members and moderate the requests." },
+        { topic: "Projects creation", question: "Can I make a project private?", answear: "Unfortunately, it is now impossible to create private projects but this feature will be available later. Now only the projects with status of 'draft' and 'completed' are not listed on the home page but everyone still can find it on your Public Account page or by id." }
+    );
+    array.push(
+        { topic: "Requests, teams and communication", question: "What are requests and how do I make one?", answear: "Every authenticated user can make a Request to become a project team member. When you find a project interesting for you, you can make a request by clicking 'Join request!' button on its Public page. Then the project owner will recieve, review your request and accept it if he wants." },
+        { topic: "Requests, teams and communication", question: "Can I withdraw my request?", answear: "Yes, you can withdraw (delete) your request if it hasn't been accepted yet. To do that go to the Account page, scroll down to your requests, open one and click 'Delete the request' button. You will be able to request to the same project again later if you change your mind." },
+        { topic: "Requests, teams and communication", question: "How many request can I create?", answear: "Every registered user can have only one valid Request per project. It means that you can make a Request to any project that is available but you cannot make another Request to the same project if you already have one." },
+        { topic: "Requests, teams and communication", question: "Can I leave a project team?", answear: "Yes, you can leave a project if you are not its owner. Open the project window from your Account page, go down to the 'Danger zone' and click the 'Leave and delete' button. You'll be deleted from the project team and it will disappear from your dashboard. You still will be able to rejoin the project team later by requesting to its owner." }
+    );
+    array.push(
+        { topic: "Bans and projects deletion", question: "I've been banned. Can I recover my account?", answear: "If your account has been banned and you believe it was a mistake, you can submit the form below and select the 'Bans and projects deletion' topic option. Don't forget you can pin some screenshots, because sometimes it can help our team to understand the situation." },
+        { topic: "Bans and projects deletion", question: "Can I recover my project if it was deleted?", answear: "As a rule, we delete projects due to their illegal or unethical naming and/or description. Such projects are unlikely to be recovered but if you still believe there was a mistake, submit a form below and ask to review the decision." },
+        { topic: "Bans and projects deletion", question: "Can my project be deleted if the information about it is deceptive?", answear: "We do not delete the projects that show obviously false or impossible information about their thechologies, complexity or deadlines but such projects are not popular among users." }
+    );
+}
 
-        var point2 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("Can I change my username and email?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("Unfortunately, it is now impossible to change your email, name or surname associated with you from your Account Page, but you still can ask developers for this via reporting form below."));
-        p.classList.add('hidden');
-        point2.appendChild(h4);
-        point2.appendChild(p);
-
-        var point3 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("Which information is public and can be seen by other users?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("Every registered user can see the projects you are a part of and all the public account information which are: your profile image, name, surname, email, skills and description."));
-        p.classList.add('hidden');
-        point3.appendChild(h4);
-        point3.appendChild(p);
-
-        openTopicPointsContainer.appendChild(point1);
-        openTopicPointsContainer.appendChild(point2);
-        openTopicPointsContainer.appendChild(point3);
-    } else if (topicName == "Projects creation") {
-        var point1 = document.createElement('li');
-        var h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("How do I create a project?"));
-        var p = document.createElement('p')
-        p.appendChild(document.createTextNode("To create a project you must be a registered user. Then on the Account page you can find an area which says 'Here you can create your new project!'. Now name your idea, then give all the other information about your project and click the 'Create the project!' button."));
-        p.classList.add('hidden');
-        point1.appendChild(h4);
-        point1.appendChild(p);
-
-        var point2 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("How many technologies can I choose?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("You can select as many technologies as you need as long as it will be the truth about your project. If you have too many unrelated technologies chosen, other developers will not want to join your team so please be serious about it. You also will be able to change the technologies stack later."));
-        p.classList.add('hidden');
-        point2.appendChild(h4);
-        point2.appendChild(p);
-
-        var point3 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("Can I change the information about my project?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("All the projects you've created or are a part of are listed on your Account page. If you are the owner of a project, you can open it later and change its status, technologies, description, delete team members and moderate the requests."));
-        p.classList.add('hidden');
-        point3.appendChild(h4);
-        point3.appendChild(p);
-
-        var point4 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("Can I make a project private?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("Unfortunately, it is now impossible to create private projects but this feature will be available later. Now only the projects with status of 'draft' and 'completed' are not listed on the home page but everyone still can find it on your Public Account page or by id."));
-        p.classList.add('hidden');
-        point4.appendChild(h4);
-        point4.appendChild(p);
-
-        openTopicPointsContainer.appendChild(point1);
-        openTopicPointsContainer.appendChild(point2);
-        openTopicPointsContainer.appendChild(point3);
-        openTopicPointsContainer.appendChild(point4);
-    } else if (topicName == "Requests, teams and communication") {
-        var point1 = document.createElement('li');
-        var h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("What are requests and how do I make one?"));
-        var p = document.createElement('p')
-        p.appendChild(document.createTextNode("Every authenticated user can make a Request to become a project team member. When you find a project interesting for you, you can make a request by clicking 'Join request!' button on its Public page. Then the project owner will recieve, review your request and accept it if he wants."));
-        p.classList.add('hidden');
-        point1.appendChild(h4);
-        point1.appendChild(p);
-
-        var point2 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("Can I withdraw my request?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("Yes, you can withdraw (delete) your request if it hasn't been accepted yet. To do that go to the Account page, scroll down to your requests, open one and click 'Delete the request' button. You will be able to request to the same project again later if you change your mind."));
-        p.classList.add('hidden');
-        point2.appendChild(h4);
-        point2.appendChild(p);
-
-        var point3 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("How many request can I create?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("Every registered user can have only one valid Request per project. It means that you can make a Request to any project that is available but you cannot make another Request to the same project if you already have one."));
-        p.classList.add('hidden');
-        point3.appendChild(h4);
-        point3.appendChild(p);
-
-        var point4 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("Can I leave a project team?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("Yes, you can leave a project if you are not its owner. Open the project window from your Accaount page, go down to the 'Danger zone' and click the 'Leave and delete' button. You'll be deleted from the project team and it will disappear from your dashboard. You still will be able to rejoin the project team later by requesting to its owner."));
-        p.classList.add('hidden');
-        point4.appendChild(h4);
-        point4.appendChild(p);
-
-        openTopicPointsContainer.appendChild(point1);
-        openTopicPointsContainer.appendChild(point2);
-        openTopicPointsContainer.appendChild(point3);
-        openTopicPointsContainer.appendChild(point4);
-    } else if (topicName == "Bans and projects deletion") {
-        var point1 = document.createElement('li');
-        var h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("I've been banned. Can I recover my account?"));
-        var p = document.createElement('p')
-        p.appendChild(document.createTextNode("If your account has been banned and you believe it was a mistake, you can submit the form below and select the 'Bans and projects deletion' topic option. Don't forget you can pin some screenshots, because sometimes it can help our team to understand the situation."));
-        p.classList.add('hidden');
-        point1.appendChild(h4);
-        point1.appendChild(p);
-
-        var point2 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("Can I recover my project if it was deleted?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("As a rule, we delete projects due to their illegal or unethical naming and/or description. Such projects are unlikely to be recovered but if you still believe there was a mistake, submit a form below and ask to review the decision."));
-        p.classList.add('hidden');
-        point2.appendChild(h4);
-        point2.appendChild(p);
-
-        var point3 = document.createElement('li');
-        h4 = document.createElement('h4')
-        h4.appendChild(document.createTextNode("Can my project be deleted if the information about it is deceptive?"));
-        p = document.createElement('p')
-        p.appendChild(document.createTextNode("We do not delete the projects that show obviously false or impossible information about their thechologies, complexity or deadlines but such projects are not popular among users."));
-        p.classList.add('hidden');
-        point3.appendChild(h4);
-        point3.appendChild(p);
-
-        openTopicPointsContainer.appendChild(point1);
-        openTopicPointsContainer.appendChild(point2);
-        openTopicPointsContainer.appendChild(point3);
-    }
+function showQuestions(array, topicName) {
+    array.forEach(function (elem) {
+        if (elem.topic == topicName || topicName == "searched") {
+            var point = document.createElement('li');
+            var h4 = document.createElement('h4')
+            h4.appendChild(document.createTextNode(elem.question));
+            var p = document.createElement('p')
+            p.appendChild(document.createTextNode(elem.answear));
+            p.classList.add('hidden');
+            point.appendChild(h4);
+            point.appendChild(p);
+            openTopicPointsContainer.appendChild(point);
+        }
+    });
 
     Array.from(openTopicPointsContainer.children).forEach((point) => {
         point.addEventListener("click", function () {
             showAnswer(point.querySelector('h4').textContent);
         });
     });
+}
+
+// search functionality
+const searchInput = document.querySelector(".help-page__search input");
+const searchButton = document.querySelector(".help-page__search button");
+searchButton.addEventListener('click', function () {
+    var searchQuery = searchInput.value;
+    searchHelp(searchQuery);
+});
+searchInput.addEventListener('input', function () {
+    if (searchInput.value.length >= 3) {
+        searchButton.style.backgroundColor = "#bcead5";
+        searchButton.disabled = false;
+    } else {
+        searchButton.style.backgroundColor = "lightgrey";
+        searchButton.disabled = true;
+    }
+});
+function searchHelp(query) {
+    var foundHelpArray = [];
+    questionsArray.forEach(function (item) {
+        if (String(item.question).toLowerCase().includes(query.toLowerCase())) {
+            foundHelpArray.push(item);
+        }
+    });
+    showFoundHelp(foundHelpArray);
+}
+function showFoundHelp(array) {
+    const openTopicCardTitle = openTopicCard.querySelector('.help-page__open-topic-header > .help-page__open-topic-header-h > h3');
+    const openTopicCardIcon = openTopicCard.querySelector('.help-page__open-topic-header > .help-page__open-topic-header-h > i');
+    openTopicPointsContainer.replaceChildren();
+    if (array == "" || array == null) {
+        openTopicCardTitle.textContent = "Nothing found. Please, try another query or submit a help form below."
+    } else {
+        openTopicCardTitle.textContent = "Take a look at what we've found";
+        showQuestions(array, "searched");
+    }
+    openTopicCardIcon.classList.replace(openTopicCardIcon.classList[1], "fa-search");
+    openTopicCard.classList.remove('hidden');
+    topicsCards.classList.add('hidden');
 }
