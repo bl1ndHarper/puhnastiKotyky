@@ -10,8 +10,6 @@ namespace testProject.Models
         [Key]
         [Column("issues_id")]
         public uint IssuesId { get; set; }
-        [Column("users_id")]
-        public uint UsersId { get; set; }
 
         [Column("topic", TypeName = "enum('Account and personal information','Projects creation','Requests, teams and communication','Bans and projects deletion', 'Bugs or inconveniences')")]
         public string Topic { get; set; }
@@ -22,11 +20,12 @@ namespace testProject.Models
         [Column("date", TypeName = "datetime")]
         public DateTime Date { get; set; }
 
+        [Column("contact_email", TypeName = "varchar(100)")]
+        public string ContactEmail { get; set; }
+
         [Column("is_solved", TypeName = "tinyint(1)")]
         public bool IsSolved { get; set; }
 
-        [ForeignKey("UsersId")]
-        public virtual User User { get; set; } = null!;
         public virtual ICollection<Attachment> Attachments { get; set; }
     }
 }

@@ -23,23 +23,18 @@ namespace testProject.Areas.Help.Controllers
         }
 
         [HttpPost]
-        public JsonResult SubmitForm(string topic, string description, List<IFormFile> screenshots, [FromServices] CloudinaryService cloudinaryService)
+        public async Task<JsonResult> SubmitFormAsync(string topic, string description, string email, List<IFormFile> screenshots, [FromServices] CloudinaryService cloudinaryService)
         {
             _db = new AppDbContext();
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Json(new { success = false, message = "Please, log in to your account to submit this form" });
-            }
 
             try
             {
                 Issue issue = new Issue
                 {
-                    UsersId = Convert.ToUInt32(userId),
                     Topic = topic,
                     Description = description,
                     Date = DateTime.Now,
+                    ContactEmail = email,
                     IsSolved = false
                 };
 
@@ -49,7 +44,7 @@ namespace testProject.Areas.Help.Controllers
                 Console.WriteLine("Uploaded screenshots count: " + screenshots.Count());
                 foreach (IFormFile file in screenshots)
                 {
-                    SaveAttachment(issue.IssuesId, file, cloudinaryService);
+                    await SaveAttachment(issue.IssuesId, file, cloudinaryService);
                 }    
             }
             catch(Exception ex)
@@ -61,7 +56,7 @@ namespace testProject.Areas.Help.Controllers
             return Json(new { success = true, message = "The form has been submitted. Thank you for contacting us!" });
         }
 
-        private ActionResult SaveAttachment(uint issueId, IFormFile file, [FromServices] CloudinaryService cloudinaryService)
+        private async Task<JsonResult> SaveAttachment(uint issueId, IFormFile file, [FromServices] CloudinaryService cloudinaryService)
         {
             string fileName = Guid.NewGuid().ToString();
             

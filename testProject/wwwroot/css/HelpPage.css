@@ -465,6 +465,36 @@
                 pointer-events: none;
             }
 
+.help-page__help-form-email-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.help-page__help-form-email {
+    background: #def5e5;
+    border-radius: 12px;
+    border-style: solid;
+    border-color: #183d3d;
+    border-width: 1px;
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    position: relative;
+    padding: 4px 8px;
+    flex-grow: 1;
+}
+
+.help-page__help-form-email input {
+    width: 100%;
+    resize: none;
+    outline: #183d3d;
+    color: #183d3d;
+    font-family: "Fira Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
 .help-page__help-form-comment {
     width: 100%;
     display: flex;
