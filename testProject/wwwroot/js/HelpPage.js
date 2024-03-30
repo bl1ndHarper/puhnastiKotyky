@@ -84,17 +84,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function validateForm() {
+    const description = document.getElementById("helFormDescription").value;
+    const email = document.getElementById("helpFormEmail").value;
+
+    // Check description length
+    if (description.length < 12) {
+        const tooltip = document.getElementById("descriptionTooltip");
+        tooltip.style.border = "3px dashed tomato";
+        tooltip.style.visibility = "visible";
+        setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000);
+        return false;
+    }
+
+    // Check email format
+    if (!/\S+@\S+\.\S+/.test(email)) {
+        const tooltip = document.getElementById("emailTooltip");
+        tooltip.style.border = "3px dashed tomato";
+        tooltip.style.visibility = "visible";
+        setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000);
+        return false;
+    }
+
+    return true;
+}
+
 function submitForm() {
     const toast = document.querySelector(".help-page__toast");
     const topic = document.getElementById("helpFormTopic").value;
     const description = document.getElementById("helFormDescription").value;
+    const email = document.getElementById("helpFormEmail").value;
+    const clearBtn = document.getElementById("helpFormClear");
+    const submitBtn = document.getElementById("helpFormSubmit");
 
-    if (description.length < 12) {
-        const tooltip = document.querySelector(".help-page__tooltip");
-        tooltip.style.border = "3px dashed tomato";
-        tooltip.style.visibility = "visible";
-        setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000)
-    } else {
+     if (validateForm()) { 
         const formData = new FormData();
 
         if (chosenFiles.length > 0) {
@@ -105,6 +128,10 @@ function submitForm() {
 
         formData.append("topic", topic);
         formData.append("description", description);
+        formData.append("email", email);
+        submitBtn.textContent = 'Sending ...';
+        submitBtn.disabled = true;
+        clearBtn.disabled = true;
 
         $.ajax({
             url: '/Help/Help/SubmitForm/',
@@ -121,19 +148,23 @@ function submitForm() {
                     toast.querySelector("p").textContent = data.message;
                     toast.classList.add("toast-error");
                 }
+                clearForm();
+                submitBtn.textContent = 'Send the report!';
+                submitBtn.disabled = false;
+                clearBtn.disabled = false;
                 toast.classList.remove("hidden");
                 setTimeout(function () {
                     toast.classList.add("hidden");
                 }, 7000);
-                clearForm();
             }
-        });
-    }   
+        });   
+    }
 }
 
 function clearForm() {
     var topicItems = document.querySelectorAll('.help-page__help-form-topic-select-items p');
     var hiddenInput = document.querySelector('.help-page__help-form-topic-selector input[name="helpFormTopic"]');
+    var email = document.getElementById('helpFormEmail');
 
     hiddenInput.value = topicItems[0].textContent;
     selectHelpFormTopic(topicItems[0].textContent);
@@ -144,6 +175,10 @@ function clearForm() {
     var container = document.querySelector('.help-page__help-form-screenshot > div');
     container.innerHTML = '';
     chosenFiles = [];
+
+    if (!email.hidden) {
+        email.value = '';
+    }
 }
 
 

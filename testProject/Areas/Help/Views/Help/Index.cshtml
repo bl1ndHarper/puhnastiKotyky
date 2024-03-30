@@ -1,4 +1,9 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.AspNetCore.Identity
+@using testProject.Models
+
+@inject UserManager<User> UserManager
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Help";
 }
@@ -108,7 +113,7 @@
                                   oninput="auto_height(this)"
                                   onmousemove="auto_height(this)"
                                   onresize="auto_height(this)"></textarea>
-                        <span class="help-page__tooltip">Write a valid description!</span>
+                        <span class="help-page__tooltip" id="descriptionTooltip">Write a valid description!</span>
                     </div>
                 </div>
                 <div class="help-page__help-form-screenshot-wrapper">
@@ -122,16 +127,32 @@
                         </div>
                     </div>
                 </div>
+
+                @if(!User.Identity.IsAuthenticated){
+                    <div class="help-page__help-form-email-wrapper">
+                    <h4>Enter contact email adress:</h4>
+                        <div class="help-page__help-form-email">
+                            <input type="email" id="helpFormEmail" name="helpFormEmail">
+                            <span class="help-page__tooltip" id="emailTooltip">Write a valid email</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    User user = (User) await UserManager.GetUserAsync(User);
+                    <input hidden id="helpFormEmail" value="@user.Email">
+                }
+
                 <div class="help-page__help-form-comment">
                     <p>The answer from our support team will be sent to your email.</p>
                 </div>
                 <div class="help-page__help-page-buttons">
                     <button type="button"
-                            class="button" onclick="clearForm()">
+                            class="button" id="helpFormClear" onclick="clearForm()">
                         <p>Clear</p>
                     </button>
                     <button type="button"
-                            class="button" onclick="submitForm()">
+                            class="button" id="helpFormSubmit" onclick="submitForm()">
                         <p>Send the report!</p>
                     </button>
                 </div>
