@@ -1162,6 +1162,90 @@ user-account-day * {
         width: 66px;
     }
 
+.user-account-day__user-socials {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.user-account-day__user-socials h3 {
+    width: 100%;
+}
+
+    .user-account-day__user-socials > .user-account-day__user-socials-container {
+        display: flex;
+        flex-direction: row;
+        gap: 4px 15px;
+        align-items: center;
+        justify-content: flex-start;
+        flex-shrink: 0;
+        position: relative;
+        flex-wrap: wrap;
+    }
+
+    .user-account-day__user-socials > .user-account-day__user-socials-container > div {
+        display: flex;
+        flex-direction: row;
+        width: fit-content;
+        gap: 4px;
+        background: transparent;
+        border-radius: 24px;
+        border: 3px solid #183d3d;
+        color: #183d3d;
+        padding: 4px 16px;
+        align-items: center;
+        cursor: pointer;
+        transition: all ease-in-out .2s;
+    }
+
+    .user-account-day__user-socials > .user-account-day__user-socials-container > div > a {
+        color: #183d3d;
+        pointer-events: auto;
+    }
+
+        .user-account-day__user-socials > .user-account-day__user-socials-container > div:hover {
+            background: #bcead5;
+        }
+
+.editable > .user-account-day__user-socials-container > div:not(#addLink):hover {
+    transform: translateY(-2px);
+    background: tomato;
+}
+
+.user-account-day__user-socials > .user-account-day__user-socials-container > div#addLink {
+    padding: 4px;
+    background: #bcead5;
+}
+
+            .user-account-day__user-socials > .user-account-day__user-socials-container > div#addLink:hover {
+                background: #8ec3b0;
+            }
+
+    .user-account-day__user-socials > .user-account-day__user-socials-input {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        max-width: 300px;
+        background: white;
+        border-radius: 24px;
+        border: 3px solid #8ec3b0;
+        padding: 4px;
+        font-size: 16px;
+    }
+
+        .user-account-day__user-socials > .user-account-day__user-socials-input > input {
+            position: relative;
+            width: 80%;
+            margin-left: 12px;
+            color: #8ec3b0;
+        }
+
+        .user-account-day__user-socials > .user-account-day__user-socials-input > .button {
+            margin: 0;
+            padding: 0 8px;
+            border-radius: 20px;
+        }
+
 .user-account-day__user-details-header {
     color: #183d3d;
     text-align: justify;

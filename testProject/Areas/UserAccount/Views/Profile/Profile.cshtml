@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
     <div class="user-account-day">
@@ -27,6 +27,21 @@
                     <div class="user-account-day__user-email">
                         <p>Email:</p>
                         <p>@Model.Email</p>
+                    </div>
+                    <div class="user-account-day__user-socials">
+                        <div class="user-account-day__user-socials-container">
+                            <h3 class="user-account-day__user-details-header">
+                                Social Media Links:
+                            </h3>
+                            <div>
+                                <i class="fa-brands fa-github"></i>
+                                <a href="https://github.com/bl1ndHarper/" target="_blank">github.com</a>
+                            </div>
+                            <div>
+                                <i class="fa fa-globe"></i>
+                                <a href="https://www.turbosquid.com/Search/Artists/Star-Shopper" target="_blank">turbosquid.com</a>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <h3 class="user-account-day__user-details-header">
@@ -124,5 +139,16 @@
             </div>
         </div>
     </div>
+    <script>
+        var descTextArea = document.getElementById("selfDescriptionText");
+        function auto_height(elem) {
+            elem.style.height = '1px';
+            elem.style.height = `${elem.scrollHeight}px`;
+        }
+
+        window.onload = function () {
+            auto_height(descTextArea);
+        }
+    </script>
 </body>
 </html>
