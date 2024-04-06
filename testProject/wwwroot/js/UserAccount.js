@@ -13,6 +13,10 @@ var userTechsArray = [];
 var updatedUserTechsArray = document.getElementById("updatedUserTechsArray");
 var modelTechsArray = [];
 var originalText;
+const userSocials = document.querySelector(".user-account-day__user-socials");
+const addSocialMediaLink = document.querySelector("#addLink");
+const addLinkInput = document.querySelector(".user-account-day__user-socials input");
+const addLinkContainer = addLinkInput.parentElement;
 
 function auto_height(elem) {
     elem.style.height = '1px';
@@ -36,6 +40,8 @@ function editProfile() {
     userImageContainer.classList.add("hover-active");
     userAccountTechnologies.classList.add("hover-active");
     addUserTechnology.classList.remove("hidden");
+    addSocialMediaLink.classList.remove("hidden");
+    userSocials.classList.add("editable");
 
     userImageContainer.addEventListener("click", imageButtonClickHandler);
 
@@ -58,6 +64,8 @@ function editProfile() {
         imageInput.onchange = null;
         stopEditingProfile();
     };
+
+    setUpLinks();
 }
 
 function stopEditingProfile() {
@@ -69,6 +77,9 @@ function stopEditingProfile() {
     userImageContainer.classList.remove("hover-active");
     userAccountTechnologies.classList.remove("hover-active");
     addUserTechnology.classList.add("hidden");
+    addSocialMediaLink.classList.add("hidden");
+    addLinkContainer.classList.add("hidden");
+    userSocials.classList.remove("editable");
 
     descTextArea.value = originalText;
 
@@ -195,4 +206,113 @@ function removeUserTech(element, techName) {
 
 function addUserTechToArray(techName) {
     userTechsArray.push(techName);
+}
+
+
+// social media links setup
+addSocialMediaLink.addEventListener("click", function () {
+    addLinkContainer.classList.toggle("hidden");
+});
+
+const socialsContainer = document.querySelector(".user-account-day__user-socials-container");
+const addSocialMediaButton = addLinkContainer.querySelector("button");
+setUpLinks();
+function setUpLinks() {
+    Array.from(socialsContainer.children).forEach(function (item) {
+        if (item.tagName == "DIV" && item.id != "addLink") {
+            if (userSocials.classList.contains("editable")) {
+                item.removeEventListener("click", allowOpenSocialMediaLink(item));
+                item.addEventListener("click", forbidOpenSocialMediaLink(item));
+                item.onclick = function (event) {
+                    event.preventDefault();
+                    item.remove();
+                };
+            } else {
+                item.removeEventListener("click", forbidOpenSocialMediaLink(item));
+                item.addEventListener("click", allowOpenSocialMediaLink(item));
+            }
+        }
+    });
+}
+
+function allowOpenSocialMediaLink(linkItem) {
+    var a = linkItem.querySelector("a");
+    a.style.pointerEvents = "auto";
+}
+function forbidOpenSocialMediaLink(linkItem) {
+    var a = linkItem.querySelector("a");
+    a.style.pointerEvents = "none";
+}
+addSocialMediaButton.addEventListener("click", function () {
+    addSocialMedia(addLinkInput.value);
+});
+function addSocialMedia(link) {
+    if (link.includes("http://") || link.includes("https://")) {
+        // the input string must be a link
+        if (limitLinksCount(5)) {
+            addLinkInput.value = "";
+            return;
+        }
+        const div = document.createElement("div");
+        const i = document.createElement("i");
+        const a = document.createElement("a");
+        const classes = assignFaClass(link).split(" ");
+        Array.from(classes).forEach(function(c) {
+            i.classList.add(c);
+        });
+        a.href = link;
+        a.target = "_blank"
+        a.textContent = extractRootDomain(link);
+        div.appendChild(i);
+        div.appendChild(a);
+        socialsContainer.insertChildAtIndex(div, socialsContainer.children.length - 1);
+        addLinkInput.value = "";
+        setUpLinks();
+    }
+}
+Element.prototype.insertChildAtIndex = function (child, index) {
+    if (!index) index = 0
+    if (index >= this.children.length) {
+        this.appendChild(child)
+    } else {
+        this.insertBefore(child, this.children[index])
+    }
+}
+function limitLinksCount(linksCount) {
+    if (socialsContainer.childElementCount-2 >= linksCount) {
+        alert("You can add up to " + linksCount + " social media links.")
+        return true;
+    }
+    return false;
+}
+const knownServices = [
+    { domain: "github", faClass: "fa-github" },
+    { domain: "linkedin", faClass: "fa-linkedin" },
+    { domain: "facebook", faClass: "fa-facebook-f" },
+    { domain: "twitter", faClass: "fa-twitter" },
+    { domain: "instagram", faClass: "fa-instagram" },
+    { domain: "discord", faClass: "fa-discord" },
+    { domain: "stackoverflow", faClass: "fa-stack-overflow" },
+    { domain: "medium", faClass: "fa-medium" },
+    { domain: "codepan", faClass: "fa-codepan" },
+    { domain: "telegram", faClass: "fa-telegram" },
+    { domain: "t.me", faClass: "fa-telegram" },
+    { domain: "pinterest", faClass: "fa-pinterest" },
+    { domain: "microsoft", faClass: "fa-microsoft" },
+    { domain: "messenger", faClass: "fa-facebook-messenger" },
+    { domain: "atlassian", faClass: "fa-atlassian" },
+    { domain: "trello", faClass: "fa-trello" },
+    { domain: "reddit", faClass: "fa-reddit" },
+    { domain: "patreon", faClass: "fa-patreon" },
+    { domain: "kickstarter", faClass: "fa-kickstarter-k" },
+    { domain: "jira", faClass: "fa-jira" }
+];
+function assignFaClass(link) {
+    const domain = extractRootDomain(link);
+    const service = knownServices.find(service => domain.includes(service.domain));
+    if (service) {
+        return "fa-brands " + service.faClass;
+    } else {
+        return "fa fa-globe";
+    }
 }
