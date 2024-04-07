@@ -1,5 +1,6 @@
 ﻿function validateAndSubmit() {
     const projectDescriptionInput = document.querySelector(".user-account-day__project-desc textarea");
+    const projectRepositoryLink = document.querySelector(".user-account-day__repository input");
     const projectTechsContainer = document.getElementById("newProjectTechnologies");
     const projectLevelInput = document.querySelector(".user-account-day__new-project-level-dropdown input");
 
@@ -7,6 +8,11 @@
 
     if (projectDescriptionInput.value.length < 12) {
         const tooltip = document.querySelector(".user-account-day__project-desc .user-account-day__tooltip");
+        tooltip.style.border = "3px dashed tomato";
+        tooltip.style.visibility = "visible";
+        setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000)
+    } else if (projectRepositoryLink.value !== "" && !isValidGithubUrl(projectRepositoryLink.value)) {
+        tooltip = document.querySelector(".user-account-day__repository .user-account-day__tooltip");
         tooltip.style.border = "3px dashed tomato";
         tooltip.style.visibility = "visible";
         setTimeout(() => { tooltip.style.visibility = "hidden" }, 3000)
@@ -26,6 +32,17 @@
                 createProjectForm.submit();
             }
 }
+
+function isValidGithubUrl(url) { 
+    var githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/;
+
+    if (githubRegex.test(url)) {
+        return true;
+    } else {
+        return false;
+    }
+}        
+    
 
 function showDetailed() {
     var createNewProject = document.getElementById("createNewProjectLayout");

@@ -633,7 +633,8 @@ user-account-day * {
         justify-content: center;
     }
 
-.user-account-day__project-description {
+.user-account-day__project-description,
+.user-account-day__repository {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -654,7 +655,8 @@ user-account-day * {
     align-self: flex-start;
 }
 
-.user-account-day__project-desc {
+.user-account-day__project-desc,
+.user-account-day__repository > div{
     background: #def5e5;
     border-radius: 12px;
     border-style: solid;
@@ -671,7 +673,8 @@ user-account-day * {
     position: relative;
 }
 
-    .user-account-day__project-desc textarea {
+    .user-account-day__project-desc textarea,
+    .user-account-day__repository-link-input {
         width: 100%;
         resize: none;
         outline: #183d3d;

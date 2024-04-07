@@ -199,8 +199,13 @@
                                                     <p>completed</p>
                                                 </div>
                                             }
+                                        </div>   
+                                    </div>
+                                    <div class="modal__repository">
+                                        <div>
+                                            <i class="fa-brands fa-github"></i>
+                                            <a>View on GitHub</a>
                                         </div>
-                                        
                                     </div>
                                     <div class="modal__body-subject">
                                         <h3>
@@ -243,6 +248,27 @@
                                         <p class="modal__text-expandable">@projectsUser.Projects.Description</p>
                                         <button id="buttonExpandDescription" class="button align-self-end">More</button>
                                     </div>
+
+
+                                    @if(Model.User.Id == @projectsUser.Projects.Users.Id)
+                                    {
+                                        <div class="modal__body-subject">
+                                            <h3>GitHub repository:</h3> 
+                                            <div class="modal__repository-container">
+                                                <input type="text" class="modal__repository-link-input" placeholder="Insert a link to the project's repository here">
+                                                <button class="button modal__repository-add-button">Add</button>
+                                                <span class="modal__tooltip hidden">Invalid GitHub link</span>
+                                            </div> 
+                                          
+                                               @* <div class="modal__repository-container">
+                                                    <input type="text" readonly class="modal__repository-link-input">
+                                                    <button class="button modal__repository-edit-button">Edit</button>
+                                                    <button class="button modal__repository-delete-button">Delete</button>
+                                                    <span class="modal__tooltip hidden">Invalid GitHub link</span>
+                                                  </div>  *@
+                                        </div>
+                                    }
+
                                     <div class="modal__body-subject modal__flex-row-item">
                                         <h3>Team:</h3>
                                         <div class="modal__user-item">
@@ -426,6 +452,13 @@
                                         placeholder="Write a description for your idea (up to 1024 characters)"
                                         oninput="auto_height(this)"></textarea>
                                 <span class="user-account-day__tooltip">Write a valid description!</span>
+                            </div>
+                        </div>
+                        <div class="user-account-day__repository">
+                            <h3>Add the GitHub repository (optionally):</h3> 
+                            <div>
+                                <input type="text" placeholder="Provide a link to the project's repository" class="user-account-day__repository-link-input">
+                                <span class="user-account-day__tooltip">Invalid GitHub link</span>
                             </div>
                         </div>
                         <div class="user-account-day__new-project-technologies-container">

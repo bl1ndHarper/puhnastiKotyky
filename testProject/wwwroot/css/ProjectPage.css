@@ -68,6 +68,26 @@
     z-index: 1;
 }
 
+.project__repository-link {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    gap: 4px;
+    background: transparent;
+    border-radius: 24px;
+    border: 3px solid #183d3d;
+    color: #183d3d;
+    padding: 4px 16px;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease-in-out .2s;
+}
+
+    .project__repository-link > a {
+        color: #183d3d;
+        pointer-events: auto;
+    }
+
     .project__header::before,
     .project__header::after {
         content: '';
