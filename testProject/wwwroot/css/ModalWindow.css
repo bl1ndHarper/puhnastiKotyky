@@ -184,7 +184,9 @@
 }
 
 .modal__header,
-.modal__body-subject {
+.modal__body-subject,
+.modal__repository,
+.modal__repository-container {
     width: 100%;
     height: fit-content;
     display: flex;
@@ -238,18 +240,61 @@
         margin: 4px;
     }
 
-.modal__tooltip {
-    visibility: hidden;
-    width: 120px;
-    background-color: #183d3dc6;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 4px 8px;
-    position: absolute;
-    z-index: 2;
-    top: 120%;
+.modal__repository {
+    margin: -40px 0px;
 }
+
+    .modal__repository > div {
+        display: flex;
+        flex-direction: row;
+        width: fit-content;
+        gap: 4px;
+        background: transparent;
+        border-radius: 24px;
+        border: 3px solid #183d3d;
+        color: #183d3d;
+        padding: 4px 16px;
+        align-items: center;
+        cursor: pointer;
+        transition: all ease-in-out .2s;
+    }
+
+    .modal__repository > div > a {
+        color: #183d3d;
+        pointer-events: auto;
+    }
+
+.modal__repository-container {
+    justify-content: start;
+    align-items: center;
+    gap: 6px;
+}    
+
+.modal__repository-link-input {
+    width: 60%;
+    resize: none;
+    background-color: #def5e5;
+    border: 1px solid #183d3d;
+    border-radius: 10px;
+    color: #183d3d;
+    font-family: "Fira Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 3px 8px;
+}
+
+    .modal__tooltip {
+        visibility: hidden;
+        width: 120px;
+        background-color: #183d3dc6;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 4px 8px;
+        position: absolute;
+        z-index: 2;
+        top: 120%;
+    }
 
     .modal__tooltip::after {
         content: "";

@@ -301,6 +301,130 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             }
         }
 
+        const repositoryContainer = currentModal.querySelector(".modal__repository-container");
+        const repositoryLinkInput = currentModal.querySelector(".modal__repository-link-input");
+        const addRepositoryButton = currentModal.querySelector(".modal__repository-add-button");
+        let initialLink = repositoryLinkInput.value; // this variable is used to undo changes when clicking the Cancel button
+
+        if (addRepositoryButton) {
+            addRepositoryButton.addEventListener('click', addRepository);
+        }
+
+        function addRepository() {
+            const repositoryLink = repositoryLinkInput.value;
+            initialLink = repositoryLink;
+
+            const addRepositoryButton = currentModal.querySelector(".modal__repository-add-button");
+            addRepositoryButton.remove();
+            repositoryLinkInput.readOnly = true;
+
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.classList.add("button", "modal__repository-edit-button");
+            repositoryContainer.appendChild(editButton);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("button", "modal__repository-delete-button");
+            repositoryContainer.appendChild(deleteButton);
+
+            editButton.addEventListener('click', editLink);
+            deleteButton.addEventListener('click', deleteLink);
+        }
+
+        const editRepositoryButton = currentModal.querySelector(".modal__repository-edit-button");
+        if (editRepositoryButton) { 
+            editRepositoryButton.addEventListener('click', editLink);
+        }
+
+        function editLink() {
+            const editRepositoryButton = currentModal.querySelector(".modal__repository-edit-button");
+            const deleteRepositoryButton = currentModal.querySelector(".modal__repository-delete-button");
+            editRepositoryButton.remove();
+            deleteRepositoryButton.remove();
+
+            repositoryLinkInput.readOnly = false;
+
+            const saveButton = document.createElement("button");
+            saveButton.textContent = "Save";
+            saveButton.classList.add("button", "modal__repository-save-button");
+            repositoryContainer.appendChild(saveButton);
+
+            const cancelButton = document.createElement("button");
+            cancelButton.textContent = "Cancel";
+            cancelButton.classList.add("button", "modal__repository-cancel-button");
+            repositoryContainer.appendChild(cancelButton);
+            saveButton.addEventListener('click', saveLink);
+            cancelButton.addEventListener('click', cancelLinkChanges);
+            repositoryLinkInput.focus();
+        }
+
+        const deleteRepositoryButton = currentModal.querySelector(".modal__repository-delete-button");
+        if (deleteRepositoryButton) {
+            deleteRepositoryButton.addEventListener('click', deleteLink);
+        }
+
+        function deleteLink() {
+            repositoryLinkInput.value = "";
+            repositoryLinkInput.readOnly = false;
+            const editRepositoryButton = currentModal.querySelector(".modal__repository-edit-button");
+            const deleteRepositoryButton = currentModal.querySelector(".modal__repository-delete-button");
+            editRepositoryButton.remove();
+            deleteRepositoryButton.remove();
+
+            const addButton = document.createElement("button");
+            addButton.textContent = "Add";
+            addButton.classList.add("button", "modal__repository-add-button");
+            repositoryContainer.appendChild(addButton);
+            addButton.addEventListener('click', addRepository);
+        }
+
+        function saveLink() {
+            const saveRepositoryButton = currentModal.querySelector(".modal__repository-save-button");
+            const cancelRepositoryButton = currentModal.querySelector(".modal__repository-cancel-button");
+            saveRepositoryButton.remove();
+            cancelRepositoryButton.remove();
+
+            repositoryLinkInput.readOnly = true;
+            initialLink = repositoryLinkInput.value;
+
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.classList.add("button", "modal__repository-edit-button");
+            repositoryContainer.appendChild(editButton);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("button", "modal__repository-delete-button");
+            repositoryContainer.appendChild(deleteButton);
+
+            editButton.addEventListener('click', editLink);
+            deleteButton.addEventListener('click', deleteLink);
+        }
+
+        function cancelLinkChanges() {
+            const saveRepositoryButton = currentModal.querySelector(".modal__repository-save-button");
+            const cancelRepositoryButton = currentModal.querySelector(".modal__repository-cancel-button");
+            saveRepositoryButton.remove();
+            cancelRepositoryButton.remove();
+
+            repositoryLinkInput.value = initialLink;
+            repositoryLinkInput.readOnly = true;
+
+            const editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.classList.add("button", "modal__repository-edit-button");
+            repositoryContainer.appendChild(editButton);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.classList.add("button", "modal__repository-delete-button");
+            repositoryContainer.appendChild(deleteButton);
+
+            editButton.addEventListener('click', editLink);
+            deleteButton.addEventListener('click', deleteLink);
+        }
+
         const deleteMemberButtons = currentModal.querySelectorAll(".modal__team-dropdown-items i");
         deleteMemberButtons.forEach(function (button) {
             deleteParticipant(button);
