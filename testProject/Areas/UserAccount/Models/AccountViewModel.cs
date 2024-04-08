@@ -8,5 +8,6 @@ namespace testProject.Areas.UserAccount.Models
         public Dictionary<uint, List<User>> ProjectParticipants { get; set; } = new Dictionary<uint, List<User>>();
         public IEnumerable<Technology> Technologies { get; set; }
         public IEnumerable<Request> Requests { get; set; }
+        public IEnumerable<SocialMedia> SocialMedias { get; set; }
     }
 }

@@ -34,19 +34,20 @@
                         <p>Email:</p>
                         <p>@Model.User.Email</p>
                     </div>
+                    <input type="text" class="hidden" name="newSocialMediasArray" id="newSocialMediasArray" />
+                    <input type="text" class="hidden" name="originalSocialMediasArray" id="originalSocialMediasArray" />
                     <div class="user-account-day__user-socials">
                         <div class="user-account-day__user-socials-container">
                             <h3 class="user-account-day__user-details-header">
                                 Social Media Links:
                             </h3>
-                            <div>
-                                <i class="fa-brands fa-github"></i>
-                                <a href="https://github.com/bl1ndHarper/" target="_blank">github.com</a>
-                            </div>
-                            <div>
-                                <i class="fa fa-globe"></i>
-                                <a href="https://www.turbosquid.com/Search/Artists/Star-Shopper" target="_blank">turbosquid.com</a>
-                            </div>
+                            @foreach (var socialMedia in Model.User.SocialMedias)
+                            {
+                                <div>
+                                    <i class=""></i>
+                                    <a href="@socialMedia.Url" target="_blank"></a>
+                                </div>
+                            }
                             <div class="hidden" id="addLink">
                                 <img src="~/images/plus-image0.png" />
                             </div>
@@ -655,11 +656,11 @@
                   fill="#DEF5E5" />
         </svg>
     </div>
+    <script src="@Url.Content("~/js/LinksHandler.js")"></script>
     <script src="@Url.Content("~/js/UserAccount.js")"></script>
     <script src="@Url.Content("~/js/CreateProject.js")"></script>
     <script src="@Url.Content("~/js/NumberInput.js")"></script>
     <script src="@Url.Content("~/js/ModalWindow.js")"></script>
-    <script src="@Url.Content("~/js/LinksHandler.js")"></script>
     <script>
         window.onload = function () {
             var userTechsInput = document.getElementById("userTechsInput");

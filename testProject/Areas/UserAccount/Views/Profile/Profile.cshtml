@@ -33,14 +33,13 @@
                             <h3 class="user-account-day__user-details-header">
                                 Social Media Links:
                             </h3>
-                            <div>
-                                <i class="fa-brands fa-github"></i>
-                                <a href="https://github.com/bl1ndHarper/" target="_blank">github.com</a>
-                            </div>
-                            <div>
-                                <i class="fa fa-globe"></i>
-                                <a href="https://www.turbosquid.com/Search/Artists/Star-Shopper" target="_blank">turbosquid.com</a>
-                            </div>
+                            @foreach (var socialMedia in Model.SocialMedias)
+                            {
+                                <div>
+                                    <i class=""></i>
+                                    <a href="@socialMedia.Url" target="_blank"></a>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div>
@@ -139,6 +138,7 @@
             </div>
         </div>
     </div>
+    <script src="@Url.Content("~/js/LinksHandler.js")"></script>
     <script>
         var descTextArea = document.getElementById("selfDescriptionText");
         function auto_height(elem) {
@@ -149,6 +149,17 @@
         window.onload = function () {
             auto_height(descTextArea);
         }
+
+        const socialsContainer = document.querySelector(".user-account-day__user-socials-container");
+        Array.from(socialsContainer.children).forEach(function (item) {
+            var i = item.querySelector("i");
+            var link = item.querySelector("a");
+            if (link != null && i != null) {
+                link.textContent = extractRootDomain(link.href);
+                link = link.href;
+                i.className = assignFaClass(link);
+            }
+        });
     </script>
 </body>
 </html>

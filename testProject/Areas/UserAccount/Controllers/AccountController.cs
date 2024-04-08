@@ -15,6 +15,7 @@ using testProject.Services;
 using testProject.Areas.UserAccount.Models;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
+using System.Security.Cryptography;
 
 namespace testProject.Areas.UserAccount.Controllers
 {
@@ -48,6 +49,7 @@ namespace testProject.Areas.UserAccount.Controllers
                 .ThenInclude(user => user.ProjectsTechnologies)
                 .ThenInclude(user => user.Technologies)
                 .Include(user => user.Projects)
+                .Include(user => user.SocialMedias)
                 .FirstOrDefault(u => u.Id.ToString() == userId);
 
             var tech = _db.Technologies.ToList();
@@ -77,11 +79,15 @@ namespace testProject.Areas.UserAccount.Controllers
 
         [Route("[controller]/[action]")]
         [HttpPost]
-        public ActionResult SaveUserChanges(IFormFile file, [FromServices] CloudinaryService cloudinaryService, string updatedDescription, string userTechsArray, string updatedUserTechsArray)
+        public ActionResult SaveUserChanges(IFormFile file, [FromServices] CloudinaryService cloudinaryService,
+            string updatedDescription,
+            string userTechsArray, string updatedUserTechsArray,
+            string newSocialMediasArray, string originalSocialMediasArray)
         {
             UpdateProfilePhoto(file, cloudinaryService);
             UpdateProfileDescription(updatedDescription);
             UpdateUserTechnologies(userTechsArray, updatedUserTechsArray);
+            UpdateSocialMediaLinks(newSocialMediasArray, originalSocialMediasArray);
 
             return RedirectToAction("Index");
         }
@@ -198,5 +204,50 @@ namespace testProject.Areas.UserAccount.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [Route("[controller]/[action]")]
+        [HttpPost]
+        public ActionResult UpdateSocialMediaLinks(string newArray, string originalArray)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+
+            string[] updatedSocialMedias = string.IsNullOrEmpty(newArray) ? new string[0] : newArray.Split(',');
+            string[] originalSocialMedias = string.IsNullOrEmpty(originalArray) ? new string[0] : originalArray.Split(',');
+
+            var uId = Convert.ToUInt32(userId);
+
+            if (user != null)
+            {
+
+                if (updatedSocialMedias.Any() || originalSocialMedias.Any())
+                {
+                    var addedItems = updatedSocialMedias.Except(originalSocialMedias);
+                    var deletedItems = originalSocialMedias.Except(updatedSocialMedias);
+
+                    foreach (var item in addedItems)
+                    {
+                        SocialMedia socialMedia = new SocialMedia { UsersId = uId, Url = item };
+                        _db.SocialMedias.Add(socialMedia);
+                        _db.SaveChanges();
+                    }
+
+                    foreach (var item in deletedItems)
+                    {
+                        var socialMedia = _db.SocialMedias
+                            .Where(sm => sm.UsersId == uId && sm.Url == item)
+                            .FirstOrDefault();
+
+                        if (socialMedia != null)
+                        {
+                            _db.SocialMedias.Remove(socialMedia);
+                        }
+                    }
+                }
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }

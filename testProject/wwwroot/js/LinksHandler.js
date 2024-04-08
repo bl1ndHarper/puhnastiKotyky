@@ -1,4 +1,27 @@
-﻿function extractHostname(url) {
+﻿const knownServices = [
+    { domain: "github", faClass: "fa-github" },
+    { domain: "linkedin", faClass: "fa-linkedin" },
+    { domain: "facebook", faClass: "fa-facebook-f" },
+    { domain: "twitter", faClass: "fa-twitter" },
+    { domain: "instagram", faClass: "fa-instagram" },
+    { domain: "discord", faClass: "fa-discord" },
+    { domain: "stackoverflow", faClass: "fa-stack-overflow" },
+    { domain: "medium", faClass: "fa-medium" },
+    { domain: "codepan", faClass: "fa-codepan" },
+    { domain: "telegram", faClass: "fa-telegram" },
+    { domain: "t.me", faClass: "fa-telegram" },
+    { domain: "pinterest", faClass: "fa-pinterest" },
+    { domain: "microsoft", faClass: "fa-microsoft" },
+    { domain: "messenger", faClass: "fa-facebook-messenger" },
+    { domain: "atlassian", faClass: "fa-atlassian" },
+    { domain: "trello", faClass: "fa-trello" },
+    { domain: "reddit", faClass: "fa-reddit" },
+    { domain: "patreon", faClass: "fa-patreon" },
+    { domain: "kickstarter", faClass: "fa-kickstarter-k" },
+    { domain: "jira", faClass: "fa-jira" }
+];
+
+function extractHostname(url) {
     var hostname;
     //find & remove protocol (http, ftp, etc.) and get hostname
 
@@ -16,8 +39,6 @@
     validateDomain(hostname);
     return hostname;
 }
-
-// Warning: you can use this function to extract the "root" domain, but it will not be as accurate as using the psl package.
 
 function extractRootDomain(url) {
     var domain = extractHostname(url),
@@ -55,3 +76,13 @@ const validateDomain = s => {
         return false;
     }
 };
+
+function assignFaClass(link) {
+    const domain = extractRootDomain(link);
+    const service = knownServices.find(service => domain.includes(service.domain));
+    if (service) {
+        return "fa-brands " + service.faClass;
+    } else {
+        return "fa fa-globe";
+    }
+}
