@@ -18,14 +18,15 @@ namespace testProject.Areas.UserAccount.Controllers
             _db = db;
         }
 
-        public ActionResult SaveNewProject(string projectName, string projectDescription, string projectLevel, int projectDuration, string projectTechnologies)
+        public ActionResult SaveNewProject(string projectName, string projectDescription, string projectLevel, int projectDuration, string projectTechnologies, string repositoryLink)
         {
             _db = new AppDbContext();
             var userId = Convert.ToUInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
+           
             Project project = new Project { Name = projectName, Description = projectDescription, 
                 UsersId = userId, CreationDate = DateTime.Now, 
-                Level = projectLevel, Duration = projectDuration, Status = "searching for participants"
+                Level = projectLevel, Duration = projectDuration, Status = "searching for participants",
+                Repository = repositoryLink
             };
             _db.Projects.Add(project);
             _db.SaveChanges();
@@ -179,6 +180,31 @@ namespace testProject.Areas.UserAccount.Controllers
             catch (Exception ex)
             {
                 return Json(new { success = false, message = "An error occurred while changing the status. Details: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditRepositoryLink(string projectId, string link)
+        {
+            try
+            {
+                _db = new AppDbContext();
+
+                var project = _db.Projects
+                        .Where(p => p.ProjectsId == Convert.ToUInt32(projectId))
+                        .FirstOrDefault();
+
+                if (project != null)
+                {
+                    project.Repository = link;
+                    _db.SaveChanges();
+                }
+
+                return Json(new { success = true, message = "Repository link for the project " + projectId + " successfully changed to " + link});
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while editing repository link. Details: " + ex.Message });
             }
         }
     }

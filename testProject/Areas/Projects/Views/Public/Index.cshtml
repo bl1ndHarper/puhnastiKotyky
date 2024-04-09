@@ -32,10 +32,13 @@
                     <i class="fa fa-calendar"></i>
                     <p>Creation date: @Model.Project.CreationDate.ToString("dd.MM.yyyy")</p>     
                 </div>
-                <div class="project__repository-link">
-                    <i class="fa fa-github"></i>
-                    <a>View on GitHub</a>
-                </div>
+                @if (!string.IsNullOrEmpty(@Model.Project.Repository))
+                {
+                    <div class="project__repository-link">
+                        <i class="fa fa-github"></i>
+                        <a href="@Model.Project.Repository" target="_blank">View on GitHub</a>
+                    </div>
+                }
             </div>
         </div>
         <div class="project__content">

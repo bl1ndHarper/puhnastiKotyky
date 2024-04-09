@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace testProject.Models;
 
@@ -20,6 +22,9 @@ public partial class Project
     public int Duration { get; set; }
 
     public string Status { get; set; } = null!;
+
+    [Column("repository", TypeName = "varchar(255)")]
+    public string? Repository { get; set; }
 
     public virtual ICollection<ProjectsTechnology> ProjectsTechnologies { get; set; } = new List<ProjectsTechnology>();
 
