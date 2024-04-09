@@ -34,6 +34,7 @@ namespace testProject.Areas.UserAccount.Controllers
                 .ThenInclude(user => user.ProjectsTechnologies)
                 .ThenInclude(user => user.Technologies)
                 .Include(user => user.Projects)
+                .Include(user => user.SocialMedias)
                 .FirstOrDefault(u => u.Id == id);
 
             return View(user);

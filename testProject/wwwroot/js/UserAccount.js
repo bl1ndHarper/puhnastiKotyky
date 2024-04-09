@@ -216,9 +216,21 @@ addSocialMediaLink.addEventListener("click", function () {
 
 const socialsContainer = document.querySelector(".user-account-day__user-socials-container");
 const addSocialMediaButton = addLinkContainer.querySelector("button");
+var originalLinksArray = [];
+var newLinksArray = [];
+
 setUpLinks();
+populateLinksArray();
+
 function setUpLinks() {
     Array.from(socialsContainer.children).forEach(function (item) {
+        var i = item.querySelector("i");
+        var link = item.querySelector("a");
+        if (link != null && i != null) {
+            link.textContent = extractRootDomain(link.href);
+            link = link.href;
+            i.className = assignFaClass(link);
+        }
         if (item.tagName == "DIV" && item.id != "addLink") {
             if (userSocials.classList.contains("editable")) {
                 item.removeEventListener("click", allowOpenSocialMediaLink(item));
@@ -226,6 +238,8 @@ function setUpLinks() {
                 item.onclick = function (event) {
                     event.preventDefault();
                     item.remove();
+                    newLinksArray.splice(newLinksArray.indexOf(item.querySelector("a").href), 1)
+                    document.getElementById("newSocialMediasArray").value = newLinksArray;
                 };
             } else {
                 item.removeEventListener("click", forbidOpenSocialMediaLink(item));
@@ -233,6 +247,18 @@ function setUpLinks() {
             }
         }
     });
+}
+
+function populateLinksArray() {
+    Array.from(socialsContainer.children).forEach(function (item) {
+        var link = item.querySelector("a");
+        if (link != null) {
+            originalLinksArray.push(link.href);
+            newLinksArray.push(link.href);
+        }
+    });
+    document.getElementById("originalSocialMediasArray").value = originalLinksArray;
+    document.getElementById("newSocialMediasArray").value = originalLinksArray;
 }
 
 function allowOpenSocialMediaLink(linkItem) {
@@ -247,9 +273,16 @@ addSocialMediaButton.addEventListener("click", function () {
     addSocialMedia(addLinkInput.value);
 });
 function addSocialMedia(link) {
-    if (link.includes("http://") || link.includes("https://")) {
-        // the input string must be a link
-        if (limitLinksCount(5)) {
+    if (validateDomain(extractRootDomain(link)) &&
+        link.includes("http://") || link.includes("https://")) { // the input string must be a link
+        const linksCount = 5;
+        if (limitLinksCount(linksCount)) {
+            alert("You can add up to " + linksCount + " social media links.")
+            addLinkInput.value = "";
+            return;
+        }
+        if (newLinksArray.includes(link)) {
+            alert("This link has already been added.");
             addLinkInput.value = "";
             return;
         }
@@ -257,7 +290,7 @@ function addSocialMedia(link) {
         const i = document.createElement("i");
         const a = document.createElement("a");
         const classes = assignFaClass(link).split(" ");
-        Array.from(classes).forEach(function(c) {
+        Array.from(classes).forEach(function (c) {
             i.classList.add(c);
         });
         a.href = link;
@@ -268,8 +301,13 @@ function addSocialMedia(link) {
         socialsContainer.insertChildAtIndex(div, socialsContainer.children.length - 1);
         addLinkInput.value = "";
         setUpLinks();
+        newLinksArray.push(link);
+        document.getElementById("newSocialMediasArray").value = newLinksArray;
+    } else {
+        alert("An error occurred validating the URL. Please, make sure your URL is valid and try again.")
     }
 }
+
 Element.prototype.insertChildAtIndex = function (child, index) {
     if (!index) index = 0
     if (index >= this.children.length) {
@@ -280,39 +318,7 @@ Element.prototype.insertChildAtIndex = function (child, index) {
 }
 function limitLinksCount(linksCount) {
     if (socialsContainer.childElementCount-2 >= linksCount) {
-        alert("You can add up to " + linksCount + " social media links.")
         return true;
     }
     return false;
-}
-const knownServices = [
-    { domain: "github", faClass: "fa-github" },
-    { domain: "linkedin", faClass: "fa-linkedin" },
-    { domain: "facebook", faClass: "fa-facebook-f" },
-    { domain: "twitter", faClass: "fa-twitter" },
-    { domain: "instagram", faClass: "fa-instagram" },
-    { domain: "discord", faClass: "fa-discord" },
-    { domain: "stackoverflow", faClass: "fa-stack-overflow" },
-    { domain: "medium", faClass: "fa-medium" },
-    { domain: "codepan", faClass: "fa-codepan" },
-    { domain: "telegram", faClass: "fa-telegram" },
-    { domain: "t.me", faClass: "fa-telegram" },
-    { domain: "pinterest", faClass: "fa-pinterest" },
-    { domain: "microsoft", faClass: "fa-microsoft" },
-    { domain: "messenger", faClass: "fa-facebook-messenger" },
-    { domain: "atlassian", faClass: "fa-atlassian" },
-    { domain: "trello", faClass: "fa-trello" },
-    { domain: "reddit", faClass: "fa-reddit" },
-    { domain: "patreon", faClass: "fa-patreon" },
-    { domain: "kickstarter", faClass: "fa-kickstarter-k" },
-    { domain: "jira", faClass: "fa-jira" }
-];
-function assignFaClass(link) {
-    const domain = extractRootDomain(link);
-    const service = knownServices.find(service => domain.includes(service.domain));
-    if (service) {
-        return "fa-brands " + service.faClass;
-    } else {
-        return "fa fa-globe";
-    }
 }
