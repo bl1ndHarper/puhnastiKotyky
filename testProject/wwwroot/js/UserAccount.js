@@ -258,6 +258,7 @@ function populateLinksArray() {
         }
     });
     document.getElementById("originalSocialMediasArray").value = originalLinksArray;
+    document.getElementById("newSocialMediasArray").value = originalLinksArray;
 }
 
 function allowOpenSocialMediaLink(linkItem) {

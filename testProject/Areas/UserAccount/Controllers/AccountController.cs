@@ -209,22 +209,21 @@ namespace testProject.Areas.UserAccount.Controllers
         [HttpPost]
         public ActionResult UpdateSocialMediaLinks(string newArray, string originalArray)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
-
-            string[] updatedSocialMedias = string.IsNullOrEmpty(newArray) ? new string[0] : newArray.Split(',');
-            string[] originalSocialMedias = string.IsNullOrEmpty(originalArray) ? new string[0] : originalArray.Split(',');
-
-            var uId = Convert.ToUInt32(userId);
-
-            if (user != null)
+            if (newArray != originalArray)
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = _db.Users.FirstOrDefault(u => u.Id.ToString() == userId);
 
-                if (updatedSocialMedias.Any() || originalSocialMedias.Any())
+                string[] updatedSocialMedias = string.IsNullOrEmpty(newArray) ? new string[0] : newArray.Split(',');
+                string[] originalSocialMedias = string.IsNullOrEmpty(originalArray) ? new string[0] : originalArray.Split(',');
+
+                var addedItems = updatedSocialMedias.Except(originalSocialMedias);
+                var deletedItems = originalSocialMedias.Except(updatedSocialMedias);
+
+                var uId = Convert.ToUInt32(userId);
+
+                if (user != null)
                 {
-                    var addedItems = updatedSocialMedias.Except(originalSocialMedias);
-                    var deletedItems = originalSocialMedias.Except(updatedSocialMedias);
-
                     foreach (var item in addedItems)
                     {
                         SocialMedia socialMedia = new SocialMedia { UsersId = uId, Url = item };
@@ -243,8 +242,8 @@ namespace testProject.Areas.UserAccount.Controllers
                             _db.SocialMedias.Remove(socialMedia);
                         }
                     }
+                    _db.SaveChanges();
                 }
-                _db.SaveChanges();
             }
             return RedirectToAction("Index");
         }
