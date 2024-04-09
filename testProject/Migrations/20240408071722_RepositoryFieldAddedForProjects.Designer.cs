@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using testProject.Data;
 
@@ -10,9 +11,11 @@ using testProject.Data;
 namespace testProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408071722_RepositoryFieldAddedForProjects")]
+    partial class RepositoryFieldAddedForProjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -371,30 +374,6 @@ namespace testProject.Migrations
                     b.ToTable("requests", (string)null);
                 });
 
-            modelBuilder.Entity("testProject.Models.SocialMedia", b =>
-                {
-                    b.Property<uint>("SocialMediasId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("social_medias_id");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("url");
-
-                    b.Property<uint>("UsersId")
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("users_id");
-
-                    b.HasKey("SocialMediasId")
-                        .HasName("PRIMARY");
-
-                    b.HasIndex(new[] { "UsersId" }, "social_medias_users_id_foreign");
-
-                    b.ToTable("social_medias", (string)null);
-                });
-
             modelBuilder.Entity("testProject.Models.Technology", b =>
                 {
                     b.Property<uint>("TechnologiesId")
@@ -603,17 +582,6 @@ namespace testProject.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("testProject.Models.SocialMedia", b =>
-                {
-                    b.HasOne("testProject.Models.User", "User")
-                        .WithMany("SocialMedias")
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("testProject.Models.UsersTechnology", b =>
                 {
                     b.HasOne("testProject.Models.Technology", "Technologies")
@@ -663,8 +631,6 @@ namespace testProject.Migrations
                     b.Navigation("ProjectsUser");
 
                     b.Navigation("Requests");
-
-                    b.Navigation("SocialMedias");
 
                     b.Navigation("UsersTechnologies");
                 });

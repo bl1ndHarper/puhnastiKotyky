@@ -307,37 +307,58 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
         let initialLink = repositoryLinkInput.value; // this variable is used to undo changes when clicking the Cancel button
 
         if (addRepositoryButton) {
-            addRepositoryButton.addEventListener('click', addRepository);
+            addRepositoryButton.addEventListener('click', addRepositoryLink);
         }
 
-        function addRepository() {
-            const repositoryLink = repositoryLinkInput.value;
-            initialLink = repositoryLink;
+        function addRepositoryLink() {
+            if (isValidGithubUrl(repositoryLinkInput.value)) {
+                changeRepositoryLink(repositoryLinkInput.value);
+                const repositoryLink = repositoryLinkInput.value;
+                initialLink = repositoryLink;
 
-            const addRepositoryButton = currentModal.querySelector(".modal__repository-add-button");
-            addRepositoryButton.remove();
-            repositoryLinkInput.readOnly = true;
+                const addRepositoryButton = currentModal.querySelector(".modal__repository-add-button");
+                addRepositoryButton.remove();
+                repositoryLinkInput.readOnly = true;
 
-            const editButton = document.createElement("button");
-            editButton.textContent = "Edit";
-            editButton.classList.add("button", "modal__repository-edit-button");
-            repositoryContainer.appendChild(editButton);
+                const editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+                editButton.classList.add("button", "modal__repository-edit-button");
+                repositoryContainer.appendChild(editButton);
 
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
-            deleteButton.classList.add("button", "modal__repository-delete-button");
-            repositoryContainer.appendChild(deleteButton);
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.classList.add("button", "modal__repository-delete-button");
+                repositoryContainer.appendChild(deleteButton);
 
-            editButton.addEventListener('click', editLink);
-            deleteButton.addEventListener('click', deleteLink);
+                // create the "View on GitHub" button
+                const repositoryDiv = document.createElement("div");
+                repositoryDiv.classList.add("modal__repository");
+                const divElement = document.createElement("div");
+                const icon = document.createElement("i");
+                icon.classList.add("fa-brands", "fa-github");
+                const link = document.createElement("a");
+                link.href = repositoryLinkInput.value;
+                link.target = "_blank";
+                link.textContent = "View on GitHub";
+                repositoryDiv.appendChild(divElement);
+                divElement.appendChild(icon);
+                icon.after(link);
+                const projectStatus = currentModal.querySelector(".modal__project-status");
+                projectStatus.after(repositoryDiv);
+
+                editButton.addEventListener('click', editRepositoryLink);
+                deleteButton.addEventListener('click', deleteRepositoryLink);
+            } else {
+                alert("An error occurred validating the URL. Please, make sure your URL is valid and try again.");
+            }
         }
 
         const editRepositoryButton = currentModal.querySelector(".modal__repository-edit-button");
         if (editRepositoryButton) { 
-            editRepositoryButton.addEventListener('click', editLink);
+            editRepositoryButton.addEventListener('click', editRepositoryLink);
         }
 
-        function editLink() {
+        function editRepositoryLink() {
             const editRepositoryButton = currentModal.querySelector(".modal__repository-edit-button");
             const deleteRepositoryButton = currentModal.querySelector(".modal__repository-delete-button");
             editRepositoryButton.remove();
@@ -354,52 +375,34 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             cancelButton.textContent = "Cancel";
             cancelButton.classList.add("button", "modal__repository-cancel-button");
             repositoryContainer.appendChild(cancelButton);
-            saveButton.addEventListener('click', saveLink);
+            saveButton.addEventListener('click', saveRepositoryLink);
             cancelButton.addEventListener('click', cancelLinkChanges);
             repositoryLinkInput.focus();
         }
 
         const deleteRepositoryButton = currentModal.querySelector(".modal__repository-delete-button");
         if (deleteRepositoryButton) {
-            deleteRepositoryButton.addEventListener('click', deleteLink);
+            deleteRepositoryButton.addEventListener('click', deleteRepositoryLink);
         }
 
-        function deleteLink() {
+        function deleteRepositoryLink() {
+            changeRepositoryLink(null);
             repositoryLinkInput.value = "";
+            repositoryLinkInput.placeholder = "Insert a link to the project's repository here";
             repositoryLinkInput.readOnly = false;
             const editRepositoryButton = currentModal.querySelector(".modal__repository-edit-button");
             const deleteRepositoryButton = currentModal.querySelector(".modal__repository-delete-button");
             editRepositoryButton.remove();
             deleteRepositoryButton.remove();
 
+            const repositoryDiv = currentModal.querySelector(".modal__repository");
+            repositoryDiv.remove();
+            
             const addButton = document.createElement("button");
             addButton.textContent = "Add";
             addButton.classList.add("button", "modal__repository-add-button");
             repositoryContainer.appendChild(addButton);
-            addButton.addEventListener('click', addRepository);
-        }
-
-        function saveLink() {
-            const saveRepositoryButton = currentModal.querySelector(".modal__repository-save-button");
-            const cancelRepositoryButton = currentModal.querySelector(".modal__repository-cancel-button");
-            saveRepositoryButton.remove();
-            cancelRepositoryButton.remove();
-
-            repositoryLinkInput.readOnly = true;
-            initialLink = repositoryLinkInput.value;
-
-            const editButton = document.createElement("button");
-            editButton.textContent = "Edit";
-            editButton.classList.add("button", "modal__repository-edit-button");
-            repositoryContainer.appendChild(editButton);
-
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
-            deleteButton.classList.add("button", "modal__repository-delete-button");
-            repositoryContainer.appendChild(deleteButton);
-
-            editButton.addEventListener('click', editLink);
-            deleteButton.addEventListener('click', deleteLink);
+            addButton.addEventListener('click', addRepositoryLink);
         }
 
         function cancelLinkChanges() {
@@ -421,8 +424,76 @@ document.querySelectorAll('.user-account-day__user-projects .modal__open-button'
             deleteButton.classList.add("button", "modal__repository-delete-button");
             repositoryContainer.appendChild(deleteButton);
 
-            editButton.addEventListener('click', editLink);
-            deleteButton.addEventListener('click', deleteLink);
+            editButton.addEventListener('click', editRepositoryLink);
+            deleteButton.addEventListener('click', deleteRepositoryLink);
+        }
+
+        const saveRepositoryButton = currentModal.querySelector(".modal__repository-save-button");
+        if (saveRepositoryButton) {
+            saveRepositoryButton.addEventListener('click', saveRepositoryLink);
+        }
+
+        function saveRepositoryLink() {
+            if (isValidGithubUrl(repositoryLinkInput.value)) {
+                changeRepositoryLink(repositoryLinkInput.value);
+                const saveRepositoryButton = currentModal.querySelector(".modal__repository-save-button");
+                const cancelRepositoryButton = currentModal.querySelector(".modal__repository-cancel-button");
+                saveRepositoryButton.remove();
+                cancelRepositoryButton.remove();
+
+                const repositoryLink = currentModal.querySelector(".modal__repository a");
+                repositoryLink.href = repositoryLinkInput.value;
+                repositoryLinkInput.readOnly = true;
+                initialLink = repositoryLinkInput.value;
+
+                const editButton = document.createElement("button");
+                editButton.textContent = "Edit";
+                editButton.classList.add("button", "modal__repository-edit-button");
+                repositoryContainer.appendChild(editButton);
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.classList.add("button", "modal__repository-delete-button");
+                repositoryContainer.appendChild(deleteButton);
+
+                editButton.addEventListener('click', editRepositoryLink);
+                deleteButton.addEventListener('click', deleteRepositoryLink);
+            } else {
+                alert("An error occurred validating the URL. Please, make sure your URL is valid and try again.");
+            }
+        }
+
+        function isValidGithubUrl(url) {
+            var githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/;
+
+            if (githubRegex.test(url)) {
+                return true;
+            } else {
+                return false;
+            }
+        } 
+
+        function changeRepositoryLink(link) {
+            const projectId = repositoryLinkInput.getAttribute('data-projectId');
+
+            $.ajax({
+                url: '/Account/Projects/EditRepositoryLink',
+                type: 'POST',
+                data: {
+                    projectId: projectId,
+                    link: link
+                },
+                success: function (data) {
+                    if (data.success) {
+                        console.log('Projects/EditRepositoryLink executed successfully. Message: ' + data.message);                        
+                    } else {
+                        console.error('An error occured while executing Projects/EditRepositoryLink: ', data.message);
+                    }
+                },
+                error: function (error) {
+                    console.error('An error occured while ajax-calling Projects/EditRepositoryLink: ', error);
+                }
+            });
         }
 
         const deleteMemberButtons = currentModal.querySelectorAll(".modal__team-dropdown-items i");

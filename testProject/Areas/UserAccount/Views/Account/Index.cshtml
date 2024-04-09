@@ -202,12 +202,15 @@
                                             }
                                         </div>   
                                     </div>
-                                    <div class="modal__repository">
-                                        <div>
-                                            <i class="fa-brands fa-github"></i>
-                                            <a>View on GitHub</a>
+                                    @if (!string.IsNullOrEmpty(@projectsUser.Projects.Repository))
+                                    {
+                                        <div class="modal__repository">
+                                            <div>
+                                                <i class="fa-brands fa-github"></i>
+                                                <a href="@projectsUser.Projects.Repository" target="_blank">View on GitHub</a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                     <div class="modal__body-subject">
                                         <h3>
                                             Technologies:
@@ -254,19 +257,21 @@
                                     @if(Model.User.Id == @projectsUser.Projects.Users.Id)
                                     {
                                         <div class="modal__body-subject">
-                                            <h3>GitHub repository:</h3> 
+                                            <h3>GitHub repository:</h3>
+                                        @if(string.IsNullOrEmpty(@projectsUser.Projects.Repository)){ 
                                             <div class="modal__repository-container">
-                                                <input type="text" class="modal__repository-link-input" placeholder="Insert a link to the project's repository here">
+                                                <input type="text" class="modal__repository-link-input" placeholder="Insert a link to the project's repository here"
+                                                data-projectId="@projectsUser.Projects.ProjectsId">
                                                 <button class="button modal__repository-add-button">Add</button>
-                                                <span class="modal__tooltip hidden">Invalid GitHub link</span>
                                             </div> 
-                                          
-                                               @* <div class="modal__repository-container">
-                                                    <input type="text" readonly class="modal__repository-link-input">
-                                                    <button class="button modal__repository-edit-button">Edit</button>
-                                                    <button class="button modal__repository-delete-button">Delete</button>
-                                                    <span class="modal__tooltip hidden">Invalid GitHub link</span>
-                                                  </div>  *@
+                                        } else {
+                                            <div class="modal__repository-container">
+                                                <input type="text" readonly class="modal__repository-link-input"
+                                                data-projectId="@projectsUser.Projects.ProjectsId" value="@projectsUser.Projects.Repository">
+                                                <button class="button modal__repository-edit-button">Edit</button>
+                                                <button class="button modal__repository-delete-button">Delete</button>
+                                            </div>
+                                        }                                               
                                         </div>
                                     }
 
@@ -458,7 +463,7 @@
                         <div class="user-account-day__repository">
                             <h3>Add the GitHub repository (optionally):</h3> 
                             <div>
-                                <input type="text" placeholder="Provide a link to the project's repository" class="user-account-day__repository-link-input">
+                                <input name="repositoryLink" type="text" placeholder="Provide a link to the project's repository" class="user-account-day__repository-link-input">
                                 <span class="user-account-day__tooltip">Invalid GitHub link</span>
                             </div>
                         </div>
