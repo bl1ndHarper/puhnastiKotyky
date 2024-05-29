@@ -21,11 +21,13 @@ namespace testProject.Areas.Identity.Pages.Account
     {
         private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly EmailService _emailService;
 
-        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<User> userManager, IEmailSender emailSender, EmailService emailService)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _emailService = emailService;
         }
 
         /// <summary>
@@ -72,23 +74,11 @@ namespace testProject.Areas.Identity.Pages.Account
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-                var config = builder.Build();
-                var smtpSettings = config.GetSection("Smtp");
-
-                var emailService = new EmailService(
-                    smtpSettings["Host"],
-                    int.Parse(config["Smtp:Port"]),
-                    smtpSettings["Username"],
-                    smtpSettings["Password"]
-                    );
-
                 var emailTemplate = System.IO.File.ReadAllText("Views/EmailTemplates/PasswordRecovery.html");
                 emailTemplate = emailTemplate.Replace("{passwordResetLink}", callbackUrl);
                 emailTemplate = emailTemplate.Replace("{userName}", user.FirstName);
                 var emailBody = emailTemplate;
-
-                emailService.SendConfirmationEmail(user.Email, "Password Recovery", emailBody);
+                _emailService.SendConfirmationEmail(user.Email, "Password Recovery", emailBody);
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

@@ -13,15 +13,17 @@ using System.ComponentModel;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.Extensions.DependencyInjection;
 
+DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.Services.AddAuthentication()
     .AddGoogle(googleOptions =>
     {
-        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-        googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+        googleOptions.ClientId = Environment.GetEnvironmentVariable("GOOGLE_CLIENTID");
+        googleOptions.ClientSecret = Environment.GetEnvironmentVariable("GOOGLE_CLIENTSECRET");
         googleOptions.AuthorizationEndpoint = string.Concat(googleOptions.AuthorizationEndpoint, "?prompt=select_account");
 
         googleOptions.Events.OnRemoteFailure = (context) =>
@@ -33,8 +35,8 @@ builder.Services.AddAuthentication()
     })
     .AddOAuth("GitHub", options =>
     {
-        options.ClientId = configuration["Authentication:GitHub:ClientId"];
-        options.ClientSecret = configuration["Authentication:GitHub:ClientSecret"];
+        options.ClientId = Environment.GetEnvironmentVariable("GITHUB_CLIENTID");
+        options.ClientSecret = Environment.GetEnvironmentVariable("GITHUB_CLIENTSECRET");
         options.CallbackPath = new PathString("/signin-github");
         options.AuthorizationEndpoint = "https://github.com/login/oauth/authorize";
         options.TokenEndpoint = "https://github.com/login/oauth/access_token";
@@ -73,16 +75,31 @@ builder.Services.AddAuthentication()
         };
     });
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string is not found");
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRINGS_DEFAULTCONNECTION");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new Exception("Connection string not found. Ensure the .env file is correctly configured and placed in the root directory.");
+}
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<CloudinaryService>();
-builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.Configure<CloudinarySettings>(options =>
+{
+    options.CloudName = Environment.GetEnvironmentVariable("CLOUDINARY_CLOUDNAME");
+    options.ApiKey = Environment.GetEnvironmentVariable("CLOUDINARY_APIKEY");
+    options.ApiSecret = Environment.GetEnvironmentVariable("CLOUDINARY_APISECRET");
+});
+
+var smtpHost = Environment.GetEnvironmentVariable("SMTP_HOST");
+var smtpPort = int.Parse(Environment.GetEnvironmentVariable("SMTP_PORT"));
+var smtpUsername = Environment.GetEnvironmentVariable("SMTP_USERNAME");
+var smtpPassword = Environment.GetEnvironmentVariable("SMTP_PASSWORD");
+builder.Services.AddSingleton(new EmailService(smtpHost, smtpPort, smtpUsername, smtpPassword));
 
 builder.Services.AddSignalR();
 

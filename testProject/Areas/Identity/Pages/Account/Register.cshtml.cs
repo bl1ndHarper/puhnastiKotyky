@@ -31,13 +31,15 @@ namespace testProject.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly EmailService _emailService;
+
 
         public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, EmailService emailService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,6 +47,7 @@ namespace testProject.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _emailService = emailService;
         }
 
         /// <summary>
@@ -146,21 +149,10 @@ namespace testProject.Areas.Identity.Pages.Account
                     /*Sending Confirmation Email here*/
                     try
                     {
-                        var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
-                        var config = builder.Build();
-                        var smtpSettings = config.GetSection("Smtp");
-
-                        var emailService = new EmailService(
-                            smtpSettings["Host"],
-                            int.Parse(config["Smtp:Port"]),
-                            smtpSettings["Username"],
-                            smtpSettings["Password"]
-                            );
-
                         var emailTemplate = System.IO.File.ReadAllText("Views/EmailTemplates/EmailConfirm.html");
                         var emailBody = emailTemplate.Replace("{activationLink}", callbackUrl);
 
-                        emailService.SendConfirmationEmail(user.Email, "Email confirmation", emailBody);
+                        _emailService.SendConfirmationEmail(user.Email, "Email confirmation", emailBody);
 
                         //await _signInManager.SignInAsync(user, isPersistent: false);
                         //return LocalRedirect(returnUrl);
