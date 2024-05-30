@@ -195,12 +195,9 @@ namespace testProject.Areas.UserAccount.Controllers
             {
                 string safeUserEmail = user.Email.Replace('@', '_').Replace('.', '_');
 
-                if (file == null)
-                {
                     cloudinaryService.DeleteImage("PuhnastiKotyky/UsersProfileImages/" + safeUserEmail);
                     user.Photo = "https://res.cloudinary.com/dsjlfcky6/image/upload/v1703186888/PuhnastiKotyky/UsersProfileImages/gtidxkjrk4qns1dh0iya.png";
                     _db.SaveChanges();
-                }
             }
             return RedirectToAction("Index");
         }
