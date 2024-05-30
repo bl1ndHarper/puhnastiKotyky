@@ -99,12 +99,24 @@ function deleteUserImage() {
 
     if (clickCounter == 2) {
         userImage.src = "/images/default-profile-icon (1).png";
+
+        fetch('/images/default-profile-icon (1).png')
+            .then(response => response.blob())
+            .then(blob => {
+                const file = new File([blob], 'default-profile-icon.png', {
+                    type: 'image/png',
+                });
+
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                imageInput.files = dataTransfer.files;
+            })
+            .catch(error => {
+                console.error('An error occurred while loading profile image: ', error);
+            });
+
         changeUserImageText.innerHTML = "Click to change";
         clickCounter = 0;
-
-        $(function () {
-            $.post("DeleteProfilePhoto", "Account");
-        });
     }
     else {
         setTimeout(function () {
