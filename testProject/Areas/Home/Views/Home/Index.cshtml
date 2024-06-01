@@ -19,7 +19,7 @@
                 <h2>Explore existing community projects</h2>
                 <div class="home__catalog-filters">
                     <div class="home__catalog-filters-header">
-                        <h3>Filter projects list</h3>
+                        <h3>Filters</h3>
                         <i class="arrow down"></i>
                     </div>
                     <input class="hidden" id="complexity" />
@@ -85,6 +85,9 @@
             {
                 <h2>Projects for you (based on your skills)</h2>
             }
+            <div class="home__carousel">
+                <button class="carousel__button carousel__button--left"><i class="fa fa-arrow-left"></i></button>
+                <div class="home__recommendations-cards-container">
                 <div class="home__recommendations-cards">
                     @{
                     var projectsCount = projects.Count() < 10 ? projects.Count() : 10;
@@ -131,7 +134,10 @@
                               class="button">Open</a>
                         </div>
                     </div>
-                }
+                        }
+                    </div>
+                </div>
+                <button class="carousel__button carousel__button--right"><i class="fa fa-arrow-right"></i></button>
             </div>      
         </div>
         <partial name="_ToProjectCreationPartial" />

@@ -3,7 +3,7 @@
 .home,
 .welcome-page {
     width: 100%;
-    height: calc(100% - 70px);
+    height: calc(100vh - 70px);
     position: fixed;
     left: 0;
     background: #def5e5;
@@ -54,7 +54,7 @@
     width: 100%;
     height: fit-content;
     padding: 12px 44px;
-    background: linear-gradient(270deg, #def5e5 1px, #ffffff00 10px), linear-gradient(180deg, #DEF5E5 0%, #9ED5C5 100%), linear-gradient(90deg, #DEF5E5 0%, #9ED5C5 50.5%, #DEF5E5 100%);
+    background: linear-gradient(270deg, #def5e5 1px, #ffffff00 5em), linear-gradient(180deg, #DEF5E5 0%, #9ED5C5 100%), linear-gradient(90deg, #DEF5E5 0%, #9ED5C5 50.5%, #DEF5E5 100%);
 }
 
 .home__catalog-header {
@@ -86,6 +86,7 @@
         background: #DEF5E5;
         z-index: 2;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        transition: all ease-in-out .2s;
     }
 
         .home__catalog-header .home__catalog-filters .technologies {
@@ -234,6 +235,8 @@
     border-radius: 16px;
     border: 1px solid #183D3D;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    scroll-snap-align: center;
+    flex: 0 0 auto;
 }
 
     .home__card div {
@@ -354,11 +357,11 @@
 
     .home__catalog-pagination .home__catalog-pagination-chosen-page {
         background-color: #BCEAD5 !important;
-    }   
+    }
 
 .home__recommendations {
     width: 100%;
-    padding: 44px 44px 0 44px;
+    padding: 0 8px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -367,6 +370,7 @@
     .home__recommendations h2 {
         font-size: 40px;
         font-weight: 600;
+        padding: 44px 44px 0 44px;
     }
 
     .home__recommendations .home__recommendations-cards {
@@ -376,6 +380,7 @@
         flex-wrap: wrap;
         height: 320px;
         overflow: auto hidden;
+        scroll-snap-type: x mandatory;
     }
 
 .home__no-projects-found {
@@ -559,3 +564,211 @@
         max-width: 1000px;
         text-align: center;
     }
+
+.home__carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.carousel__button {
+    position: absolute;
+    background: radial-gradient(circle, #8EC3B0 20%, rgba(255,255,255,0) 100%);
+    color: white;
+    padding: 20px 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+    .carousel__button:hover {
+        opacity: 1;
+    }
+
+.carousel__button--left {
+    left: 0;
+}
+
+.carousel__button--right {
+    right: 0;
+}
+
+@media (max-width: 600px) {
+    .home__banner > h1 {
+        font-size: 28px;
+        width: 90%;
+        left: 5%;
+        margin-top: 2vh;
+        margin-bottom: 25vh;
+    }
+
+    .home__banner > h2 {
+        font-size: 24px;
+        width: 90%;
+        right: 5%;
+        margin-top: 25vh;
+        margin-bottom: 2vh;
+    }
+
+    .home__catalog-header {
+        padding: 2vh 4vw;
+    }
+
+    .home__catalog-header h2 {
+        font-size: 24px;
+        width: 70vw;
+    }
+
+    .home__catalog-header .home__catalog-filters {
+        right: 1vw;
+        max-width: 95vw;
+    }
+
+    .home__catalog-header .home__catalog-filters-header h3 {
+        font-size: 20px;
+        content: "Filters";
+    }
+
+        .home__catalog-filters:has(.home__catalog-filter:not(.hidden)) {
+            transform: translateY(70px);
+        }
+
+    .home__recommendations {
+        gap: 0;
+    }
+
+    .home__recommendations .home__recommendations-cards {
+        height: 370px;
+        gap: 20px;
+        padding: 0 10vw;
+        margin: 0 4px;
+        scroll-behavior: smooth;
+        overflow: scroll hidden;
+        justify-content: center;
+    }
+
+    .home__card .home__technologies {
+        flex-wrap: wrap;
+    }
+
+    .home__card {
+        height: fit-content;
+        margin-left: 2vw;
+        min-width: calc(100vw - 50px);
+        width: calc(100vw - 50px);
+    }
+        .home__card h3 {
+            font-size: 20px;
+        }
+
+        .home__card h4 {
+            font-size: 16px;
+        }
+
+    .home__recommendations {
+        padding: 2vh 0 2vh 0;
+    }
+
+        .home__recommendations h2 {
+            font-size: 24px;
+            text-align: center;
+        }
+
+    .project__alt {
+        padding: 0 !important;
+        margin: 0 0 10vh 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+        .home__carousel .home__card {
+            min-width: calc(90vw - 50px);
+            max-width: calc(90vw - 50px);
+        }
+
+    .home__recommendations-cards-container {
+        overflow: hidden;
+        flex: 1;
+    }
+
+    .welcome-page h1 {
+        font-size: 32px;
+        width: 80%;
+    }
+
+    .welcome-page__register-link-segment h1 {
+        text-align: center;
+    }
+
+    .welcome-page h2 {
+        font-size: 24px;
+    }
+
+    .welcome-page__feature-segment {
+        flex-direction: column !important;
+        gap: 28px;
+    }
+
+        .welcome-page__feature-segment > h2 {
+            width: 100%;
+            text-align: center !important;
+        }
+
+    .welcome-page__card-example-segment > .welcome-page__card-example-content {
+        justify-content: normal;
+        gap: 0;
+    }
+
+    .welcome-page__card-example-segment > .welcome-page__card-example-content > .welcome-page__card-example-desc {
+        max-width: 80vw;
+        transform: translateX(calc(45vw - 50%));
+    }
+
+    .welcome-page__card-example-segment > .welcome-page__card-example-content > .welcome-page__card-example-desc > p {
+        font-size: 16px;
+    }
+
+    .welcome-page__register-link-segment {
+        margin-bottom: 80px;
+    }
+
+    .welcome-page__register-link-segment p {
+        font-size: 16px;
+        width: 80vw
+    }
+
+    .help-page hr,
+    .welcome-page hr {
+        color: #183d3d;
+        transform: translateX(50%);
+        width: 50%;
+        height: 8px;
+        border-top: 1px solid #183d3d;
+        border-bottom: 1px solid #183d3d;
+        opacity: 1;
+        margin: 0;
+        background: transparent;
+    }
+
+    .separator-clouds-wide {
+        width: calc(100vw - 70px);
+        gap: -2px;
+    }
+
+        .separator-clouds-wide > *:nth-child(2n) {
+            height: 50px;
+        }
+
+        .separator-clouds-wide > div {
+            width: calc(100% / 2);
+            height: 12px;
+            margin-top: 14px;
+        }
+
+            .separator-clouds-wide > div > * {
+                width: 100%;
+            }
+}
