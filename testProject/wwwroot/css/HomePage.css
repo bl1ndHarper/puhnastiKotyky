@@ -25,7 +25,7 @@
 }
 
     .home__banner > h1 {
-        font-size: 56px;
+        font-size: clamp(28px, 5vw, 56px);
         width: 70%;
         position: relative;
         top: 5%;
@@ -36,7 +36,7 @@
     }
 
     .home__banner > h2 {
-        font-size: 42px;
+        font-size: clamp(24px, 3.5vw, 42px);
         width: 50%;
         position: relative;
         bottom: 5%;
@@ -66,7 +66,7 @@
 }
 
     .home__catalog-header h2 {
-        font-size: 40px;
+        font-size: clamp(20px, 3vw, 40px);
         font-weight: 600;
         width: calc(100% - 330px);
     }
@@ -98,7 +98,7 @@
         }
 
             .home__catalog-header .home__catalog-filters .technologies p {
-                font-size: 14px;
+                font-size: clamp(12px, 1.5vw, 14px);
                 background: #BCEAD5;
                 padding: 4px 8px;
                 border-radius: 8px;
@@ -120,7 +120,7 @@
     }
 
         .home__catalog-header .home__catalog-filters-header h3 {
-            font-size: 24px;
+            font-size: clamp(16px, 2.5vw, 24px);
             font-style: normal;
             font-weight: 600;
         }
@@ -165,7 +165,7 @@
                 }
 
                 .home__catalog-filter .home__catalog-filter-search .button {
-                    font-size: 12px;
+                    font-size: clamp(10px, 1.5vw, 12px);
                     margin: 0;
                     padding: 0 12px;
                     color: #183d3d;
@@ -178,7 +178,7 @@
                     left: 0;
                     right: 60px;
                     border: none;
-                    font-size: 16px;
+                    font-size: clamp(14px, 2vw, 16px);
                     border-radius: 0 0 8px 8px;
                     box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
                 }
@@ -187,15 +187,15 @@
                         background-color: #9ED5C5;
                     }
 
-        .home__catalog-header .home__catalog-filter p,
-        .home__catalog-header .home__catalog-filter div {
-            font-size: 16px;
-            font-weight: 400;
-            background: #BCEAD5;
-            border: 1px solid #183d3d;
-            padding: 8px;
-            cursor: pointer;
-        }
+.home__catalog-header .home__catalog-filter p,
+.home__catalog-header .home__catalog-filter div {
+    font-size: clamp(12px, 2vw, 16px);
+    font-weight: 400;
+    background: #BCEAD5;
+    border: 1px solid #183d3d;
+    padding: 8px;
+    cursor: pointer;
+}
 
             .home__catalog-header .home__catalog-filter p:first-child,
             .home__catalog-header .home__catalog-filter div:first-child {
@@ -269,12 +269,12 @@
         width: 100%;
         font-weight: 700;
         text-align: center;
-        font-size: 24px;
+        font-size: clamp(18px, 2vw, 24px);
     }
 
     .home__card h4 {
         font-weight: 600;
-        font-size: 20px;
+        font-size: clamp(16px, 2.5vw, 20px);
     }
 
 .home__card > div:has(.home__technologies) {
@@ -292,16 +292,16 @@
 
 .home__technologies_technology_name {
     font-weight: 500;
-    font-size: 14px;
+    font-size: clamp(12px, 1.5vw, 14px);
     border-radius: 12px;
     border: 2px solid #BCEAD5;
     background: #DEF5E5;
     padding: 4px 8px;
-}    
+}
 
 .home__technologies_and_more {
     font-weight: 500;
-    font-size: 14px;
+    font-size: clamp(12px, 1.5vw, 14px);
 }
 
 .home__catalog-filters-buttons {
@@ -343,7 +343,7 @@
     }
 
     .home__catalog-pagination > li:not(.arrow) {
-        font-size: 16px;
+        font-size: clamp(12px, 1.5vw, 16px);
         font-weight: 600;
         border-radius: 8px;
         background: transparent;
@@ -368,7 +368,7 @@
 }
 
     .home__recommendations h2 {
-        font-size: 40px;
+        font-size: clamp(24px, 3vw, 40px);
         font-weight: 600;
         padding: 44px 44px 0 44px;
     }
@@ -389,7 +389,7 @@
     color: #183d3d;
     width: 100%;
     margin: 65px auto;
-    font-size: 18px;
+    font-size: clamp(16px, 2.5vw, 18px);
     line-height: 1.5;
 }
 
@@ -414,12 +414,12 @@
 }
 
 .welcome-page h1 {
-    font-size: 56px;
+    font-size: clamp(32px, 5vw, 56px);
     font-weight: 700;
 }
 
 .welcome-page h2 {
-    font-size: 48px;
+    font-size: clamp(24px, 4vw, 48px);
     font-weight: 600;
 }
 
@@ -474,7 +474,7 @@
         flex-direction: row;
         align-items: center;
         gap: 12px;
-        font-size: 20px;
+        font-size: clamp(16px, 2.5vw, 20px);
         font-weight: 500;
         cursor: pointer;
     }
@@ -541,7 +541,7 @@
         }
 
             .welcome-page__card-example-segment > .welcome-page__card-example-content > .welcome-page__card-example-desc > p {
-                font-size: 24px;
+                font-size: clamp(18px, 2.5vw, 24px);
                 font-weight: 600;
             }
 
@@ -558,7 +558,7 @@
 }
 
     .welcome-page__register-link-segment p {
-        font-size: 20px;
+        font-size: clamp(16px, 2vw, 20px);
         font-weight: 500;
         width: 70%;
         max-width: 1000px;
@@ -578,7 +578,7 @@
     padding: 20px 6px;
     border: none;
     cursor: pointer;
-    font-size: 24px;
+    font-size: clamp(18px, 2.5vw, 24px);
     opacity: 0.8;
     z-index: 1;
 }
