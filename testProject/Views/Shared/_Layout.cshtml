@@ -30,6 +30,9 @@
                 <span aria-hidden="true" class="fa fa-bars hidden"></span>
             </div>
             <ul class="navbar__tabs">
+                <li class="navbar__login-container-mobile hidden">
+                    <partial name="_LoginPartial" for="@Model" />
+                </li>
                 <li class="navbar__tab-item">
                     <i class="fa fa-home"></i>
                     <a asp-area="Home" asp-controller="Home" asp-action="Index">Home</a>
@@ -49,7 +52,9 @@
                     <a asp-area="Help" asp-controller="Help" asp-action="Index">Help</a>
                 </li>
             </ul>
-            <partial name="_LoginPartial" for="@Model" />
+            <div class="navbar__login-container-regular">
+                <partial name="_LoginPartial" for="@Model" />
+            </div>
         </nav>
     </header>
     <div class="container">
@@ -117,5 +122,6 @@
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/navbar.js"></script>
 </body>
 </html>

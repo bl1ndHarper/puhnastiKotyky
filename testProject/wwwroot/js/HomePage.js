@@ -320,3 +320,25 @@ applyFiltersButton.onclick = function () {
     loadProjects(1, level, minDuration, maxDuration, selectedTechnologies);
     showPageNumbers(1, level, minDuration, maxDuration, selectedTechnologies);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.querySelector('.home__recommendations-cards');
+    const leftButton = document.querySelector('.carousel__button--left');
+    const rightButton = document.querySelector('.carousel__button--right');
+    const cards = document.querySelectorAll('.home__card');
+    let cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(cards[0]).marginRight);
+
+    leftButton.addEventListener('click', function () {
+        container.scrollBy({
+            left: -cardWidth,
+            behavior: 'smooth'
+        });
+    });
+
+    rightButton.addEventListener('click', function () {
+        container.scrollBy({
+            left: cardWidth,
+            behavior: 'smooth'
+        });
+    });
+});

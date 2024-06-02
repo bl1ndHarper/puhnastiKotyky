@@ -136,7 +136,7 @@
                 text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
             }
 
-    .navbar__container > .navbar__auth {
+    .navbar__auth {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -145,63 +145,63 @@
         align-items: flex-end;
     }
 
-        .navbar__container > .navbar__auth > .navbar__auth-authenticated,
-        .navbar__container > .navbar__auth > .navbar__auth-anonimous {
-            height: 100%;
-            width: fit-content;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
+    .navbar__auth > .navbar__auth-authenticated,
+    .navbar__auth > .navbar__auth-anonimous {
+        height: 100%;
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+    }
+
+        .navbar__auth > .navbar__auth-authenticated > p,
+        .navbar__auth > .navbar__auth-anonimous > a,
+        .navbar__auth > .navbar__auth-logout-button > button {
+            color: #183d3d;
+            font: 700 20px "Fira Sans";
         }
 
-            .navbar__container > .navbar__auth > .navbar__auth-authenticated > p,
-            .navbar__container > .navbar__auth > .navbar__auth-anonimous > a,
-            .navbar__container > .navbar__auth > .navbar__auth-logout-button > button {
-                color: #183d3d;
-                font: 700 20px "Fira Sans";
-            }
 
+        .navbar__auth > .navbar__auth-anonimous > a {
+            font: 600 18px "Fira Sans";
+        }
 
-            .navbar__container > .navbar__auth > .navbar__auth-anonimous > a {
-                font: 600 18px "Fira Sans";
-            }
-
-        .navbar__container > .navbar__auth > .navbar__auth-anonimous > a,
-        .navbar__container > .navbar__auth > .navbar__auth-logout-button > button {
+        .navbar__auth > .navbar__auth-anonimous > a,
+        .navbar__auth > .navbar__auth-logout-button > button {
             text-decoration: underline;
         }
 
-            .navbar__container > .navbar__auth > .navbar__auth-logout-button > button {
-                display: block;
-                font: 500 16px "Fira Sans";
-                height: 100%;
-            }
+    .navbar__auth > .navbar__auth-logout-button > button {
+        display: block;
+        font: 500 16px "Fira Sans";
+        height: 100%;
+    }
 
-            .navbar__container > .navbar__auth > .navbar__auth-authenticated > img {
-                height: 85%;
-                border-radius: 50%;
-                border: 2px solid #183d3d;
-            }
+    .navbar__auth > .navbar__auth-authenticated > img {
+        height: 85%;
+        border-radius: 50%;
+        border: 2px solid #183d3d;
+    }
 
-        .navbar__container > .navbar__auth > .navbar__auth-logout-button {
-            display: none;
-            height: fit-content;
-            width: fit-content;
-            padding: 20px 8px;
-            background: #8EC3B0;
-            text-align: center;
-            vertical-align: middle;
-            box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
-            cursor: pointer;
-            z-index: 3;
+    .navbar__auth > .navbar__auth-logout-button {
+        display: none;
+        height: fit-content;
+        width: fit-content;
+        padding: 20px 8px;
+        background: #8EC3B0;
+        text-align: center;
+        vertical-align: middle;
+        box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+        z-index: 3;
+    }
+
+        .navbar__auth > .navbar__auth-authenticated:hover + .navbar__auth-logout-button,
+        .navbar__auth > .navbar__auth-logout-button:hover {
+            display: block;
         }
-
-            .navbar__container > .navbar__auth > .navbar__auth-authenticated:hover + .navbar__auth-logout-button,
-            .navbar__container > .navbar__auth > .navbar__auth-logout-button:hover {
-                display: block;
-            }
 
 .notification-circle {
     position: absolute;
@@ -223,4 +223,75 @@
 .navbar__tab-item i.fa-bell {
     position: relative;
     margin-right: 4px;
+}
+
+@media (max-width: 600px) {
+
+    .navbar__container > .navbar__tabs {
+        width: 100vw;
+    }
+        .navbar__container > .navbar__tabs > .navbar__tab-item {
+            justify-content: center;
+        }
+
+    .navbar__container > .navbar__branding {
+        width: 100%;
+    }
+    .navbar__container > .navbar__branding > span {
+        border: none;
+        margin-left: auto;
+    }
+
+    .navbar__auth {
+        width: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #BCEAD5;
+        border: 1px solid #183d3d;
+        border-radius: 8px;
+        margin: 8px;
+        box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .navbar__auth > .navbar__auth-authenticated {
+        flex-direction: row-reverse;
+        padding: 4px 8px;
+    }
+    .navbar__auth > .navbar__auth-authenticated > img {
+        height: 40px;
+    }
+
+    .navbar__auth > .navbar__auth-logout-button {
+        display: block;
+        padding: 4px 8px;
+        margin: 8px;
+        border-radius: 8px;
+    }
+
+        .navbar__auth > .navbar__auth-anonimous-user {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+            margin: 0 8px;
+        }
+
+        .navbar__auth > .navbar__auth-anonimous-user > i {
+            font-size: 28px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            border: 2px solid #183d3d;
+        }
+
+        .navbar__auth > .navbar__auth-anonimous-user > p {
+            font-size: 20px;
+        }
+
+        .navbar__auth > .navbar__auth-anonimous > a {
+            font-size: 16px;
+            padding: 2px 8px;
+            background-color: #8EC3B0;
+            border-radius: 8px;
+        }
 }

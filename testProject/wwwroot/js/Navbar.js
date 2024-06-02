@@ -1,4 +1,7 @@
-﻿const tabs = document.querySelectorAll(".navbar__tab-item");
+﻿var mediaIsNarrow = window.matchMedia("(max-width: 600px)");
+const loginPartialRegular = document.querySelector(".navbar__login-container-regular");
+const loginPartialMobile = document.querySelector(".navbar__login-container-mobile");
+const tabs = document.querySelectorAll(".navbar__tab-item");
 
 var currentPage = window.location.pathname;
 if (currentPage.search("Account") != -1) {
@@ -12,6 +15,30 @@ else if (currentPage.search("Help") != -1) {
 }
 else if (currentPage == "/" || currentPage.search("Welcome") != -1) {
     Array.from(tabs).at(0).style.background = "#8EC3B0";
+}
+
+function getMediaIsNarrow() {
+    mediaIsNarrow = window.matchMedia("(max-width: 600px)").matches;
+    return mediaIsNarrow;
+}
+
+function handleMediaResult() {
+    const user = loginPartialMobile.querySelector(".navbar__auth-anonimous-user");
+    if (getMediaIsNarrow()) {
+        // media returns true, window width is less than 600px
+        loginPartialRegular.classList.add("hidden");
+        loginPartialMobile.classList.remove("hidden");
+        if (user != null) {
+            user.classList.remove("hidden");
+        }
+    } else {
+        // media returns true, window width is less than 600px
+        loginPartialRegular.classList.remove("hidden");
+        loginPartialMobile.classList.add("hidden");
+        if (user != null) {
+            user.classList.add("hidden");
+        }
+    }
 }
 
 function showLoggedOutToast() {
@@ -29,8 +56,14 @@ const collapsibleButton = document.querySelector(".navbar__branding").querySelec
 const tabsContainer = document.querySelector(".navbar__tabs");
 const navbarContainer = document.querySelector(".navbar__container");
 
-window.addEventListener('load', checkFlexGap);
-window.addEventListener('resize', checkFlexGap);
+window.addEventListener('load', function () {
+    handleMediaResult();
+    checkFlexGap();
+});
+window.addEventListener('resize', function () {
+    handleMediaResult();
+    checkFlexGap();
+});
 function checkFlexGap() {
     var containerWidth = navbarContainer.offsetWidth;
     var childrenWidth = 0;
@@ -41,7 +74,7 @@ function checkFlexGap() {
 
     var gap = containerWidth - childrenWidth;
 
-    if (collapsibleButton.classList.contains('hidden')) {
+    if (collapsibleButton.classList.contains('hidden') || getMediaIsNarrow()) {
         if (gap < 0) {
             tabsContainer.classList.add('collapsed');
             tabsContainer.classList.add('hidden');
