@@ -381,6 +381,7 @@
         height: 320px;
         overflow: auto hidden;
         scroll-snap-type: x mandatory;
+        align-items: center;
     }
 
 .home__no-projects-found {
@@ -571,6 +572,11 @@
     align-items: center;
 }
 
+.home__recommendations-cards-container {
+    overflow: auto;
+    flex: 1;
+}
+
 .carousel__button {
     position: absolute;
     background: radial-gradient(circle, #8EC3B0 20%, rgba(255,255,255,0) 100%);
@@ -688,11 +694,6 @@
             min-width: calc(90vw - 50px);
             max-width: calc(90vw - 50px);
         }
-
-    .home__recommendations-cards-container {
-        overflow: hidden;
-        flex: 1;
-    }
 
     .welcome-page h1 {
         font-size: 32px;

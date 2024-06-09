@@ -18,6 +18,13 @@
             <p></p>
         </div>
         <div class="project__header">
+            @if (!string.IsNullOrEmpty(@Model.Project.Repository))
+            {
+                <div class="project__repository-link mobile hidden">
+                    <i class="fa fa-github"></i>
+                    <a href="@Model.Project.Repository" target="_blank">View on GitHub</a>
+                </div>
+            }
             <h1>@Model.Project.Name</h1>  
             <div class="project__header-info">
                 <div>
@@ -57,8 +64,7 @@
             </div>
             <div class="project__actions">
                 <div>
-                    <i class="fa fa-info"></i>
-                    <h3>Status: <span>@Model.Project.Status</span></h3>
+                    <h3><i class="fa fa-info"></i>Status: <span>@Model.Project.Status</span></h3>
                 </div>
                 <div class="project__actions-buttons">
                     <button onclick="createNewRequest(@Model.Project.ProjectsId)">
@@ -101,7 +107,7 @@
             </div>
         </div>
         <partial name="_ToProjectCreationPartial" />
-        <svg class="user-account-day__color-mode-switch"
+        <svg class="user-account-day__color-mode-switch hidden"
              width="112"
              height="112"
              viewBox="0 0 112 112"

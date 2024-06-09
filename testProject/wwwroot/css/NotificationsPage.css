@@ -16,7 +16,7 @@
 
     .notifications__body h1 {
         margin-top: 40px;
-        font: 600 36px "Fira Sans";
+        font: 600 clamp(28px, 5vw, 36px) "Fira Sans";
         color: #183d3d;
         text-align: center;
     }
@@ -39,7 +39,7 @@
     }
 
     .notifications__header h1 {
-        font: 600 32px "Fira Sans";
+        font: 600 clamp(24px, 2.5vw, 32px) "Fira Sans";
         margin: 0;
     }
 
@@ -61,19 +61,19 @@
 
     .notifications__notification-item p {
         margin: 8px 0;
-        font: 400 16px "Fira Sans";
+        font: 400 clamp(14px, 2vw, 16px) "Fira Sans";
         color: #183d3d;
         text-align: justify;
     }
 
     .notifications__notification-item a {
-        font: 400 16px "Fira Sans";
+        font: 400 clamp(14px, 2vw, 16px) "Fira Sans";
         color: #183d3d;
         font-style: italic;
     }
 
     .notifications__notification-item button {
-        font: 400 16px "Fira Sans";
+        font: 400 clamp(14px, 2vw, 16px) "Fira Sans";
         padding: 4px 8px;
         color: #183d3d;
         align-self: flex-end;
@@ -92,7 +92,7 @@
 }
 
     .notifications__notification-item-header h3 {
-        font: 700 20px "Fira Sans";
+        font: 700 clamp(16px, 3vw, 20px) "Fira Sans";
     }
 
         .notifications__notification-item-header .modal__close-button {
@@ -105,3 +105,25 @@
                 width: 12px;
                 height: 2px;
             }
+
+@media (max-width: 600px) {
+    .notifications__body {
+        padding: 2vh 5vw;
+    }
+
+        .notifications__body h1 {
+            font-size: 28px;
+        }
+
+        .notifications__header h1 {
+            font-size: 24px;
+        }
+
+    .notifications__notification-item p {
+        font-size: 14px;
+    }
+
+    .notifications__notification-item-header h3 {
+        font-size: 16px;
+    }
+}
