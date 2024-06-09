@@ -321,12 +321,27 @@ applyFiltersButton.onclick = function () {
     showPageNumbers(1, level, minDuration, maxDuration, selectedTechnologies);
 }
 
+// suggested projects carousel behavior
 document.addEventListener('DOMContentLoaded', function () {
     const container = document.querySelector('.home__recommendations-cards');
     const leftButton = document.querySelector('.carousel__button--left');
     const rightButton = document.querySelector('.carousel__button--right');
     const cards = document.querySelectorAll('.home__card');
     let cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(cards[0]).marginRight);
+
+    window.onresize = function() {
+        if (container.scrollWidth > window.innerWidth - 36) {
+            if (leftButton.classList.contains("hidden")) {
+                leftButton.classList.remove("hidden");
+                rightButton.classList.remove("hidden");
+            }
+        } else {
+            if (!leftButton.classList.contains("hidden")) {
+                leftButton.classList.add("hidden");
+                rightButton.classList.add("hidden");
+            }
+        }
+    }
 
     leftButton.addEventListener('click', function () {
         container.scrollBy({

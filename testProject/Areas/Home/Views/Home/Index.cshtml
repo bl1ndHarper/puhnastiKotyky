@@ -88,52 +88,52 @@
             <div class="home__carousel">
                 <button class="carousel__button carousel__button--left"><i class="fa fa-arrow-left"></i></button>
                 <div class="home__recommendations-cards-container">
-                <div class="home__recommendations-cards">
-                    @{
-                    var projectsCount = projects.Count() < 10 ? projects.Count() : 10;
-                    }
-                    @for (int i = 0; i < projectsCount; i++)
-                    {
-                    <div class="home__card">
-                        <div><h3>@projects.ElementAt(i).Name</h3></div>
-                        <div>
-                            <h4>Technologies:</h4>
-                            <div class="home__technologies">
-                                @{
-                                    var technologiesCount = projects.ElementAt(i).ProjectsTechnologies.Count() < 5 ? projects.ElementAt(i).ProjectsTechnologies.Count() : 5;
-                                }
-
-                                @for (var j = 0; j < technologiesCount; j++)
-                                {
-                                    <p class="home__technologies_technology_name">@projects.ElementAt(i).ProjectsTechnologies.ElementAt(j).Technologies.Name</p>
-                                }
-                                @if ((@projects.ElementAt(i).ProjectsTechnologies.Count() - 5) > 0)
-                                    {
-                                    <p class="home__technologies_and_more">and @(projects.ElementAt(i).ProjectsTechnologies.Count() - 5) more</p>
+                    <div class="home__recommendations-cards">
+                        @{
+                        var projectsCount = projects.Count() < 10 ? projects.Count() : 10;
+                        }
+                        @for (int i = 0; i < projectsCount; i++)
+                        {
+                        <div class="home__card">
+                            <div><h3>@projects.ElementAt(i).Name</h3></div>
+                            <div>
+                                <h4>Technologies:</h4>
+                                <div class="home__technologies">
+                                    @{
+                                        var technologiesCount = projects.ElementAt(i).ProjectsTechnologies.Count() < 5 ? projects.ElementAt(i).ProjectsTechnologies.Count() : 5;
                                     }
-                                </div>
+
+                                    @for (var j = 0; j < technologiesCount; j++)
+                                    {
+                                        <p class="home__technologies_technology_name">@projects.ElementAt(i).ProjectsTechnologies.ElementAt(j).Technologies.Name</p>
+                                    }
+                                    @if ((@projects.ElementAt(i).ProjectsTechnologies.Count() - 5) > 0)
+                                        {
+                                        <p class="home__technologies_and_more">and @(projects.ElementAt(i).ProjectsTechnologies.Count() - 5) more</p>
+                                        }
+                                    </div>
+                            </div>
+                            <div>
+                                <h4>Complexity:</h4>
+                                <p>@projects.ElementAt(i).Level</p>
+                            </div>
+                            <div>
+                                <h4>Time:</h4>
+                                <p>@projects.ElementAt(i).Duration weeks</p>
+                            </div>
+                            <div>
+                                <h4>Created:</h4>
+                                <p>@projects.ElementAt(i).CreationDate.ToString("dd.MM.yyyy")</p>
+                            </div>
+                            <div class="description">
+                                <h4>Description:</h4>
+                                <p>@projects.ElementAt(i).Description</p>
+                            </div>
+                            <div>
+                                <a href="@Url.Action("Index", "Public", new {area = "Projects", id=@projects.ElementAt(i).ProjectsId })"
+                                  class="button">Open</a>
+                            </div>
                         </div>
-                        <div>
-                            <h4>Complexity:</h4>
-                            <p>@projects.ElementAt(i).Level</p>
-                        </div>
-                        <div>
-                            <h4>Time:</h4>
-                            <p>@projects.ElementAt(i).Duration weeks</p>
-                        </div>
-                        <div>
-                            <h4>Created:</h4>
-                            <p>@projects.ElementAt(i).CreationDate.ToString("dd.MM.yyyy")</p>
-                        </div>
-                        <div class="description">
-                            <h4>Description:</h4>
-                            <p>@projects.ElementAt(i).Description</p>
-                        </div>
-                        <div>
-                            <a href="@Url.Action("Index", "Public", new {area = "Projects", id=@projects.ElementAt(i).ProjectsId })"
-                              class="button">Open</a>
-                        </div>
-                    </div>
                         }
                     </div>
                 </div>

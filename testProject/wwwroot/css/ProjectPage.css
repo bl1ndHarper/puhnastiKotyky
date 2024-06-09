@@ -116,22 +116,22 @@
     }
 }
 
-    .project__header h1 {
-        font: 600 56px "Fira Sans";
-        height: 50px;
-        transition: all ease-in-out .3s;
-    }
+.project__header h1 {
+    font: 600 clamp(32px, 4vw, 56px) "Fira Sans";
+    height: fit-content;
+    transition: all ease-in-out .3s;
+}
 
-    .project__header .project__header-info {
-        margin-right: 20%;
-        font: 500 20px "Fira Sans";
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 8px 80px;
-    }
+.project__header .project__header-info {
+    margin-right: 20%;
+    font: 500 clamp(16px, 4vw, 20px) "Fira Sans";
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px 80px;
+}
 
         .project__header .project__header-info div,
         .project__actions button {
@@ -190,44 +190,44 @@
     gap: 12px;
 }
 
-.project__technologies h2,
-.project__description h2,
-.project__team h2 {
-    font: 700 20px "Fira Sans";
-}
-
-    .project__description p {
-        text-align: justify;
-        font: 400 16px "Fira Sans";
+    .project__technologies h2,
+    .project__description h2,
+    .project__team h2 {
+        font: 700 clamp(16px, 4vw, 20px) "Fira Sans";
     }
 
+.project__description p {
+    text-align: justify;
+    font: 400 clamp(14px, 3.8vw, 16px) "Fira Sans";
+}
+
 .project__technologies div,
-.project__actions div {
+.project__actions div,
+.project__actions div h3 {
     color: #183d3d;
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
     gap: 12px;
 }
 
-.project__actions div {
-    width: max-content;
-    align-items: center;
-}
+    .project__actions div {
+        padding: 0 12px;
+    }
 
 .project__actions .project__actions-buttons {
     flex-wrap: nowrap;
 }
 
-        .project__technologies div p {
-            background: #DEF5E5;
-            border-radius: 12px;
-            border: 2px solid #bcead5;
-            font: 500 16px "Fira Sans";
-            padding: 8px;
-        }
+.project__technologies div p {
+    background: #DEF5E5;
+    border-radius: 12px;
+    border: 2px solid #bcead5;
+    font: 500 clamp(14px, 3.8vw, 16px) "Fira Sans";
+    padding: 8px;
+}
 
 .project__actions .project__actions-buttons button {
     background: #BCEAD5;
@@ -240,7 +240,7 @@
 
     .project__actions .project__actions-buttons button i {
         border: none;
-        font-size: 20px;
+        font-size: clamp(16px, 4vw, 20px);
         color: #183d3d;
         width: 24px;
         height: 24px;
@@ -268,9 +268,9 @@
     font-size: 12px;
 }
 
-    .project__actions h3 {
-        font: 500 20px "Fira Sans";
-    }
+.project__actions h3 {
+    font: 500 clamp(16px, 4vw, 20px) "Fira Sans";
+}
 
 .project__team .project__team-dropdown {
     background: #def5e5;
@@ -328,3 +328,153 @@
         text-decoration: underline;
         cursor: pointer;
     }
+
+@media (max-width: 600px) {
+    .project__content {
+        width: 85%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 50px 0;
+    }
+
+    .project__header {
+        height: 220px;
+        max-height: 220px;
+        min-height: 220px;
+        padding: 52px 3vw 12px 3vw;
+        top: -100px;
+    }
+        .project__header h1 {
+            font-size: 28px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .project__header .project__header-info {
+            font-size: 16px;
+            flex-direction: row-reverse;
+            margin-right: 0;
+            z-index: 1;
+        }
+
+        .project__header .project__repository-link {
+            position: absolute;
+            top: 28px;
+            right: 12px;
+            z-index: 1;
+            padding: 4px 8px;
+            animation: appear 1s linear;
+            margin: -20px -8px;
+            overflow: hidden;
+        }
+
+            .project__header .project__repository-link::before {
+                animation: appear 1s linear;
+                background-color: rgb(255, 255, 255, .3);
+                content: '';
+                backdrop-filter: blur(8px);
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                z-index: -1;
+            }
+
+            .project__header .project__repository-link a {
+                font-size: 14px;
+            }
+
+            .project__header .project__repository-link i {
+                font-size: 20px;
+            }
+
+            .fixed-bottom {
+                position: fixed !important;
+                top: auto !important;
+                bottom: 40px;
+                left: auto;
+                right: 32px !important;
+            }
+
+    @keyframes appear {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .project__header .project__header-info div {
+        flex-direction: row-reverse;
+    }
+
+    .project__technologies,
+    .project__description,
+    .project__actions,
+    .project__team {
+        padding: 8px;
+    }
+
+        .project__technologies h2,
+        .project__description h2,
+        .project__actions h2,
+        .project__team h2 {
+            font-size: 16px;
+        }
+
+    .project__technologies div {
+        gap: 8px;
+    }
+
+        .project__technologies div p {
+            font-size: 14px;
+        }
+
+    .project__description p {
+        font-size: 14px;
+    }
+
+    .project__actions, .project__team {
+        width: 100%;
+        height: fit-content;
+    }
+
+        .project__actions h3 {
+            font-size: 16px;
+        }
+
+        .project__actions div {
+            font-size: 16px;
+        }
+
+        .project__actions div:not(.project__actions-buttons) * {
+            gap: 4px;
+        }
+
+    .project__actions {
+        align-items: center;
+        gap: 12px;
+        padding: 20px 0;
+    }
+
+        .project__actions .project__actions-buttons {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+            .project__actions .project__actions-buttons button {
+                gap: 4px;
+                padding: 4px;
+            }
+
+                .project__actions .project__actions-buttons button p {
+                    font-size: 14px;
+                }
+
+                .project__actions .project__actions-buttons button i {
+                    font-size: 20px;
+                }
+}
