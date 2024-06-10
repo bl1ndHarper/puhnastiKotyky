@@ -15,7 +15,7 @@
     <div class="user-account-day">
         <div class="user-account-day__page-content">
             <div class="user-account-day__sign-out">
-            </div>
+        </div>
             <form class="user-account-day__user-account" method="post" enctype="multipart/form-data" action="@Url.Action("SaveUserChanges", "Account")">
                 <div class="user-account-day__user-image-container" id="userImageContainer">
                     <img src="@Model.User.Photo" class="user-account-day__user-image" id="userImage" />
@@ -27,12 +27,16 @@
                     </div>
                 </div>
                 <div class="user-account-day__user-account-details">
-                    <h2>
-                        @Model.User.FirstName @Model.User.LastName
-                    </h2>
-                    <div class="user-account-day__user-email">
-                        <p>Email:</p>
-                        <p>@Model.User.Email</p>
+                    <div class="user-account-day__user-name-and-email">
+                        <div>
+                            <h2>
+                                @Model.User.FirstName @Model.User.LastName
+                            </h2>
+                        </div>
+                        <div class="user-account-day__user-email">
+                            <p>Email:</p>
+                            <p>@Model.User.Email</p>
+                        </div>
                     </div>
                     <input type="text" class="hidden" name="newSocialMediasArray" id="newSocialMediasArray" />
                     <input type="text" class="hidden" name="originalSocialMediasArray" id="originalSocialMediasArray" />
@@ -116,538 +120,19 @@
                 </div>
             </form>
   
-            <div class="user-account-day__horizontal-container">
-                <div class="user-account-day__user-projects">
-                    @if (!Model.User.ProjectsUser.Any())
-                    {
-                        <h2>
-                            Here will be the projects you are a part of
-                        </h2>
-                    }
-                    else
-                    {
-                        <h2>
-                            Here are the projects you are a part of:
-                        </h2>
-                    }
-                    <div class="user-account-day__projects-container">
-                        @foreach (var projectsUser in Model.User.ProjectsUser)
-                        {
-                            <div id="project-card" data-modal-id="project-modal-@projectsUser.Projects.ProjectsId" class="user-account-day__project">
-                                <h2>@projectsUser.Projects.Name</h2>
-                                <div class="user-account-day__project-technologies-container">
-                                    <h3>
-                                        Technologies:
-                                    </h3>
-                                    <div class="user-account-day__technologies">
-                                        @foreach (var projectTechnology in projectsUser.Projects.ProjectsTechnologies)
-                                        {
-                                            <div>
-                                                <p>@projectTechnology.Technologies.Name</p>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="user-account-day__project-info">
-                                    <div>
-                                        <h3>Owner:</h3>
-                                        <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName</p>
-                                    </div>
-                                    <div>
-                                        <h3>
-                                            Creation Date:
-                                        </h3>
-                                        <p>@projectsUser.Projects.CreationDate.ToString("dd.MM.yyyy")</p>
-                                    </div>
-                                    <div>
-                                        <h3>Status:</h3>
-                                        <p>@projectsUser.Projects.Status</p>
-                                    </div>
-                                    <button class="modal__open-button" id="user-account-day__detailed-info-button" data-modal-id="project-modal-@projectsUser.Projects.ProjectsId" type="button">
-                                        <p>View more</p>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="modal__container hidden" id="project-modal-@projectsUser.Projects.ProjectsId" data-owner="@projectsUser.UsersId">
-                                <div class="modal__body">
-                                    @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
-                                    {
-                                        <input class="hidden" id="isUserOwner" data-isOwner="true" />
-                                    } else {
-                                        <input class="hidden" id="isUserOwner" data-isOwner="false" />
-                                    }
-                                    <div class="modal__header">
-                                        <h1>@projectsUser.Projects.Name</h1>
-                                        <button class="modal__close-button">
-                                            <div class="cross-line"></div>
-                                            <div class="cross-line"></div>
-                                        </button>
-                                    </div>
-                                    <div class="modal__project-status">
-                                        <p>Status: </p>
-                                        <div>
-                                            <span>@projectsUser.Projects.Status</span>
-                                            <input class="hidden" name="updatedProjectStatus"
-                                                   data-url="@Url.Action("EditProjectStatus", "Projects", new { area = "UserAccount" })"
-                                                   data-projectId="@projectsUser.Projects.ProjectsId" />
-                                            @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
-                                            {
-                                                <div class="modal__project-status-select-items">
-                                                    <p>searching for participants</p>
-                                                    <p>draft</p>
-                                                    <p>in development</p>
-                                                    <p>completed</p>
-                                                </div>
-                                            }
-                                        </div>   
-                                    </div>
-                                    @if (!string.IsNullOrEmpty(@projectsUser.Projects.Repository))
-                                    {
-                                        <div class="modal__repository">
-                                            <div>
-                                                <i class="fa-brands fa-github"></i>
-                                                <a href="@projectsUser.Projects.Repository" target="_blank">View on GitHub</a>
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="modal__body-subject">
-                                        <h3>
-                                            Technologies:
-                                        </h3>
-                                        <div class="modal__technologies-container hover-active">
-                                            @foreach (var projectTechnology in projectsUser.Projects.ProjectsTechnologies)
-                                            {
-                                                <div id="tech">
-                                                    @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
-                                                    {
-                                                        <span class="modal__tooltip">Click to delete</span>
-                                                        <div class="removeTechOverlay"></div>
-                                                    }
-                                                    <p>@projectTechnology.Technologies.Name</p>
-                                                </div>
-                                            }
-                                            @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
-                                            {
-                                                <div id="modalAddProjectTechnology" style="cursor: pointer">
-                                                    <img src="~/images/plus-image0.png" onclick="openModalTechsDropdow(@projectsUser.Projects.ProjectsTechnologies)" />
-                                                </div>
-                                                <div class="modal__technologies-dropdown hidden" id="modalProjectTechnologiesDropdown">
-                                                    <div class="header">
-                                                        <input type="text" placeholder="Search..." id="projectTechSearchInput" />
-                                                        <img src="~/images/cancel.png" />
-                                                    </div>
-                                                    <div class="container" id="projectDropdownTechsContainer">
-                                                        @foreach (var tech in Model.Technologies)
-                                                        {
-                                                            <p onclick="chooseProjectTech('@tech.Name')" id="projectTechsDropdownItem">@tech.Name</p>
-                                                        }
-                                                    </div>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div class="modal__body-subject">
-                                        <h3>Project description:</h3>
-                                        <p class="modal__text-expandable">@projectsUser.Projects.Description</p>
-                                        <button id="buttonExpandDescription" class="button align-self-end">More</button>
-                                    </div>
-
-
-                                    @if(Model.User.Id == @projectsUser.Projects.Users.Id)
-                                    {
-                                        <div class="modal__body-subject">
-                                            <h3>GitHub repository:</h3>
-                                        @if(string.IsNullOrEmpty(@projectsUser.Projects.Repository)){ 
-                                            <div class="modal__repository-container">
-                                                <input type="text" class="modal__repository-link-input" placeholder="Insert a link to the project's repository here"
-                                                data-projectId="@projectsUser.Projects.ProjectsId">
-                                                <button class="button modal__repository-add-button">Add</button>
-                                            </div> 
-                                        } else {
-                                            <div class="modal__repository-container">
-                                                <input type="text" readonly class="modal__repository-link-input"
-                                                data-projectId="@projectsUser.Projects.ProjectsId" value="@projectsUser.Projects.Repository">
-                                                <button class="button modal__repository-edit-button">Edit</button>
-                                                <button class="button modal__repository-delete-button">Delete</button>
-                                            </div>
-                                        }                                               
-                                        </div>
-                                    }
-
-                                    <div class="modal__body-subject modal__flex-row-item">
-                                        <h3>Team:</h3>
-                                        <div class="modal__user-item">
-                                            @if (projectsUser.Projects.Users.Id == Model.User.Id)
-                                            {
-                                                <a href="@Url.Action("Index", "Account", new {area = "UserAccount"})">
-                                                    <img src="@projectsUser.Projects.Users.Photo" />
-                                                    <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName (Owner)</p>
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=projectsUser.Projects.Users.Id})">
-                                                    <img src="@projectsUser.Projects.Users.Photo" />
-                                                    <p>@projectsUser.Projects.Users.FirstName @projectsUser.Projects.Users.LastName (Owner)</p>
-                                                </a>
-                                            }           
-                                        </div>
-
-                                        <div class="modal__team-dropdown-header" id="showTeamMembers">
-                                            @if (Model.ProjectParticipants[@projectsUser.Projects.ProjectsId].Count >= 2)
-                                            {
-                                                <p class="">and @(Model.ProjectParticipants[@projectsUser.Projects.ProjectsId].Count - 1) more...</p>
-                                                <i class="arrow up hidden"></i>
-                                            }
-                                        </div>
-                                        <div class="modal__team-dropdown hidden">
-                                            <div class="modal__team-dropdown-items" id="teamMembersDropdown">
-                                                @foreach (var member in Model.ProjectParticipants[@projectsUser.Projects.ProjectsId])
-                                                {
-                                                    @if (@projectsUser.Projects.UsersId != member.Id)
-                                                    {
-                                                        <div class="modal__user-item" data-userId="@member.Id"
-                                                        data-url="@Url.Action("DeleteUserFormProject", "Projects", new { area = "UserAccount" })"
-                                                        data-projectId="@projectsUser.Projects.ProjectsId">
-                                                            @if (member.Id == Model.User.Id)
-                                                            {
-                                                                <a href="@Url.Action("Index", "Account", new {area = "UserAccount"})">
-                                                                    <img src="@member.Photo" />
-                                                                    <p>@member.FirstName @member.LastName</p>
-                                                                </a>
-                                                            }
-                                                            else
-                                                            {
-                                                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=@member.Id})">
-                                                                    <img src="@member.Photo" />
-                                                                    <p>@member.FirstName @member.LastName</p>
-                                                                </a>
-                                                            }
-
-                                                            
-                                                            @if (Model.User.Id == @projectsUser.Projects.Users.Id)    // якщо поточний користувач є власником
-                                                            {
-                                                                <i class="fa fa-user-times" aria-hidden="true"></i>
-                                                            }
-                                                        </div>
-                                                    } 
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal__body-subject modal__flex-row-item">
-                                        <h3>Additional information:</h3>
-                                        <p>Complexity level: @projectsUser.Projects.Level</p>
-                                        <p>Creation date: @projectsUser.Projects.CreationDate</p>
-                                        <p>Expected duration: @projectsUser.Projects.Duration weeks</p>
-                                    </div>
-
-                                    @if (Model.User.Id == projectsUser.Projects.Users.Id)
-                                    {
-                                        <div class="modal__body-subject">
-                                            @if (Model.Requests.Where(r => r.ProjectsId == projectsUser.Projects.ProjectsId
-                                                                        && r.Status == "considering" && r.IsHidden == false).Count() > 0)
-                                            {
-                                                <h3>Requests:</h3>
-                                                <div class="modal__request-container">
-
-                                                    @foreach (var request in Model.Requests.Where(r => r.ProjectsId == projectsUser.Projects.ProjectsId 
-                                                                                                    && r.Status == "considering" && r.IsHidden == false))                                            
-                                                    {
-                                                        <div class="modal__request-item">
-                                                            <button class="modal__request-hide-button" data-requestId="@request.RequestsId"
-                                                            data-userId="@request.UsersId" data-projectId="@request.ProjectsId"
-                                                            data-userPhoto="@request.Users.Photo">
-                                                                <div class="cross-line"></div>
-                                                                <div class="cross-line"></div>
-                                                            </button>
-                                                            <div class="modal__request-body">
-                                                                <h3>
-                                                                    Request by <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=@request.Users.Id})">
-                                                                        <span>@request.Users.FirstName @request.Users.LastName</span>
-                                                                    </a>
-                                                                </h3>
-                                                                <div class="modal__request-details">
-                                                                    <div>
-                                                                        <h4>Created: </h4>
-                                                                        <p>@request.Date.ToString("dd.MM.yyyy")</p>
-                                                                    </div>
-                                                                    <div>
-                                                                        <h4>Status: </h4>
-                                                                        <p>@request.Status</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal__request-button">
-                                                                <button class="button align-self-end modal__request-accept-button" 
-                                                                data-requestId="@request.RequestsId"
-                                                                data-userId="@request.UsersId" data-projectId="@request.ProjectsId"
-                                                                data-userPhoto="@request.Users.Photo">
-                                                                    Accept
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </div>
-                                                
-                                            } else {
-                                                <h3>No requests have been sent yet</h3>
-                                            }   
-                                        </div>
-                                    }
-
-                                    @if (Model.User.Id != @projectsUser.Projects.UsersId &&                             // this area should be available only for
-                                   Model.ProjectParticipants[@projectsUser.Projects.ProjectsId].Contains(Model.User))   // the project's participants (except the owner)
-                                    {
-                                        <div class="modal__body-subject danger">
-                                            <h3 class="align-self-center">Danger zone!</h3>
-                                            <form id="leaveAndDeleteForm" class="modal__danger-item" method="post" enctype="multipart/form-data" action="@Url.Action("DeleteUserFormProject", "Projects")">
-                                                <p>Want to leave the team and delete this project from your dashboard?</p>
-                                                <button id="leaveAndDeleteButton" class="button" type="button" onclick="">Leave and delete</button>
-                                                <input name="deleteUserIdInput" class="hidden" value="@Model.User.Id" />
-                                                <input name="deleteUserProjectInput" class="hidden" value="@projectsUser.Projects.ProjectsId" />
-
-                                            </form>
-                                            <div id="leaveAndDeleteTooltip" class="modal__info-tooltip hidden">
-                                                <h3>Click again to confirm</h3>
-                                                <p>
-                                                    Better think twice before doing it!
-                                                    You will no longer be a part of the team and the project will be deleted from your dashboard.
-                                                    The owner of this project will be notified about your decision.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    }       
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div class="user-account-day__vertical-container">
-                    <div id="createNewProjectLayout" class="user-account-day__create-new-project">
-                        <h2 class="user-account-day__create-new-project-header">
-                            Here you can create your new project!
-                        </h2>
-                        <div class="user-account-day__project-name-container">
-                            <textarea id="newAppName"
-                                      minlength="4"
-                                      maxlength="100"
-                                      placeholder="Enter the app name or a project title here..."
-                                      oninput="auto_height(this)"></textarea>
-                        </div>
-                        <button onclick="showDetailed()" type="button" class="user-account-day__apply-title-button">
-                            <p>
-                                Go to the next step!
-                            </p>
-                        </button>
-                    </div>
-                    <form id="createNewProjectDetailed" class="user-account-day__create-new-project-detailed hidden" method="post" enctype="multipart/form-data" action="@Url.Action("SaveNewProject", "Projects")">
-                        <div>
-                            <h2 id="newAppNameDetailed">Project Title</h2>
-                            <input class="hidden" id="newAppNameInput" name="projectName" />
-                        </div>
-                        <div class="user-account-day__project-description">
-                            <h3>
-                                Describe your idea more:
-                            </h3>
-                            <div class="user-account-day__project-desc">
-                                <textarea name="projectDescription"
-                                        minlength="12"
-                                        maxlength="1024"
-                                        placeholder="Write a description for your idea (up to 1024 characters)"
-                                        oninput="auto_height(this)"></textarea>
-                                <span class="user-account-day__tooltip">Write a valid description!</span>
-                            </div>
-                        </div>
-                        <div class="user-account-day__repository">
-                            <h3>Add the GitHub repository (optionally):</h3> 
-                            <div>
-                                <input name="repositoryLink" type="text" placeholder="Provide a link to the project's repository" class="user-account-day__repository-link-input">
-                                <span class="user-account-day__tooltip">Invalid GitHub link</span>
-                            </div>
-                        </div>
-                        <div class="user-account-day__new-project-technologies-container">
-                            <h3>
-                                Choose the technologies your app will be based on:
-                            </h3>
-                            <div class="user-account-day__technologies hover-active" id="newProjectTechnologies">
-                                <input type="text" class="hidden" name="projectTechnologies" id="projectTechnologiesInput" />
-                                <div id="addProjectTechnology" onclick="openTechsDropdown(projectTechsDropdown, addProjectTechnology)" style="cursor: pointer">
-                                    <img src="~/images/plus-image0.png" />
-                                </div>
-                                <span class="user-account-day__tooltip">Choose at least one technology!</span>
-                                <div class="user-account-day__technologies-dropdown hidden" id="projectTechsDropdown">
-                                    <div class="header">
-                                        <input type="text" placeholder="Search..." id="projectTechSearchInput" onkeyup="dropdownFilterFunction(projectTechSearchInput, projectTechsDropdown)" />
-                                        <img src="~/images/cancel.png" onclick="closeTechsDropdown(projectTechsDropdown, addProjectTechnology)" />
-                                    </div>
-                                    <div class="container" id="newProjectDropdownTechsContainer">
-                                        @foreach (var tech in Model.Technologies)
-                                        {
-                                            <p onclick="chooseProjectTech('@tech.Name')" id="projectTechsDropdownItem">@tech.Name</p>
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="user-account-day__new-project-level">
-                            <div class="header">
-                                <h3>
-                                    Select the complexity level for your project:
-                                </h3>
-                                <div class="user-account-day__new-project-info top">
-                                    <img src="~/images/information.png" />
-                                    <div class="user-account-day__info-tooltip">
-                                        Declare the complexity level of your project so others learn if they're ready
-                                        to be a part of your team. For exapmle, it must be easy to create a static one-page website
-                                        but it is pretty hard to build a full-fledged analog of a popular social media.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="user-account-day__new-project-level-dropdown">
-                                <input class="hidden" type="text" name="projectLevel" />
-                                <label for="projectLevel">Hover to choose</label>
-                                <span class="user-account-day__tooltip">Set a complexity level!</span>
-                                <div>
-                                    <p onclick="selectLevel('Easy')">Easy</p>
-                                    <p onclick="selectLevel('Medium')">Medium</p>
-                                    <p onclick="selectLevel('Hard')">Hard</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="user-account-day__new-project-duration">
-                            <div class="header">
-                                <h3>Enter the expected duration of the work:</h3>
-                                <div class="user-account-day__new-project-info top">
-                                    <img src="~/images/information.png" />
-                                    <div class="user-account-day__info-tooltip">
-                                        Enter the expected time needed to complete your project (in weeks).
-                                        It might help other developers to calculate their efforts, time
-                                        and make the right decision.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="customNumberInput">
-                                <i class="arrow left"></i>
-                                <input type="number" name="projectDuration" min="1" max="100" value="1" />
-                                <i class="arrow right"></i>
-                            </div>
-                        </div>
-                        <div class="user-account-day__buttons">
-                            <button onclick="hideDetailed()"
-                                    type="reset"
-                                    class="user-account-day__create-project-button user-account-day__cancel-button">
-                                <p>
-                                    Dismiss all
-                                </p>
-                            </button>
-                            <button onclick="validateAndSubmit()"
-                                    type="button"
-                                    class="user-account-day__create-project-button"
-                                    id="createProjectButton">
-                                <p>
-                                    Create the project!
-                                </p>
-                            </button>
-                        </div>
-                    </form>
-                    <div class="user-account-day__user-requests">
-                        @if (!Model.User.Requests.Any())
-                        {
-                            <h2 class="user-account-day__user-requests-title">You don't have any requests to partcipate in other projects at the moment.</h2>
-                        }
-                        else
-                        {
-                            <h2 class="user-account-day__user-requests-title">
-                                Your requests to participate in other projects:
-                            </h2>
-                        }
-                        <div class="user-account-day__user-requests-container">
-                            @foreach (var request in Model.User.Requests.Where(r => r.Status != "deleted"))
-                            {
-                                <div class="user-account-day__request">
-                                    <h2>
-                                        Request to be a part of @request.Projects.Name team
-                                    </h2>
-                                    <div class="user-account-day__request-info">
-                                        <div>
-                                            <h3>Date:</h3>
-                                            <p>@request.Date.ToString("dd.MM.yyyy")</p>
-                                        </div>
-                                        <div>
-                                            <h3>Status:</h3>
-                                            <p>@request.Status</p>
-                                        </div>
-                                    </div>
-                                    <button class="modal__open-button" id="user-account-day__detailed-info-button" data-modal-id="request-modal-@request.RequestsId" type="button">
-                                        <p>View more</p>
-                                    </button>
-                                </div>
-
-                                <div class="modal__container hidden" id="request-modal-@request.RequestsId">
-                                    <div class="modal__body-request">
-                                        <div class="modal__header">
-                                            @if (request.Status == "accepted")  // if request is accepted show project modal
-                                            {
-                                                <h1>Request to be a part of <span id="modalLink" data-project-id="project-modal-@request.ProjectsId">@request.Projects.Name</span> team</h1>
-                                            } else  // if not - show project's public page
-                                            {
-                                                <h1>
-                                                    Request to be a part of 
-                                                    <a href="@Url.Action("Index", "Public", new { area = "Projects", id = request.ProjectsId})">@request.Projects.Name</a>
-                                                    team
-                                                </h1>
-                                            }
-                                            <button class="modal__close-button">
-                                                <div class="cross-line"></div>
-                                                <div class="cross-line"></div>
-                                            </button>
-                                        </div>
-                                        <div class="modal__project-status">
-                                            <p>by
-                                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=request.Projects.UsersId})">
-                                                    <span>@request.Projects.Users.FirstName @request.Projects.Users.LastName</span>
-                                                </a>   
-                                            </p>
-                                        </div>
-                                        <div class="modal__request-info">
-                                            <div>
-                                                <h3>Request status:  <span>@request.Status</span></h3>
-                                            </div>
-                                            <div>
-                                                <h3>Creation date:  <span>@request.Date.ToString("dd.MM.yyyy HH:mm")</span></h3>
-                                            </div>
-                                        </div>
-                                        <form class="modal__delete-request-button" method="post" enctype="multipart/form-data" action="@Url.Action("WithdrawRequest", "Requests")">
-                                            <input class="hidden" name="requestId" value="@request.RequestsId" />
-                                            @if (@request.Status != "denied" && @request.Status != "accepted")
-                                            {
-                                                <button type="submit" class="button align-self-end">
-                                                    <p>Delete the request</p>
-                                                </button>
-                                                <div id="deleteRequestTooltip" class="modal__info-tooltip"><p>Click if you're sure you want to withdraw the request. It will be deleted completely but you always can create a new one!</p></div>
-                                            } else
-                                            {
-                                                <button type="button" class="button align-self-end">
-                                                    <p>Delete the request</p>
-                                                </button>
-                                                <div id="cannotDeleteRequestTooltip" class="modal__info-tooltip"><p>You cannot withdraw the request if it has already been accepted or denied by the project owner.</p></div>
-                                            }
-                                        </form>
-                                        
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
+            <div class="user-account-day__tab-navbar">
+                <div class="user-account-day__tab-name user-account-day__tab-active" id="ownProjectsTab">My Projects</div>
+                <div class="user-account-day__tab-name" id="communityProjectsTab">Community Projects</div>
+                <div class="user-account-day__tab-name" id="requestsTab">Participation Requests</div>
+            </div>
+            <div class="user-account-day__tab-container" id="tabsContainer">
+                
             </div>
         </div>
+    </div>
+    @* <div>
         <svg class="user-account-day__color-mode-switch"
              width="112"
-             height="112"
-             viewBox="0 0 112 112"
              fill="none"
              xmlns="http://www.w3.org/2000/svg">
             <circle cx="55.915"
@@ -660,7 +145,8 @@
                   d="M43.6879 87.4928C60.7391 94.3892 80.1524 86.1573 87.0489 69.1061C93.9454 52.055 85.7134 32.6416 68.6623 25.7452C64.548 24.0811 60.2962 23.2978 56.1158 23.3067C69.4154 30.7642 75.4117 47.124 69.544 61.6313C63.5017 76.5707 47.0502 84.1759 31.9341 79.467C35.1271 82.8589 39.0864 85.6316 43.6879 87.4928Z"
                   fill="#DEF5E5" />
         </svg>
-    </div>
+    </div> *@
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="@Url.Content("~/js/LinksHandler.js")"></script>
     <script src="@Url.Content("~/js/UserAccount.js")"></script>
     <script src="@Url.Content("~/js/CreateProject.js")"></script>
@@ -668,6 +154,7 @@
     <script src="@Url.Content("~/js/ModalWindow.js")"></script>
     <script>
         window.onload = function () {
+
             var userTechsInput = document.getElementById("userTechsInput");
             @foreach (var technology in Model.User.UsersTechnologies)
             {

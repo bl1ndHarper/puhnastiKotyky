@@ -17,6 +17,7 @@ const userSocials = document.querySelector(".user-account-day__user-socials");
 const addSocialMediaLink = document.querySelector("#addLink");
 const addLinkInput = document.querySelector(".user-account-day__user-socials input");
 const addLinkContainer = addLinkInput.parentElement;
+const userAccountTabs = document.querySelectorAll(".user-account-day__tab-name");
 
 function auto_height(elem) {
     elem.style.height = '1px';
@@ -334,3 +335,43 @@ function limitLinksCount(linksCount) {
     }
     return false;
 }
+
+function highlightSelectedTab(event) {
+    userAccountTabs.forEach(function (tab) {
+        tab.classList.remove('user-account-day__tab-active');
+    });
+
+    event.currentTarget.classList.add('user-account-day__tab-active');
+}
+
+function loadTabPartialView(event) {
+    let url;
+
+    switch (event.currentTarget.id) {
+        case 'ownProjectsTab':
+            url = '/UserAccount/Tabs/OpenOwnProjectsTab';
+            break;
+        case 'communityProjectsTab':
+            url = '/UserAccount/Tabs/OpenCommunityProjectsTab';
+            break;
+        case 'requestsTab':
+            url = '/UserAccount/Tabs/OpenRequestsTab';
+            break;
+    }
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        success: function (data) {
+            document.getElementById("tabsContainer").innerHTML = data;
+        },
+        error: function () {
+            console.error('Failed to load a tab:', textStatus, errorThrown);
+        }
+    });        
+}
+
+userAccountTabs.forEach(function (tab) {
+    tab.addEventListener('click', highlightSelectedTab);
+    tab.addEventListener('click', loadTabPartialView);
+});

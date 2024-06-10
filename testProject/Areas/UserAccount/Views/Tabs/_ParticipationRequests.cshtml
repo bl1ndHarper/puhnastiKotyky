@@ -1,0 +1,174 @@
+﻿@using System.Security.Claims;
+@using testProject.Models;
+@model List<Request>
+
+<div class="user-account-day__user-requests-container">
+    @if (!Model.Any())
+    {
+        <h2 class="user-account-day__no-items-title">You don't have any requests to partcipate in other projects at the moment.</h2>
+    }else{
+        <div class="user-account-day__user-requests-col">
+        <h2 class="user-account-day__user-requests-title">Pending requests</h2>
+            @if (!Model.Any(r => r.Status.Equals("considering")))
+            {
+                <div class="user-account-day__no-items">
+                    <h3>You don't have any pending requests yet</h3>
+                </div>
+            }
+            @foreach (var request in Model.Where(r => r.Status.Equals("considering")))
+            {
+            <div class="user-account-day__request">
+                <h2>
+                    Request to be a part of @request.Projects.Name team
+                </h2>
+                <div class="user-account-day__request-info">
+                    <div>
+                        <h3>Date:</h3>
+                        <p>@request.Date.ToString("dd.MM.yyyy")</p>
+                    </div>
+                    <div>
+                        <h3>Status:</h3>
+                        <p>@request.Status</p>
+                    </div>
+                </div>
+                <button class="modal__open-button" id="user-account-day__detailed-info-button" data-modal-id="request-modal-@request.RequestsId" type="button">
+                    <p>View more</p>
+                </button>
+            </div>
+            <div class="modal__container hidden" id="request-modal-@request.RequestsId">
+                <div class="modal__body-request">
+                        <div class="modal__header-container">
+                            <div class="modal__header">
+                                <h1>
+                                    Request to be a part of
+                                    <a href="@Url.Action("Index", "Public", new { area = "Projects", id = request.ProjectsId})">@request.Projects.Name</a>
+                                    team
+                                </h1>
+                                <button class="modal__close-button">
+                                    <div class="cross-line"></div>
+                                    <div class="cross-line"></div>
+                                </button>
+                            </div>
+                            <div class="modal__project-status">
+                                <p>
+                                    by
+                                    <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=request.Projects.UsersId})">
+                                        <span>@request.Projects.Users.FirstName @request.Projects.Users.LastName</span>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    <div class="modal__request-info">
+                        <div>
+                            <h3>Request status:  <span>@request.Status</span></h3>
+                        </div>
+                        <div>
+                            <h3>Creation date:  <span>@request.Date.ToString("dd.MM.yyyy HH:mm")</span></h3>
+                        </div>
+                    </div>
+                    <form class="modal__delete-request-button" method="post" enctype="multipart/form-data" action="@Url.Action("WithdrawRequest", "Requests")">
+                        <input class="hidden" name="requestId" value="@request.RequestsId" />
+                        @if (@request.Status != "denied" && @request.Status != "accepted")
+                        {
+                            <button type="submit" class="button align-self-end">
+                                <p>Delete the request</p>
+                            </button>
+                            <div id="deleteRequestTooltip" class="modal__info-tooltip"><p>Click if you're sure you want to withdraw the request. It will be deleted completely but you always can create a new one!</p></div>
+                        }
+                        else
+                        {
+                            <button type="button" class="button align-self-end">
+                                <p>Delete the request</p>
+                            </button>
+                            <div id="cannotDeleteRequestTooltip" class="modal__info-tooltip"><p>You cannot withdraw the request if it has already been accepted or denied by the project owner.</p></div>
+                        }
+                    </form>
+
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="user-account-day__user-requests-col">
+        <h2 class="user-account-day__user-requests-title">Accepted requests</h2>
+            @if (!Model.Any(r => r.Status.Equals("accepted")))
+            {
+                <div class="user-account-day__no-items">
+                    <h3>You don't have any accepted requests yet</h3>
+                </div>
+            }
+        @foreach (var request in Model.Where(r => r.Status.Equals("accepted")))
+        {
+            <div class="user-account-day__request">
+                <h2>
+                    Request to be a part of @request.Projects.Name team
+                </h2>
+                <div class="user-account-day__request-info">
+                    <div>
+                        <h3>Date:</h3>
+                        <p>@request.Date.ToString("dd.MM.yyyy")</p>
+                    </div>
+                    <div>
+                        <h3>Status:</h3>
+                        <p>@request.Status</p>
+                    </div>
+                </div>
+                <button class="modal__open-button" id="user-account-day__detailed-info-button" data-modal-id="request-modal-@request.RequestsId" type="button">
+                    <p>View more</p>
+                </button>
+            </div>
+            <div class="modal__container hidden" id="request-modal-@request.RequestsId">
+                <div class="modal__body-request">
+                        <div class="modal__header-container">
+                            <div class="modal__header">
+                                <h1>
+                                    Request to be a part of
+                                    <a href="@Url.Action("Index", "Public", new { area = "Projects", id = request.ProjectsId})">@request.Projects.Name</a>
+                                    team
+                                </h1>
+                                <button class="modal__close-button">
+                                    <div class="cross-line"></div>
+                                    <div class="cross-line"></div>
+                                </button>
+                            </div>
+                            <div class="modal__project-status">
+                                <p>
+                                    by
+                                    <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=request.Projects.UsersId})">
+                                        <span>@request.Projects.Users.FirstName @request.Projects.Users.LastName</span>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    <div class="modal__request-info">
+                        <div>
+                            <h3>Request status:  <span>@request.Status</span></h3>
+                        </div>
+                        <div>
+                            <h3>Creation date:  <span>@request.Date.ToString("dd.MM.yyyy HH:mm")</span></h3>
+                        </div>
+                    </div>
+                    <form class="modal__delete-request-button" method="post" enctype="multipart/form-data" action="@Url.Action("WithdrawRequest", "Requests")">
+                        <input class="hidden" name="requestId" value="@request.RequestsId" />
+                        @if (@request.Status != "denied" && @request.Status != "accepted")
+                        {
+                            <button type="submit" class="button align-self-end">
+                                <p>Delete the request</p>
+                            </button>
+                            <div id="deleteRequestTooltip" class="modal__info-tooltip"><p>Click if you're sure you want to withdraw the request. It will be deleted completely but you always can create a new one!</p></div>
+                        }
+                        else
+                        {
+                            <button type="button" class="button align-self-end">
+                                <p>Delete the request</p>
+                            </button>
+                            <div id="cannotDeleteRequestTooltip" class="modal__info-tooltip"><p>You cannot withdraw the request if it has already been accepted or denied by the project owner.</p></div>
+                        }
+                    </form>
+
+                </div>
+            </div>
+        }
+    </div>
+    }
+</div>

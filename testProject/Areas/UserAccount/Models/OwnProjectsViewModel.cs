@@ -2,9 +2,10 @@
 
 namespace testProject.Areas.UserAccount.Models
 {
-    public class AccountViewModel
+    public class OwnProjectsViewModel
     {
-        public User User { get; set; }
+        public IEnumerable<Project> Projects { get; set; }
         public IEnumerable<Technology> Technologies { get; set; }
     }
 }
+
