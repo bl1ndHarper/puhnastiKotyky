@@ -137,10 +137,13 @@ function addProjectTechToArray(techName) {
 }
 
 function checkMaxMin() {
-    const numInput = num.querySelector("input");
+    const num = document.querySelector(".customNumberInput");
+    const numInput = document.querySelector(".customNumberInput input");
     const numInputValue = parseInt(numInput.value);
     const numInputMax = parseInt(numInput.max);
     const numInputMin = parseInt(numInput.min);
+    const arrUp = document.querySelector(".customNumberInput .right");
+    const arrDown = document.querySelector(".customNumberInput .left");
 
     if (numInputValue === numInputMax) {
         num.style.width = "6em";
