@@ -28,6 +28,13 @@ window.onload = function () {
     auto_height(descTextArea);
 }
 
+function is_touch_enabled() {
+    return ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0);
+}
+
+
 /* USER PROFILE */
 function editProfile() {
     buttonEdit.classList.add("hidden");
@@ -44,7 +51,9 @@ function editProfile() {
     addSocialMediaLink.classList.remove("hidden");
     userSocials.classList.add("editable");
 
-    userImageContainer.addEventListener("click", imageButtonClickHandler);
+    if (is_touch_enabled()) {
+        userImageContainer.addEventListener("touchstart", handleTouchClick);
+    }
 
     imageInput.onchange = function () {
         if (imageInput.files.length > 0) {
@@ -88,12 +97,43 @@ function stopEditingProfile() {
     form.reset();
     location.reload();
 
-    userImageContainer.removeEventListener("click", imageButtonClickHandler);
-}
-function imageButtonClickHandler() {
+    if (is_touch_enabled()) {
+        userImageContainer.removeEventListener("touchstart", handleTouchClick);
+    }
 }
 
-var clickCounter = 0;
+let tapCounter = 0;
+function handleTouchClick(event) {
+    event.preventDefault();
+
+    tapCounter++;
+    if (tapCounter === 1 && event.target.id !== "deleteUserImageButton") {
+        showOverlayOnTouch();
+        setTimeout(() => {
+            hideOverlay();
+            tapCounter = 0;
+        }, 5000);
+    } else if (tapCounter === 2 && event.target.id !== "deleteUserImageButton") {
+        imageInput.click();
+        tapCounter = 0;
+    } else if (event.target.id === "deleteUserImageButton") {
+        deleteUserImage();
+    }
+}
+
+function showOverlayOnTouch() {
+    const overlay = userImageContainer.querySelector(".user-account-day__change-user-image-overlay");
+    overlay.style.opacity = 1;
+    overlay.style.pointerEvents = 'auto';
+}
+
+function hideOverlay() {
+    const overlay = userImageContainer.querySelector(".user-account-day__change-user-image-overlay");
+    overlay.style.opacity = 0;
+    overlay.style.pointerEvents = 'none';
+}
+
+let clickCounter = 0;
 function deleteUserImage() {
     clickCounter++;
     changeUserImageText.innerHTML = "Click again to delete your profile image";
@@ -118,6 +158,8 @@ function deleteUserImage() {
 
         changeUserImageText.innerHTML = "Click to change";
         clickCounter = 0;
+        tapCounter = 0;
+        hideOverlay();
     }
     else {
         setTimeout(function () {
