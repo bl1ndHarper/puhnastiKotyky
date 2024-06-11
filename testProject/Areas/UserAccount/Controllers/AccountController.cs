@@ -37,42 +37,14 @@ namespace testProject.Areas.UserAccount.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             User user = _db.Users
-                .Include(u => u.Requests)
-                .ThenInclude(u => u.Projects)
-                .Include(user => user.UsersTechnologies)
-                .ThenInclude(user => user.Technologies)
-                .Include(user => user.ProjectsUser)
-                .ThenInclude(user => user.Projects)
-                .ThenInclude(user => user.Users)
-                .Include(user => user.ProjectsUser)
-                .ThenInclude(user => user.Projects)
-                .ThenInclude(user => user.ProjectsTechnologies)
-                .ThenInclude(user => user.Technologies)
-                .Include(user => user.Projects)
-                .Include(user => user.SocialMedias)
-                .FirstOrDefault(u => u.Id.ToString() == userId);
+                .Include(u => u.UsersTechnologies)
+                    .ThenInclude(u => u.Technologies)
+                .Include(u => u.SocialMedias)
+                .FirstOrDefault(u => u.Id.ToString().Equals(userId));
 
             var tech = _db.Technologies.ToList();
 
-            var requests = _db.Requests
-                .Include(r => r.Users)
-                .Include(r => r.Projects)
-                .Include(r => r.Projects.Users)
-                .ToList();
-
-            AccountViewModel accountViewModel = new AccountViewModel { User = user, Technologies = tech, Requests = requests };
-
-            if (user != null)
-            {
-                foreach (var projectsUser in user.ProjectsUser)
-                {
-                    testProject.Models.Project project = projectsUser.Projects;
-                    List<User> participants = _db.ProjectsUsers
-                        .Where(pu => pu.ProjectsId == project.ProjectsId)
-                        .Select(pu => pu.Users).ToList();
-                    accountViewModel.ProjectParticipants.Add(project.ProjectsId, participants);
-                }
-            }
+            AccountViewModel accountViewModel = new AccountViewModel { User = user, Technologies = tech };
 
             return View(accountViewModel);
         }

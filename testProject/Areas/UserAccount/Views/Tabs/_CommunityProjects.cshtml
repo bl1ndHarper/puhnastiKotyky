@@ -1,0 +1,196 @@
+﻿@using System.Security.Claims;
+@using testProject.Models;
+@model List<Project>
+
+<div class="user-account-day__horizontal-container">
+    <div class="user-account-day__user-projects-container">
+        @if (!Model.Any())
+        {
+            <h2 class="user-account-day__no-items-title">
+                Here will appear the projects you are a part of
+            </h2>
+        }
+        else
+        {
+            <h2>
+                Here are the projects you are a part of:
+            </h2>
+        }
+        <div class="user-account-day__projects-container">
+            @foreach (var project in Model)
+            {
+                <div id="project-card" data-modal-id="project-modal-@project.ProjectsId" class="user-account-day__project">
+                    <h2>@project.Name</h2>
+                    <div class="user-account-day__project-technologies-container">
+                        <h3>
+                            Technologies:
+                        </h3>
+                        <div class="user-account-day__technologies">
+                            @{
+                                int technologiesCount = project.ProjectsTechnologies.Count() >= 3 ? 3 : project.ProjectsTechnologies.Count();
+                            }
+                            @for (int i = 0; i < technologiesCount; i++)
+                            {
+                                <div>
+                                    <p>@project.ProjectsTechnologies.ElementAt(i).Technologies.Name</p>
+                                </div>
+                            }
+                            @if (project.ProjectsTechnologies.Count() > 3)
+                            {
+                                <div class="user-account-day__technologies_and_more">
+                                    <p>and @(project.ProjectsTechnologies.Count() - 3) more</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="user-account-day__project-info">
+                        <div>
+                            <h3>Owner:</h3>
+                            <p>@project.Users.FirstName @project.Users.LastName</p>
+                        </div>
+                        <div>
+                            <h3>
+                                Creation Date:
+                            </h3>
+                            <p>@project.CreationDate.ToString("dd.MM.yyyy")</p>
+                        </div>
+                        <div>
+                            <h3>Status:</h3>
+                            <p>@project.Status</p>
+                        </div>
+                        <button class="modal__open-button" id="user-account-day__detailed-info-button"
+                                data-modal-id="project-modal-@project.ProjectsId" type="button">
+                            <p>View more</p>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="modal__container hidden" id="project-modal-@project.ProjectsId" data-owner="@project.UsersId">
+                    <div class="modal__body">
+                        <input class="hidden" id="isUserOwner" data-isOwner="false" />
+                        <div class="modal__header-container">
+                            <div class="modal__header">
+                                <h1>@project.Name</h1>
+                                <button class="modal__close-button">
+                                    <div class="cross-line"></div>
+                                    <div class="cross-line"></div>
+                                </button>
+                            </div>
+                            <div class="modal__project-status">
+                                <p>Status: </p>
+                                <div>
+                                    <span>@project.Status</span>
+                                    <input class="hidden" name="updatedProjectStatus"
+                                           data-url="@Url.Action("EditProjectStatus", "Projects", new { area = "UserAccount" })"
+                                           data-projectId="@project.ProjectsId" />
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrEmpty(@project.Repository))
+                            {
+                                <div class="modal__repository">
+                                    <div>
+                                        <i class="fa-brands fa-github"></i>
+                                        <a href="@project.Repository" target="_blank">View on GitHub</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>                        
+                        <div class="modal__body-subject">
+                            <h3>
+                                Technologies:
+                            </h3>
+                            <div class="modal__technologies-container hover-active">
+                                @foreach (var projectTechnology in project.ProjectsTechnologies)
+                                {
+                                    <div id="tech">
+                                        <p>@projectTechnology.Technologies.Name</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="modal__body-subject">
+                            <h3>Project description:</h3>
+                            <p class="modal__text-expandable">@project.Description</p>
+                            <button id="buttonExpandDescription" class="button align-self-end">More</button>
+                        </div>
+
+                        <div class="modal__body-subject modal__flex-row-item">
+                            <h3>Team:</h3>
+                            <div class="modal__user-item">
+                                <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=project.Users.Id})">
+                                    <img src="@project.Users.Photo" />
+                                    <p>@project.Users.FirstName @project.Users.LastName (Owner)</p>
+                                </a>
+                            </div>
+
+                            <div class="modal__team-dropdown-header" id="showTeamMembers">
+                                @if (project.ProjectsUsers.Count >= 2)
+                                {
+                                    <p class="">and @(project.ProjectsUsers.Count - 1) more...</p>
+                                    <i class="arrow up hidden"></i>
+                                }
+                            </div>
+                            <div class="modal__team-dropdown hidden">
+                                <div class="modal__team-dropdown-items" id="teamMembersDropdown">
+                                    @foreach (var member in project.ProjectsUsers)
+                                    {
+                                        @if (@project.UsersId != member.Users.Id)
+                                        {
+                                            <div class="modal__user-item">
+                                                @if (member.Users.Id.ToString().Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                                                {
+                                                    <a href="@Url.Action("Index", "Account", new {area = "UserAccount"})">
+                                                        <img src="@member.Users.Photo" />
+                                                        <p>@member.Users.FirstName @member.Users.LastName</p>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action("Profile", "Profile", new {area = "UserAccount", id=@member.Users.Id})">
+                                                        <img src="@member.Users.Photo" />
+                                                        <p>@member.Users.FirstName @member.Users.LastName</p>
+                                                    </a>
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal__body-subject modal__flex-row-item">
+                            <h3>Additional information:</h3>
+                            <p>Complexity level: @project.Level</p>
+                            <p>Creation date: @project.CreationDate</p>
+                            <p>Expected duration: @project.Duration weeks</p>
+                        </div>
+                        <div class="modal__body-subject danger">
+                            <h3 class="align-self-center">Danger zone!</h3>
+                            <form id="leaveAndDeleteForm" class="modal__danger-item" method="post" enctype="multipart/form-data" action="@Url.Action("DeleteUserFormProject", "Projects")">
+                                <p>Want to leave the team and delete this project from your dashboard?</p>
+                                <button id="leaveAndDeleteButton" class="button" type="button">Leave and delete</button>
+                                <input name="deleteUserIdInput" class="hidden" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+                                <input name="deleteUserProjectInput" class="hidden" value="@project.ProjectsId" />
+
+                            </form>
+                            <div id="leaveAndDeleteTooltip" class="modal__info-tooltip hidden">
+                                <h3>Click again to confirm</h3>
+                                <p>
+                                    Better think twice before doing it!
+                                    You will no longer be a part of the team and the project will be deleted from your dashboard.
+                                    The owner of this project will be notified about your decision.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="user-account-day__user-projects-explore">
+            <p>Ready to use your coding skills to build something innovative?</p>
+            <div onclick="window.location.href='@Url.Action("Index", "Home", new { area = "Home" })'">
+                <i class="fa fa-magnifying-glass"></i>
+                <a>Explore more projects</a>
+            </div>
+        </div>
+    </div>
+</div>

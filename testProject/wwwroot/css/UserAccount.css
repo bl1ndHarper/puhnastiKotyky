@@ -96,8 +96,59 @@ user-account-day * {
     width: 95%;
 }
 
-.user-account-day__horizontal-container {
+.user-account-day__tab-navbar {
+    background: #9ed5c5;
+    border-radius: 18px;
+    border-style: solid;
+    border-color: #8ec3b0;
+    border-width: 1px;
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    align-items: center;
+    align-self: stretch;
+    justify-content: center;
+    padding: 0px;
+    position: relative;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
+}
+
+.user-account-day__tab-name {
+    color: #183d3d;
+    font-family: "Fira Sans", sans-serif;
+    font-size: clamp(15px, 1.3vw, 23px);
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    margin: 0px;
+    align-self: stretch;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+    .user-account-day__tab-name:hover {
+        background: rgb(142, 195, 176);
+        cursor: pointer;
+    }
+
+.user-account-day__tab-active {
+    font-weight: 700;
+}
+
+    .user-account-day__tab-active::after {
+        content: "";
+        display: block;
+        background-color: #183d3d;
+        width: 110%;
+        height: 2.5px;
+        margin-top: 6px;
+    }
+
+.user-account-day__horizontal-container {
+
     display: flex;
     flex-direction: row;
     gap: 60px;
@@ -108,66 +159,64 @@ user-account-day * {
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
-.user-account-day__user-projects {
-    background: #bcead5;
-    border-radius: 24px;
-    border-style: solid;
-    border-color: #8ec3b0;
-    border-width: 1px;
-    padding: 33px 36px 33px 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    min-width: 400px;
-    position: relative;
-    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-}
-
-    .user-account-day__user-projects h2 {
-        color: #183d3d;
-        text-align: center;
-        font-family: "Fira Sans", sans-serif;
-        font-size: 32px;
-        font-weight: 700;
-        position: relative;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-.user-account-day__projects-container {
+.user-account-day__tab-container {
+    padding-bottom: 20px;
     display: flex;
     flex-direction: row;
-    gap: 40px;
-    align-items: center;
+    gap: 60px;
+    align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
     align-self: stretch;
     flex-shrink: 0;
     position: relative;
+    overflow: hidden;
+    flex-wrap: wrap;
 }
 
-.user-profile-day__projects-container {
+.user-account-day__user-projects {
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: start;
+    flex: 2;
+    float: left;
+    width: 100%;
+    min-width: 460px;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-account-day__user-projects-container h2,
+.user-account-day__user-projects h2 {
+    color: #183d3d;
+    text-align: center;
+    font-family: "Fira Sans", sans-serif;
+    font-size: clamp(20px, 2.2vw, 32px);
+    font-weight: 700;
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-account-day__projects-container {
     position: relative;
     width: 100%;
     height: fit-content;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%/2, max(450px, 500px)), 1fr));
-    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    grid-gap: 30px;
     justify-items: center;
+    align-items: center;
+    justify-content: center;
 }
-
-    .user-profile-day__projects-container .user-account-day__project{
-        min-width: 450px;
-        max-width: 500px;
-    }
 
     .user-account-day__project {
         background: #bcead5;
@@ -182,15 +231,16 @@ user-account-day * {
         align-items: flex-start;
         justify-content: flex-start;
         flex: 1;
-        min-width: 350px;
+        min-width: 450px;
         position: relative;
+        width: 100%;
     }
 
     .user-account-day__project h2 {
         color: #183d3d;
         text-align: center;
         font-family: "Fira Sans", sans-serif;
-        font-size: 24px;
+        font-size: clamp(18px, 1.8vw, 24px);
         font-weight: 700;
         position: relative;
         align-self: stretch;
@@ -199,22 +249,25 @@ user-account-day * {
         justify-content: center;
     }
 
-.user-account-day__project-technologies-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
-    justify-content: flex-start;
-    align-self: stretch;
-    flex-shrink: 0;
-    position: relative;
-}
+        .user-account-day__project h3 {
+            font-size: clamp(16px, 1.5vw, 20px);
+        }
+
+        .user-account-day__project-technologies-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-start;
+            justify-content: flex-start;
+            align-self: stretch;
+            flex-shrink: 0;
+            position: relative;
+        }
 
     .user-account-day__project-technologies-container h3 {
         color: #183d3d;
         text-align: left;
         font-family: "Fira Sans", sans-serif;
-        font-size: 20px;
         font-weight: 700;
         position: relative;
     }
@@ -223,7 +276,7 @@ user-account-day * {
     border-radius: 5px;
     display: flex;
     flex-direction: row;
-    gap: 12px;
+    gap: 6px 12px;
     align-items: flex-start;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -283,7 +336,7 @@ user-account-day * {
         color: #183d3d;
         text-align: justify;
         font-family: "Fira Sans", sans-serif;
-        font-size: 16px;
+        font-size: clamp(13px, 1.2vw, 16px);
         font-weight: 500;
         position: relative;
     }
@@ -325,7 +378,7 @@ user-account-day * {
                 width: 100%;
                 text-align: left;
                 font-family: "Fira Sans", sans-serif;
-                font-size: 16px;
+                font-size: clamp(12px, 1.2vw, 16px);
                 font-weight: 500;
                 text-decoration: none;
                 color: #183d3d;
@@ -371,7 +424,7 @@ user-account-day * {
                 color: #183d3d;
                 text-align: left;
                 font-family: "Fira Sans", sans-serif;
-                font-size: 16px;
+                font-size: clamp(14px, 1.6vw, 16px);
                 font-weight: 400;
                 text-decoration: none;
                 position: relative;
@@ -414,7 +467,6 @@ user-account-day * {
             color: #183d3d;
             text-align: left;
             font-family: "Fira Sans", sans-serif;
-            font-size: 20px;
             font-weight: 700;
             position: relative;
         }
@@ -423,46 +475,17 @@ user-account-day * {
             color: #183d3d;
             text-align: left;
             font-family: "Fira Sans", sans-serif;
-            font-size: 20px;
+            font-size: clamp(15px, 1.4vw, 20px);
             font-weight: 400;
             position: relative;
         }
 
-.user-account-day__vertical-container {
-    display: flex;
-    flex-direction: column;
-    gap: 65px;
-    align-items: flex-end;
-    justify-content: flex-start;
-    flex: 1;
-    min-width: 400px;
-    position: relative;
-}
-
-.user-account-day__create-new-project {
-    background: #bcead5;
-    border-radius: 24px;
-    border-style: solid;
-    border-color: #8ec3b0;
-    border-width: 1px;
-    padding: 33px 0px 33px 0px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: center;
-    justify-content: center;
-    align-self: stretch;
-    flex-shrink: 0;
-    position: relative;
-    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-}
-
+.user-account-day__create-new-project-detailed
 .user-account-day__create-new-project-header {
     color: #183d3d;
     text-align: center;
     font-family: "Fira Sans", sans-serif;
-    font-size: 28px;
+    font-size: clamp(20px, 3.6vw, 28px);
     font-weight: 600;
     position: relative;
     flex: 1;
@@ -501,7 +524,7 @@ user-account-day * {
     bottom: 50px;
     right: 0;
     border-radius: 8px;
-    font: 16px;
+    font-size: clamp(13px, 1vw, 16px);
     transform: translateY(9px);
     transition: all 0.3s ease-in-out;
     box-shadow: 0 0 3px rgba(56, 54, 54, 0.86);
@@ -542,7 +565,7 @@ user-account-day * {
 
 .user-account-day__project-name-container {
     border-radius: 12px;
-    padding: 0px 10px 0px 10px;
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -551,7 +574,6 @@ user-account-day * {
     justify-content: center;
     align-self: center;
     flex-shrink: 0;
-    min-width: 400px;
     position: relative;
 }
 
@@ -562,7 +584,7 @@ user-account-day * {
         color: #183d3d;
         text-align: center;
         font-family: "Fira Sans", sans-serif;
-        font-size: 28px;
+        font-size: clamp(16px, 1.5vw, 24px);
         font-weight: 500;
     }
 
@@ -591,23 +613,32 @@ user-account-day * {
         position: relative;
     }
 
+.user-account-day__create-new-project-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
 .user-account-day__create-new-project-detailed {
     background: #bcead5;
     border-radius: 24px;
     border-style: solid;
     border-color: #8ec3b0;
     border-width: 1px;
-    padding: 33px 12px 33px 12px;
     display: flex;
     flex-direction: column;
     gap: 40px;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     align-self: stretch;
     flex-shrink: 0;
     position: relative;
-    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
     overflow: visible;
+    min-width: 650px;
+    padding: 40px 40px 30px;
+    width: 100%;
 }
 
     .user-account-day__create-new-project-detailed .header {
@@ -624,7 +655,7 @@ user-account-day * {
         color: #183d3d;
         text-align: center;
         font-family: "Fira Sans", sans-serif;
-        font-size: 32px;
+        font-size: clamp(17px, 1.8vw, 32px);
         font-weight: 600;
         position: relative;
         flex: 1;
@@ -649,7 +680,7 @@ user-account-day * {
     color: #183d3d;
     text-align: left;
     font-family: "Fira Sans", sans-serif;
-    font-size: 24px;
+    font-size: clamp(15px, 1.5vw, 24px);
     font-weight: 600;
     position: relative;
     align-self: flex-start;
@@ -681,7 +712,7 @@ user-account-day * {
         color: #183d3d;
         text-align: center;
         font-family: "Fira Sans", sans-serif;
-        font-size: 20px;
+        font-size: clamp(13px, 1.5vw, 20px);
         font-weight: 400;
     }
 
@@ -720,7 +751,7 @@ user-account-day * {
             color: #183d3d;
             padding: 12px;
             font-family: "Fira Sans", sans-serif;
-            font-size: 16px;
+            font-size: clamp(12px, 1.2vw, 16px);
             font-weight: 400;
             border: 2px solid #bcead5;
             border-radius: 16px;
@@ -741,7 +772,7 @@ user-account-day * {
                 color: #183d3d;
                 padding: 12px;
                 font-family: "Fira Sans", sans-serif;
-                font-size: 16px;
+                font-size: clamp(12px, 1.2vw, 16px);
                 font-weight: 400;
             }
 
@@ -838,7 +869,7 @@ user-account-day * {
 
     .customNumberInput input {
         font-family: "Fira Sans", sans-serif;
-        font-size: 18px;
+        font-size: clamp(12px, 1.2vw, 18px);
         font-weight: 500;
         text-align: center;
         background: none;
@@ -878,7 +909,7 @@ user-account-day * {
         color: #183d3d;
         text-align: center;
         font-family: "Fira Sans", sans-serif;
-        font-size: 20px;
+        font-size: clamp(14px, 1.2vw, 20px);
         font-weight: 700;
         position: relative;
     }
@@ -903,30 +934,11 @@ user-account-day * {
     border-color: #c81d1d;
 }
 
-.user-account-day__user-requests {
-    background: #bcead5;
-    border-radius: 24px;
-    border-style: solid;
-    border-color: #8ec3b0;
-    border-width: 1px;
-    padding: 33px 12px 33px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: center;
-    justify-content: center;
-    align-self: stretch;
-    flex-shrink: 0;
-    position: relative;
-    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
-}
-
 .user-account-day__user-requests-title {
     color: #183d3d;
     text-align: center;
     font-family: "Fira Sans", sans-serif;
-    font-size: 28px;
+    font-size: clamp(20px, 2.2vw, 28px);
     font-weight: 600;
     position: relative;
     display: flex;
@@ -935,14 +947,19 @@ user-account-day * {
 }
 
 .user-account-day__user-requests-container {
+    padding: 20px 50px;
     display: flex;
-    flex-direction: column;
-    gap: 40px;
-    align-items: center;
+    flex-direction: row;
+    align-items: start;
     justify-content: center;
-    align-self: stretch;
-    flex-shrink: 0;
     position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.user-account-day__user-requests-col {
+    width: 50%;
+    padding: 0% 2% 20px 2%;
 }
 
 .user-account-day__request {
@@ -952,6 +969,7 @@ user-account-day * {
     border-color: #183d3d;
     border-width: 2px;
     padding: 12px;
+    margin: 20px 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -959,13 +977,14 @@ user-account-day * {
     justify-content: flex-start;
     align-self: stretch;
     position: relative;
+    flex-wrap: wrap;
 }
 
     .user-account-day__request h2 {
         color: #183d3d;
         text-align: center;
         font-family: "Fira Sans", sans-serif;
-        font-size: 24px;
+        font-size: clamp(17px, 1.7vw, 24px);
         font-weight: 700;
         position: relative;
         align-self: stretch;
@@ -992,13 +1011,14 @@ user-account-day * {
         align-items: center;
         justify-content: center;
         position: relative;
+        flex-wrap: wrap;
     }
 
     .user-account-day__request-info h3 {
         color: #183d3d;
         text-align: justify;
         font-family: "Fira Sans", sans-serif;
-        font-size: 20px;
+        font-size: clamp(15px, 1.6vw, 22px);
         font-weight: 700;
         position: relative;
     }
@@ -1007,7 +1027,7 @@ user-account-day * {
         color: #183d3d;
         text-align: justify;
         font-family: "Fira Sans", sans-serif;
-        font-size: 20px;
+        font-size: clamp(15px, 2vw, 22px);
         font-weight: 400;
         position: relative;
     }
@@ -1018,7 +1038,7 @@ user-account-day * {
     border-style: solid;
     border-color: #8ec3b0;
     border-width: 1px;
-    padding: 40px 90px 40px 90px;
+    padding: 40px 90px;
     display: flex;
     flex-direction: row;
     gap: 30px 100px;
@@ -1085,7 +1105,7 @@ user-account-day * {
         text-align: center;
         vertical-align: middle;
         font-family: "Fira Sans", sans-serif;
-        font-size: 24px;
+        font-size: clamp(14px, 1.2vw, 24px);
         font-weight: 700;
         position: absolute;
         top: 50%;
@@ -1097,7 +1117,7 @@ user-account-day * {
     }
 
     .user-account-day__change-user-image-overlay span {
-        font-size: 16px;
+        font-size: clamp(12px, 1.1vw, 18px);
         font-weight: 600;
         display: block;
         margin-top: 15px;
@@ -1122,7 +1142,6 @@ user-account-day * {
     cursor: pointer;
 }
 
-
 .user-account-day__user-account-details {
     display: flex;
     flex-direction: column;
@@ -1130,39 +1149,44 @@ user-account-day * {
     align-items: flex-start;
     justify-content: flex-start;
     flex: 1;
-    min-width: 400px;
     position: relative;
+    flex-wrap: wrap;
 }
 
     .user-account-day__user-account-details h2 {
         color: #183d3d;
         text-align: left;
         font-family: "Fira Sans", sans-serif;
-        font-size: 48px;
+        font-size: clamp(26px, 3vw, 48px);
         font-weight: 500;
         position: relative;
         align-self: stretch;
-        min-width: 400px;
     }
+
+.user-account-day__user-name-and-email {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
 
 .user-account-day__user-email {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    column-gap: 15px;
     align-items: flex-start;
     justify-content: flex-start;
     flex-shrink: 0;
     position: relative;
+    flex-wrap: wrap;
 }
 
     .user-account-day__user-email p {
         color: #183d3d;
         text-align: left;
         font-family: "Fira Sans", sans-serif;
-        font-size: 24px;
+        font-size: clamp(17px, 1.7vw, 24px);
         font-weight: 600;
         position: relative;
-        width: 66px;
     }
 
 .user-account-day__user-socials {
@@ -1233,7 +1257,7 @@ user-account-day * {
         border-radius: 24px;
         border: 3px solid #8ec3b0;
         padding: 4px;
-        font-size: 16px;
+        font-size: clamp(12px, 1.6vw, 16px);
     }
 
         .user-account-day__user-socials > .user-account-day__user-socials-input > input {
@@ -1255,7 +1279,7 @@ user-account-day * {
     margin-top: 4px;
     margin-bottom: 4px;
     font-family: "Fira Sans", sans-serif;
-    font-size: 20px;
+    font-size: clamp(15px, 1.3vw, 20px);
     font-weight: 700;
     position: relative;
     width: 209px;
@@ -1281,7 +1305,7 @@ user-account-day * {
         color: #183d3d;
         text-align: justify;
         font-family: "Fira Sans", sans-serif;
-        font-size: 16px;
+        font-size: clamp(14px, 1.1vw, 17px);
         font-weight: 400;
         outline: none;
         border-radius: 12px;
@@ -1317,7 +1341,7 @@ user-account-day * {
             color: #183d3d;
             text-align: justify;
             font-family: "Fira Sans", sans-serif;
-            font-size: 20px;
+            font-size: clamp(14px, 1.3vw, 20px);
             font-weight: 700;
             position: relative;
         }
@@ -1380,7 +1404,313 @@ user-account-day * {
     color: #183d3d;
     text-align: center;
     font-family: "Fira Sans", sans-serif;
-    font-size: 18px;
+    font-size: clamp(14px, 1.3vw, 18px);
     font-weight: 700;
     position: relative;
+}
+
+.user-account-day__user-own-projects-tab {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1;
+    gap: 40px;
+    padding-bottom: 40px;
+    overflow: hidden;
+} 
+
+.user-account-day__user-projects-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.user-account-day__user-projects-explore {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0px 0px 12px;
+    font: 400 clamp(13px, 1.1vw, 18px) "Fira Sans";
+}
+
+    .user-account-day__user-projects-explore div {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+.user-account-day__no-items {
+    background: #bcead5;
+    border-radius: 16px;
+    padding: 45px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+    .user-account-day__no-items h3 {
+        color: #183d3d;
+        text-align: center;
+        font-family: "Fira Sans", sans-serif;
+        font-size: clamp(17px, 1.7vw, 24px);
+        font-weight: 700;
+    }
+
+.user-account-day__no-items-title {
+    color: #183d3d;
+    text-align: center;
+    font-family: "Fira Sans", sans-serif;
+    font-size: clamp(14px, 2vw, 28px);
+    font-weight: 700;
+    margin: 70px 0px;
+}
+
+@media (min-width: 601px) and (max-width: 1000px) {
+    .user-account-day__user-requests-container {
+        padding: 10px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-account-day__user-requests-col {
+        width: 100%;
+        padding: 0px 20px 20px;
+    }
+
+    .user-account-day__request {
+        padding: 12px;
+        margin: 20px 20px;
+    }
+
+    .user-account-day__tab-navbar {
+        gap: 45px;
+    }
+
+    .user-account-day__tab-active::after {
+        height: 1.7px;
+    }
+
+    .user-account-day__user-account {
+        padding: 20px 45px;
+    }
+
+    .user-account-day__user-image-container {
+        width: 242px;
+        height: 242px;
+        border-width: 4px;
+    }
+
+    .user-account-day__technologies div {
+        min-height: 40px;
+        min-width: 40px;
+        padding: 7px;
+    }
+
+    .user-account-day__create-new-project-container{
+        width: 100%;
+        padding-bottom: 20px;
+    }
+
+    .user-account-day__create-new-project-detailed {
+        gap: 20px;
+        flex-shrink: 1;
+        width: 100%;
+        min-width: 350px;
+        padding: 25px 45px;
+    }
+
+    .user-account-day__user-projects {
+        gap: 20px;
+        width: 100%;
+        min-width: 550px;
+    }
+
+    .user-account-day__projects-container {
+        padding-bottom: 15px;
+    }
+
+    .user-account-day__user-socials > .user-account-day__user-socials-container > div {
+        padding: 2px 9px;
+    }
+
+    .user-account-day__info-tooltip {
+        width: 360px;
+    }
+
+    .user-account-day__no-items-title {
+        margin: 40px 0px;
+    }
+}
+
+@media (max-width: 600px) {
+    .user-account-day__user-requests-container {
+        padding: 10px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-account-day__user-requests-col {
+        width: 100%;
+        padding: 0px 10px 20px;
+    }
+
+    .user-account-day__request {
+        margin: 20px 0px;
+    }
+
+    #user-account-day__detailed-info-button {
+        padding: 6px;
+    }
+
+    .user-account-day__tab-navbar {
+        gap: 0px;
+    }
+
+    .user-account-day__tab-name:hover {
+        border-radius: 18px;
+    }
+
+    .user-account-day__tab-active::after {
+        height: 1.5px;
+        margin-top: 5px;
+    }
+
+    .user-account-day__tab-name {
+        padding: 8px 15px;
+    }
+
+    .user-account-day__user-account {
+        padding: 10px 30px;
+    }
+
+    .user-account-day__user-image-container {
+        width: 168px;
+        height: 168px;
+        border-width: 3px;
+    }
+
+    .user-account-day__projects-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        grid-gap: 20px;
+    }
+
+    .user-account-day__project {
+        min-width: 280px;
+        gap: 8px;
+    }
+
+    .user-account-day__technologies div {
+        padding: 5px;
+    }
+
+    .user-account-day__create-new-project-container {
+        width: 100%;
+        padding-bottom: 0px;
+    }
+
+    .user-account-day__create-new-project-detailed {
+        gap: 20px;
+        width: 100%;
+        min-width: 300px;
+        padding: 30px 10px;
+        flex-wrap: wrap;
+    }
+
+    .user-account-day__user-projects {
+        padding: 0px;
+        gap: 0px;
+        width: 100%;
+        min-width: 300px;
+    }
+
+    .arrow {
+        border-width: 0 2px 2px 0;
+        padding: 3px;
+    }
+
+    .user-account-day__technologies div {
+        min-height: 35px;
+        min-width: 35px;
+        padding: 7px;
+    }
+
+    .user-account-day__technologies img {
+        width: 14px;
+        height: 14px;
+    }
+
+    .user-account-day__new-project-info img {
+        width: 18px;
+        height: 18px;
+        margin: 0 5px;
+    }
+
+    .user-account-day__user-projects-container {
+        padding: 0px;
+    }
+
+    .user-account-day__projects-container {
+        padding-bottom: 45px;
+    }
+
+    .user-account-day__user-account-details {
+        gap: 8px;
+    }
+
+    .user-account-day__profile-buttons button {
+        padding: 5px 10px;
+    }
+
+    .user-account-day__user-socials > .user-account-day__user-socials-container > div {
+        border: 2px solid #183d3d;
+        padding: 2px 7px;
+    }
+
+    .user-account-day__user-own-projects-tab {
+        row-gap: 0px;
+    }
+
+    .user-account-day__technologies .user-account-day__technologies-dropdown,
+    .modal__technologies-container .modal__technologies-dropdown {
+        min-width: 70px;
+        max-width: 140px;
+        max-height: 140px;
+    }
+
+    .user-account-day__create-project-button {
+        padding: 6px;
+    }
+
+    .user-account-day__cancel-button {
+        padding: 6px;
+    }
+
+    .user-account-day__info-tooltip {
+        width: 285px;
+    }
+
+    .user-account-day__no-items {
+        padding: 25px;
+    }
+
+    .user-account-day__no-items-title {
+        margin: 20px 0px;
+    }
+
+    .user-account-day__page-content {
+        right: 1.5%;
+        left: 2.5%;
+        width: 96%;
+    }
 }

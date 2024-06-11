@@ -65,6 +65,7 @@
     border-radius: 20px;
     padding: 24px 36px;
     margin-top: 5vh;
+    margin-bottom: 3vh;
 }
 
 .modal__body-request {
@@ -81,15 +82,9 @@
         display: flex;
         flex-direction: row;
         gap: 8px;
-        margin-top: -40px;
-        font: 400 18px "Fira Sans";
+        font: 400 clamp(13px, 1.3vw, 18px) "Fira Sans";
         height: fit-content;
         color: #183d3d;
-    }
-
-    .modal__body-request .modal__project-status {
-        margin-top: -24px;
-        margin-bottom: 24px;
     }
 
         .modal__body .modal__project-status div,
@@ -170,7 +165,7 @@
     border-color: #183d3d;
     border-width: 2px;
     padding: 6px;
-    font-size: 22px;
+    font-size: clamp(15px, 2vw, 22px);
     color: #183d3d;
     margin-left: auto;
     margin-top: 10px;
@@ -181,6 +176,13 @@
 .modal__modal-content {
     margin: 20px auto;
     width: 100%;
+}
+
+.modal__header-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    flex: 1;
 }
 
 .modal__header,
@@ -197,7 +199,7 @@
 }
 
     .modal__header h1 {
-        font: 700 36px "Fira Sans";
+        font: 700 clamp(21px, 3.2vw, 36px) "Fira Sans";
         color: #183d3d;
         width: fit-content;
     }
@@ -228,21 +230,17 @@
 }
 
     .modal__body-subject h3 {
-        font: 700 20px "Fira Sans";
+        font: 700 clamp(15px, 1.5vw, 20px) "Fira Sans";
         color: #183d3d;
         margin: 4px;
     }
 
     .modal__body-subject p {
-        font: 400 16px "Fira Sans";
+        font: 400 clamp(13px, 1.2vw, 16px) "Fira Sans";
         text-align: justify;
         color: #183d3d;
         margin: 4px;
     }
-
-.modal__repository {
-    margin: -40px 0px;
-}
 
     .modal__repository > div {
         display: flex;
@@ -268,7 +266,7 @@
     justify-content: start;
     align-items: center;
     gap: 6px;
-}    
+}
 
 .modal__repository-link-input {
     width: 60%;
@@ -278,7 +276,7 @@
     border-radius: 10px;
     color: #183d3d;
     font-family: "Fira Sans", sans-serif;
-    font-size: 16px;
+    font-size: clamp(13px, 1.2vw, 16px);
     font-weight: 400;
     padding: 3px 8px;
 }
@@ -357,6 +355,7 @@
     }
 
     .modal__technologies-container > div > p {
+        font-size: clamp(13px, 1.3vw, 16px);
         font-weight: 500;
     }
 
@@ -385,7 +384,7 @@
     flex-direction: row;
     gap: 4px;
     width: 100%;
-    height: 40px;
+    height: fit-content;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: flex-start;
@@ -409,10 +408,10 @@
         border: 1px solid #183d3d;
     }
 
-.modal__user-item p {
-    font-size: 18px;
-    font-weight: 500;
-}
+    .modal__user-item p {
+        font-size: clamp(13px, 1.3vw, 18px);
+        font-weight: 500;
+    }
 
     .modal__user-item i {
         color: tomato;
@@ -539,7 +538,7 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     background: #bcead5;
@@ -556,14 +555,15 @@
     .modal__request-details h4 {
         font: "Fira Sans";
         color: #183d3d;
-        font-size: 18px;
+        font-size: clamp(14px, 1.2vw, 18px);
         font-weight: 500;
     }
 
 .modal__request-details {
     display: flex;
     flex-direction: row;
-    gap: 25px;
+    gap: 5px 25px;
+    flex-wrap: wrap;
 }
 
     .modal__request-details > div {
@@ -580,7 +580,7 @@
 
 .modal__request-accept-button {
     color: #183d3d;
-    font-size: 17px;
+    font-size: clamp(14px, 1.3vw, 17px);
 }
 
 .modal__request-hide-button {
@@ -592,8 +592,8 @@
     border-radius: 50%;
     border: 2px solid #183d3d;
     position: absolute;
-    top: 3px;
-    right: 3px;
+    top: 4px;
+    right: 4px;
 }
 
     .modal__request-hide-button .cross-line {
@@ -620,7 +620,7 @@
     color: #183d3d;
     position: relative;
     border-radius: 8px;
-    font: 16px;
+    font: clamp(13px, 1.2vw, 16px);
     box-shadow: 0 0 3px rgba(56, 54, 54, 0.86);
 }
 
@@ -644,13 +644,15 @@
     padding: 0;
     display: flex;
     flex-direction: row-reverse;
-    justify-content: space-between;
+    justify-content: start;
+    align-items: start;
+    gap: 15px 80px;
     color: #183d3d;
 }
 
-    .modal__request-info h3 {
-        font: 500 24px "Fira Sans";
-    }
+.modal__request-info h3 {
+    font: 500 clamp(16px, 1.7vw, 24px) "Fira Sans";
+}
 
     .modal__request-info span {
         margin-right: 8px;
@@ -674,7 +676,7 @@
 
 .modal__body-request .button {
     color: #183d3d;
-    font: 500 20px "Fira Sans";
+    font: 500 clamp(15px, 1.3vw, 20px) "Fira Sans";
     padding: 8px;
 }
 
@@ -684,7 +686,7 @@
     }
 
         .modal__body-request .modal__info-tooltip p {
-            font: 300 18px "Fira Sans";
+            font: 300 clamp(13px, 1.1vw, 18px) "Fira Sans";
             color: #183d3d;
         }
 
@@ -707,5 +709,131 @@
 
     100% {
         transform: translateX(1px);
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1000px) {
+    .modal__body, .modal__body-request {
+        gap: 25px 30px;
+        width: 88%;
+        min-width: 400px;
+        min-height: 300px;
+        padding: 24px 30px;
+        margin-top: 7vh;
+        margin-bottom: 5vh;
+    }
+
+    .modal__header-container{
+        row-gap: 5px;
+    }
+
+    .modal__body-request {
+        min-height: 250px;
+    }
+
+    .modal__technologies-container > div {
+        min-height: 28px;
+        min-width: 28px;
+        padding: 0 5px;
+    }
+
+    .modal__user-item a {
+        height: 30px;
+    }
+
+    .modal__repository-link-input{
+        width: 80%;
+    }
+}
+
+@media (max-width: 600px) {
+    .modal__body,
+    .modal__body-request {
+        gap: 12px;
+        width: 97%;
+        min-width: 290px;
+        min-height: 250px;
+        padding: 20px 18px;
+        margin-top: 3vh;
+        margin-bottom: 3vh;
+    }
+
+    .modal__close-button {
+        height: 28px;
+        width: 28px;
+        border: 3px solid #183d3d;
+    }
+
+        .modal__close-button .cross-line {
+            width: 15px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+    .modal__header {
+        row-gap: 5px;
+    }
+
+        .modal__header h1 {
+            padding-bottom: 0px;
+        }
+
+    .modal__delete-request-button {
+        flex-direction: column-reverse;
+        row-gap: 0px;
+    }
+
+    .modal__body-request .modal__info-tooltip::after {
+        display: block;
+        left: 87%;
+        top: calc(100% - 3px);
+        transform: rotate(180deg);
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(3px);
+        }
+
+        100% {
+            transform: translateY(1px);
+        }
+    }
+
+    .modal__technologies-container > div {
+        min-height: 24px;
+        min-width: 24px;
+        padding: 0 5px;
+    }
+
+    .modal__user-item a {
+        height: 25px;
+    }
+
+    .modal__body-subject {
+        padding: 6px;
+    }
+
+    .modal__request-hide-button {
+        height: 20px;
+        width: 20px;
+    }
+
+        .modal__request-hide-button .cross-line {
+            width: 11px;
+            height: 2px;
+            border-radius: 1.5px;
+        }
+
+    .modal__repository-link-input {
+        width: 100%;
+    }
+
+    .modal__danger-item {
+        flex-direction: column;
+    }
+
+    .modal__request-container {
+        padding: 4px 4px 0px;
     }
 }
