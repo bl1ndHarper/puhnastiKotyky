@@ -12,18 +12,18 @@
 }
 
     .help-page h1 {
-        font-size: 52px;
+        font-size: clamp(32px, 4vw, 52px);
         font-weight: 700;
     }
 
     .help-page h2 {
-        font-size: 36px;
+        font-size: clamp(28px, 3vw, 36px);
         font-weight: 700;
         width: fit-content;
     }
 
     .help-page h3 {
-        font-size: 28px;
+        font-size: clamp(20px, 1.5vw, 28px);
         font-weight: 500;
         width: fit-content;
     }
@@ -202,7 +202,7 @@
 .help-page__open-topic {
     width: 70%;
     max-width: 1000px;
-    min-width: 600px;
+    min-width: 550px;
     height: fit-content;
     padding: 12px;
     display: flex;
@@ -248,7 +248,7 @@
             }
 
             .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-h > h3 {
-                font-size: 28px;
+                font-size: clamp(16px, 2vw, 28px);
                 font-weight: 700;
                 text-align: end;
             }
@@ -262,7 +262,7 @@
     }
 
         .help-page__open-topic > .help-page__open-topic-points > li > h4 {
-            font-size: 20px;
+            font-size: clamp(16px, 1.7vw, 20px);
             font-weight: 400;
             cursor: pointer;
         }
@@ -280,6 +280,10 @@
     .help-page__open-topic > .help-page__open-topic-points > .selected > h4 {
         text-decoration: underline;
     }
+
+.mobile {
+    display: none;
+}
 
 .help-page__help-form-wrapper {
     padding-bottom: 32px;
@@ -547,3 +551,129 @@
             font-size: 16px;
             color: #183d3d;
         }
+
+@media (max-width: 800px) {
+    .help-page__help-form {
+        width: 90vw;
+        margin-left: 2vw;
+    }
+
+        .help-page__help-form h3 {
+            font-size: 24px;
+        }
+
+    .help-page__help-form-topic {
+        flex-direction: column;
+    }
+
+        .help-page__help-form-topic > .help-page__help-form-topic-selector {
+            margin: 0;
+        }
+}
+
+@media (max-width: 600px) {
+    .help-page__header {
+        padding: 25vh 0;
+    }
+
+        .help-page__header > h1 {
+            font-size: 32px;
+        }
+
+            .help-page__header > .help-page__search > .button {
+                padding: 2px 4px;
+                font-size: 12px;
+            }
+
+            .help-page__header > .help-page__search > input {
+                width: 70vw;
+                font-size: 14px;
+                margin-left: 8px;
+            }
+
+    .help-page h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .help-page h3 {
+        font-size: 20px;
+        padding-top: 12px;
+        text-align: center;
+    }
+
+    .help-page__questions-by-topics {
+        margin-left: 2vw;
+    }
+
+    .help-page__topic {
+        width: 90vw;
+    }
+
+    .help-page__open-topic {
+        width: 90vw;
+        min-width: auto;
+    }
+
+        .help-page__open-topic > .help-page__open-topic-header {
+            justify-content: space-around;
+        }
+
+            .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-back-button {
+                display: none;
+            }
+
+            .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-h > h3 {
+                font-size: 16px;
+            }
+
+            .help-page__open-topic > .help-page__open-topic-header > .help-page__open-topic-header-h > i {
+                font-size: 32px;
+                padding-top: 8px;
+            }
+
+        .help-page__open-topic > .help-page__open-topic-points > li > h4 {
+            font-size: 16px;
+        }
+
+    .help-page__open-topic-header-back-button {
+        padding: 2px 4px;
+        border: 1px solid #183d3d;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
+        align-items: center;
+        gap: 4px;
+        background-color: #9ed5c5;
+        align-self: flex-end;
+    }
+
+    .mobile {
+        display: flex;
+    }
+
+    .help-page__help-form-topic-selector > .help-page__help-form-topic-select-items > p {
+        padding: 4px;
+    }
+
+    .help-page__help-form-email-wrapper {
+        flex-direction: column;
+    }
+
+    .help-page__help-form-screenshot > .help-page__screenshots-container > div > img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .help-page__contacts {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .help-page__contacts > div {
+            width: 90vw;
+        }
+
+            .help-page__contacts > div > p > a {
+                padding: 0 16px;
+            }
+}

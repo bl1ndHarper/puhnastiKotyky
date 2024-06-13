@@ -205,10 +205,12 @@ function openTopic(topicCard) {
     showQuestions(questionsArray, topicName);
 }
 
-const backToTopicsButton = document.querySelector('.help-page__open-topic-header-back-button');
-backToTopicsButton.addEventListener("click", function () {
-    backToTopics();
-});
+const backToTopicsButtons = document.querySelectorAll('.help-page__open-topic-header-back-button');
+backToTopicsButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+        backToTopics();
+    });
+})
 function backToTopics() {
     openTopicCard.classList.add('hidden');
     topicsCards.classList.remove('hidden');
