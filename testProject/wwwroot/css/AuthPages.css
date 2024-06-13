@@ -182,7 +182,7 @@ p,
 .auth-pages-day__text-link-item, .auth-pages-day__text-link-item:hover {
     color: #183d3d;
     text-align: center;
-    font: 500 2vmin "Fira Sans", sans-serif;
+    font: 500 clamp(10.5px, 1.5vw, 16px) "Fira Sans", sans-serif;
     position: relative;
     text-decoration: underline;
     cursor: pointer;
@@ -200,4 +200,38 @@ p,
     left: 3vmin;
     bottom: 3vmin;
     overflow: visible;
+}
+
+
+@media(min-width: 601px) and (max-width: 800px) {
+
+    .auth-pages-day__input-fields div,
+    .auth-pages-day__input-fields .auth-pages-day__button {
+        width: 42vw;
+    }
+
+    #external-account .auth-pages-day__button {
+        width: 40vw;
+    }
+}
+
+
+@media(max-width: 600px) {
+    .auth-pages-day__headers {
+        top: 20vh;
+    }
+
+    .auth-pages-day__input-fields div,
+    .auth-pages-day__input-fields .auth-pages-day__button {
+        width: 49vw;
+        height: 8vmin;
+    }
+
+    #external-account .auth-pages-day__button {
+        width: 40vw;
+    }
+
+    #otherServicesHeader {
+        width: 50vw;
+    }
 }
