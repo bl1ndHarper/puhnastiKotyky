@@ -72,6 +72,16 @@ To get a local copy up and running follow the steps bellow.
 
    `Update-Database`
 
+## Contributing
+
+Your contributions are greatly appreciated. If you have a suggestion to improve this project, please follow these steps to fork the repo and create a pull request:
+
+- Fork the Project
+- Create your Feature Branch (git checkout -b feature/NewFeature)
+- Commit your Changes (git commit -m 'Add some NewFeature')
+- Push to the Branch (git push origin feature/NewFeature)
+- Open a Pull Request
+
 ## License
 
 Distributed under the MIT License.
