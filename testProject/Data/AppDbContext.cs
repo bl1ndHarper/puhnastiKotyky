@@ -41,8 +41,10 @@ public partial class AppDbContext : IdentityDbContext<User, IdentityRole<uint>, 
     public virtual DbSet<SocialMedia> SocialMedias { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseMySql("server=localhost;port=3306;database=DB;user=newuser;password=Password123", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
-
+    {
+        var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRINGS_DEFAULTCONNECTION");
+        optionsBuilder.UseMySql(connectionString, Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
