@@ -631,13 +631,17 @@ $("#tabsContainer").on("click", ".user-account-day__projects-container .modal__o
                 newUserElement.setAttribute('data-url', '/Account/Projects/DeleteUserFormProject');
                 newUserElement.setAttribute('data-projectId', projectId);
 
+                const userProfileLink = document.createElement('a');
+                userProfileLink.href = `/Profile?id=` + userId;
+
                 const userPhotoElement = document.createElement('img');
                 userPhotoElement.src = userPhoto;
-                newUserElement.appendChild(userPhotoElement);
+                userProfileLink.appendChild(userPhotoElement);
 
                 const userFullName = document.createElement('p');
                 userFullName.textContent = userName;
-                newUserElement.appendChild(userFullName);
+                userProfileLink.appendChild(userFullName);
+                newUserElement.appendChild(userProfileLink);
 
                 const deleteIcon = document.createElement('i');
                 deleteIcon.classList.add('fa', 'fa-user-times');

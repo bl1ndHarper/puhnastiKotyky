@@ -985,7 +985,7 @@ user-account-day * {
         text-align: center;
         font-family: "Fira Sans", sans-serif;
         font-size: clamp(17px, 1.7vw, 24px);
-        font-weight: 700;
+        font-weight: 500;
         position: relative;
         align-self: stretch;
         display: flex;
@@ -1019,7 +1019,7 @@ user-account-day * {
         text-align: justify;
         font-family: "Fira Sans", sans-serif;
         font-size: clamp(15px, 1.6vw, 22px);
-        font-weight: 700;
+        font-weight: 500;
         position: relative;
     }
 
